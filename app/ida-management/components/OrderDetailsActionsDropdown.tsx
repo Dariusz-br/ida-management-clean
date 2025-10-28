@@ -65,7 +65,7 @@ export function OrderDetailsActionsDropdown({ order, onAction }: OrderDetailsAct
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer"
+        className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer"
       >
         <Settings className="w-4 h-4 mr-2" />
         Actions
@@ -73,7 +73,7 @@ export function OrderDetailsActionsDropdown({ order, onAction }: OrderDetailsAct
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+        <div className="absolute right-0 top-full mt-1 w-56 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
           <div className="py-1">
             {actions.map((action) => {
               const Icon = action.icon

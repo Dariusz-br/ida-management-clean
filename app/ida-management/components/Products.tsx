@@ -116,7 +116,7 @@ export function Products() {
         <h1 className="text-2xl font-bold text-gray-900">Products</h1>
         <button 
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90"
+          className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
         >
           <Plus className="w-4 h-4" />
           <span>Add Product</span>
@@ -124,7 +124,7 @@ export function Products() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-4">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
         <div className="flex items-center space-x-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -133,10 +133,10 @@ export function Products() {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
+              className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
             />
           </div>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
             <Filter className="w-4 h-4" />
             <span>Filters</span>
           </button>
@@ -146,10 +146,10 @@ export function Products() {
       {/* Products Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProducts.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div key={product.id} className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             {/* Product Image */}
             <div className="relative mb-4">
-              <div className="w-full h-32 bg-[#F5F4E7] rounded-lg overflow-hidden relative group">
+              <div className="w-full h-32 bg-[#F5F4E7] rounded-xl overflow-hidden relative group">
                 {product.image ? (
                   <img 
                     src={product.image} 
@@ -213,7 +213,7 @@ export function Products() {
             <div className="flex items-center space-x-2 mt-4">
               <button 
                 onClick={() => handleViewProduct(product)}
-                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]"
+                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
                 title="View Product"
               >
                 <Eye className="w-4 h-4" />
@@ -221,7 +221,7 @@ export function Products() {
               </button>
               <button 
                 onClick={() => handleEditProduct(product)}
-                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7] bg-[#E2EAFF]"
+                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7] bg-[#E2EAFF]"
                 title="Edit Product"
               >
                 <Edit className="w-4 h-4" />
@@ -229,7 +229,7 @@ export function Products() {
               </button>
               <button 
                 onClick={() => handleDeleteProduct(product.id)}
-                className="p-2 text-red-600 hover:bg-red-50 rounded-lg"
+                className="p-2 text-red-600 hover:bg-red-50 rounded-xl"
                 title="Delete Product"
               >
                 <Trash2 className="w-4 h-4" />

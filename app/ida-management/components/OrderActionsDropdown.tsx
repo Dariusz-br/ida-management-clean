@@ -65,14 +65,14 @@ export function OrderActionsDropdown({ order, onAction }: OrderActionsDropdownPr
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100"
+        className="text-gray-400 hover:text-gray-600 p-1 rounded-xl hover:bg-gray-100"
         title="More actions"
       >
         <MoreHorizontal className="w-4 h-4" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+        <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
           <div className="py-1">
             {actions.map((action) => {
               const Icon = action.icon

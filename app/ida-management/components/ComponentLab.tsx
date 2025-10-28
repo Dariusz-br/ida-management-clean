@@ -107,14 +107,14 @@ export function ComponentLab() {
           <h1 className="text-2xl font-bold text-gray-900">Component Lab</h1>
           <p className="text-sm text-gray-600 mt-1">Test and develop new components</p>
         </div>
-        <button className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90">
+        <button className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90">
           <Plus className="w-4 h-4" />
           <span>Add Component</span>
         </button>
       </div>
 
               {/* Component Preview Space */}
-              <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+              <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900">Component Preview</h2>
@@ -129,7 +129,7 @@ export function ComponentLab() {
                 <div className="flex space-x-4">
                   {/* Original Visitor Checkout Funnel - 40% width */}
                   <div className="w-2/5">
-                    <div className="bg-gray-50 rounded-lg p-4 border border-[#E8E6CF]">
+                    <div className="bg-gray-50 rounded-xl p-4 border border-[#E8E6CF]">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm font-semibold text-gray-900">Visitor Checkout Funnel</h3>
                         <div className="flex items-center space-x-1 text-xs text-gray-600">
@@ -229,7 +229,7 @@ export function ComponentLab() {
 
                   {/* New Alternative Funnel Design - 40% width */}
                   <div className="w-2/5">
-                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
+                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-200">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-sm font-semibold text-gray-900">Alternative Funnel View</h3>
                         <div className="flex items-center space-x-1 text-xs text-blue-600">
@@ -325,7 +325,7 @@ export function ComponentLab() {
                       </div>
 
                       {/* Alternative Funnel Summary */}
-                      <div className="bg-white/70 backdrop-blur-sm rounded-lg p-3 mt-4 border border-blue-100">
+                      <div className="bg-white/70 backdrop-blur-sm rounded-xl p-3 mt-4 border border-blue-100">
                         <div className="grid grid-cols-3 gap-3">
                           <div className="text-center">
                             <div className="text-sm font-bold text-gray-900">{funnelData[0].visitors.toLocaleString()}</div>
@@ -347,7 +347,7 @@ export function ComponentLab() {
 
                 {/* Countries Data Table Component - Matching Dashboard Width */}
                 <div className="mt-6">
-                  <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+                  <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
                     <div className="flex items-center justify-between mb-6">
                       <div>
                         <h3 className="text-lg font-semibold text-gray-900">Countries Data Table</h3>
@@ -437,9 +437,9 @@ export function ComponentLab() {
               </div>
 
       {/* Lab Status */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
         <div className="flex items-center space-x-3 mb-4">
-          <div className="p-2 bg-[#00473A]/10 rounded-lg">
+          <div className="p-2 bg-[#00473A]/10 rounded-xl">
             <FlaskConical className="w-6 h-6 text-[#00473A]" />
           </div>
           <div>
@@ -449,37 +449,37 @@ export function ComponentLab() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-green-50 p-4 rounded-lg">
+          <div className="bg-green-50 p-4 rounded-xl">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-green-900">Components Ready</p>
                 <p className="text-2xl font-bold text-green-900">4</p>
               </div>
-              <div className="p-2 bg-green-100 rounded-lg">
+              <div className="p-2 bg-green-100 rounded-xl">
                 <Code className="w-5 h-5 text-green-600" />
               </div>
             </div>
           </div>
           
-          <div className="bg-blue-50 p-4 rounded-lg">
+          <div className="bg-blue-50 p-4 rounded-xl">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-blue-900">In Development</p>
                 <p className="text-2xl font-bold text-blue-900">0</p>
               </div>
-              <div className="p-2 bg-blue-100 rounded-lg">
+              <div className="p-2 bg-blue-100 rounded-xl">
                 <Settings className="w-5 h-5 text-blue-600" />
               </div>
             </div>
           </div>
           
-          <div className="bg-yellow-50 p-4 rounded-lg">
+          <div className="bg-yellow-50 p-4 rounded-xl">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-yellow-900">Testing</p>
                 <p className="text-2xl font-bold text-yellow-900">0</p>
               </div>
-              <div className="p-2 bg-yellow-100 rounded-lg">
+              <div className="p-2 bg-yellow-100 rounded-xl">
                 <Eye className="w-5 h-5 text-yellow-600" />
               </div>
             </div>
@@ -494,11 +494,11 @@ export function ComponentLab() {
           return (
             <div 
               key={component.id}
-              className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6 hover:shadow-md transition-shadow cursor-pointer"
+              className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6 hover:shadow-md transition-shadow cursor-pointer"
               onClick={() => setSelectedComponent(component.id)}
             >
               <div className="flex items-start justify-between mb-4">
-                <div className="p-2 bg-[#00473A]/10 rounded-lg">
+                <div className="p-2 bg-[#00473A]/10 rounded-xl">
                   <Icon className="w-6 h-6 text-[#00473A]" />
                 </div>
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(component.status)}`}>
@@ -520,7 +520,7 @@ export function ComponentLab() {
 
       {/* Selected Component Details */}
       {selectedComponent && (
-        <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-gray-900">Component Details</h3>
             <button 
@@ -531,7 +531,7 @@ export function ComponentLab() {
             </button>
           </div>
           
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-gray-50 rounded-xl p-4">
             <div className="flex items-center space-x-2 mb-2">
               <Code className="w-4 h-4 text-gray-600" />
               <span className="text-sm font-medium text-gray-700">Component: {selectedComponent}</span>
@@ -545,7 +545,7 @@ export function ComponentLab() {
       )}
 
       {/* Development Notes */}
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
         <div className="flex items-start space-x-3">
           <div className="p-1 bg-yellow-100 rounded">
             <FlaskConical className="w-4 h-4 text-yellow-600" />

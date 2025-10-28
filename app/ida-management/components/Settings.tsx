@@ -73,7 +73,7 @@ export function Settings() {
         <button
           onClick={handleSave}
           disabled={isSaving}
-          className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${
+          className={`flex items-center space-x-2 px-4 py-2 rounded-xl ${
             isSaving 
               ? 'bg-gray-400 cursor-not-allowed' 
               : 'bg-[#00473A] hover:bg-[#00473A]/90'
@@ -87,7 +87,7 @@ export function Settings() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Settings Navigation */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-4">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
             <nav className="space-y-2">
               {tabs.map((tab) => {
                 const Icon = tab.icon
@@ -95,7 +95,7 @@ export function Settings() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
                       activeTab === tab.id
                         ? 'bg-green-600 text-white'
                         : 'text-gray-700 hover:bg-[#F5F4E7]'
@@ -112,7 +112,7 @@ export function Settings() {
 
         {/* Settings Content */}
         <div className="lg:col-span-3">
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             {/* Profile Settings */}
             {activeTab === 'profile' && (
               <div className="space-y-6">
@@ -127,7 +127,7 @@ export function Settings() {
                         ...settings,
                         profile: { ...settings.profile, name: e.target.value }
                       })}
-                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -139,7 +139,7 @@ export function Settings() {
                         ...settings,
                         profile: { ...settings.profile, email: e.target.value }
                       })}
-                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     />
                   </div>
                   <div>
@@ -150,7 +150,7 @@ export function Settings() {
                         ...settings,
                         profile: { ...settings.profile, role: e.target.value }
                       })}
-                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
                       <option value="admin">Admin</option>
                       <option value="team">Team</option>
@@ -166,7 +166,7 @@ export function Settings() {
                         ...settings,
                         profile: { ...settings.profile, timezone: e.target.value }
                       })}
-                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
                       <option value="UTC-5">UTC-5 (EST)</option>
                       <option value="UTC-8">UTC-8 (PST)</option>
@@ -272,7 +272,7 @@ export function Settings() {
                         ...settings,
                         system: { ...settings.system, refreshInterval: parseInt(e.target.value) }
                       })}
-                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
                       <option value={1}>1 minute</option>
                       <option value={5}>5 minutes</option>
@@ -288,7 +288,7 @@ export function Settings() {
                         ...settings,
                         system: { ...settings.system, theme: e.target.value }
                       })}
-                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     >
                       <option value="light">Light</option>
                       <option value="dark">Dark</option>

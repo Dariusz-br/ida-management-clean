@@ -221,7 +221,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
         <div className="flex items-center space-x-3">
           <button 
             onClick={() => setShowArchived(!showArchived)}
-            className={`flex items-center space-x-2 px-4 py-2 rounded-lg ${
+            className={`flex items-center space-x-2 px-4 py-2 rounded-xl ${
               showArchived 
                 ? 'bg-gray-600 text-white hover:bg-gray-700' 
                 : 'border border-[#E8E6CF] hover:bg-[#F5F4E7]'
@@ -230,18 +230,18 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
             <Archive className="w-4 h-4" />
             <span>{showArchived ? 'Show Active Orders' : 'Show Archived Orders'}</span>
           </button>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
             <Filter className="w-4 h-4" />
             <span>Filters</span>
           </button>
           <button 
             onClick={() => setShowImportModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]"
+            className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
           >
             <Upload className="w-4 h-4" />
             <span>Import tracking</span>
           </button>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
             <Download className="w-4 h-4" />
             <span>Export</span>
           </button>
@@ -249,7 +249,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-4">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
@@ -260,7 +260,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                 placeholder="Search orders..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
+                className="pl-10 pr-4 py-2 w-full border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
               />
             </div>
           </div>
@@ -269,7 +269,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
             >
               <option value="all">All Statuses</option>
               <option value="processing">Processing</option>
@@ -284,7 +284,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
             <select
               value={paymentFilter}
               onChange={(e) => setPaymentFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
             >
               <option value="all">All Payments</option>
               <option value="paid">Paid</option>
@@ -297,7 +297,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
             <select
               value={timeFilter}
               onChange={(e) => setTimeFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
             >
               <option value="all">All Time</option>
               <option value="today">Today</option>
@@ -311,7 +311,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
             {selectedOrders.length > 0 && (
               <button
                 onClick={() => setShowBulkActionsModal(true)}
-                className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
               >
                 Bulk Actions ({selectedOrders.length})
               </button>
@@ -321,7 +321,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-[#F5F4E7]">
@@ -474,7 +474,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                         </button>
                         <button
                           onClick={() => handleStatusModalOpen(order)}
-                          className="p-2 text-blue-600 hover:text-blue-800 bg-[#E2EAFF] rounded-lg"
+                          className="p-2 text-blue-600 hover:text-blue-800 bg-[#E2EAFF] rounded-xl"
                           title="Change Status"
                         >
                           <Edit className="w-4 h-4" />
@@ -519,7 +519,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
       {/* Import Tracking Modal */}
       {showImportModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full mx-4">
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">Import Tracking Data</h3>
@@ -538,7 +538,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Upload CSV File
                   </label>
-                  <div className="border-2 border-dashed border-[#E8E6CF] rounded-lg p-6 text-center hover:border-[#00473A] transition-colors">
+                  <div className="border-2 border-dashed border-[#E8E6CF] rounded-xl p-6 text-center hover:border-[#00473A] transition-colors">
                     <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
                     <p className="text-sm text-gray-600 mb-2">
                       Drag and drop your CSV file here, or click to browse
@@ -549,7 +549,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                   </div>
                 </div>
                 
-                <div className="bg-[#F5F4E7] rounded-lg p-4">
+                <div className="bg-[#F5F4E7] rounded-xl p-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-2">CSV Format Requirements:</h4>
                   <ul className="text-xs text-gray-600 space-y-1">
                     <li>• Order ID (required)</li>
@@ -563,7 +563,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
               <div className="flex items-center justify-end space-x-3 mt-6">
                 <button
                   onClick={() => setShowImportModal(false)}
-                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-xl hover:bg-gray-50"
                 >
                   Cancel
                 </button>
@@ -573,7 +573,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                     console.log('Import tracking data')
                     setShowImportModal(false)
                   }}
-                  className="px-4 py-2 text-sm bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90"
+                  className="px-4 py-2 text-sm bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
                 >
                   Import Data
                 </button>

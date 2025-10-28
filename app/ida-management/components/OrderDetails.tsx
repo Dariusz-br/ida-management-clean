@@ -232,7 +232,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
         <div className="flex items-center space-x-4">
           <button
             onClick={onBack}
-            className="p-2 rounded-lg hover:bg-[#F5F4E7]"
+            className="p-2 rounded-xl hover:bg-[#F5F4E7]"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -246,18 +246,18 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             currentStatus={currentStatus}
             onStatusChange={handleStatusChange}
           />
-          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
             <Download className="w-4 h-4 mr-2" />
             <span>Download Invoice</span>
           </button>
           <button 
             onClick={() => setShowExportModal(true)}
-            className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer"
+            className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer"
           >
             <FileText className="w-4 h-4 mr-2" />
             <span>Export Order</span>
           </button>
-          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
             <Copy className="w-4 h-4 mr-2" />
             <span>Copy Link</span>
           </button>
@@ -273,7 +273,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
         {/* Left Column - Customer Info */}
         <div className="lg:col-span-2 space-y-6">
           {/* Customer Information */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             {/* Header with Date */}
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900">Customer Information</h3>
@@ -281,7 +281,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                 <span className="text-sm text-gray-500">{formatDate(order.date)}</span>
                 <button
                   onClick={() => setIsEditingCustomer(!isEditingCustomer)}
-                  className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-lg"
+                  className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-xl"
                 >
                   <Edit className="w-4 h-4" />
                 </button>
@@ -439,14 +439,14 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={handleCancelCustomer}
-                      className="flex items-center space-x-1 px-3 py-1 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="flex items-center space-x-1 px-3 py-1 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors"
                     >
                       <X className="w-4 h-4" />
                       <span>Cancel</span>
                     </button>
                     <button
                       onClick={handleSaveCustomer}
-                      className="flex items-center space-x-1 px-3 py-1 text-sm bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90 transition-colors"
+                      className="flex items-center space-x-1 px-3 py-1 text-sm bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90 transition-colors"
                     >
                       <Save className="w-4 h-4" />
                       <span>Save</span>
@@ -463,11 +463,11 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </div>
 
           {/* Generated Artifacts */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Generated Artifacts</h3>
               <div className="flex items-center space-x-2">
-                <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+                <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
                   <Download className="w-4 h-4 mr-2" />
                   <span>Download All</span>
                 </button>
@@ -477,10 +477,10 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* IDP Booklet */}
               <div className="relative group">
-                <div className="rounded-lg p-4 border border-[#E8E6CF]">
+                <div className="rounded-xl p-4 border border-[#E8E6CF]">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-sm font-medium text-gray-900">IDP Booklet</h4>
-                    <button className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+                    <button className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
                       <Download className="w-3 h-3 mr-1" />
                       <span>Download</span>
                     </button>
@@ -520,10 +520,10 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
 
               {/* IDP Card */}
               <div className="relative group">
-                <div className="rounded-lg p-4 border border-[#E8E6CF]">
+                <div className="rounded-xl p-4 border border-[#E8E6CF]">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-sm font-medium text-gray-900">IDP Card</h4>
-                    <button className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+                    <button className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
                       <Download className="w-3 h-3 mr-1" />
                       <span>Download</span>
                     </button>
@@ -564,13 +564,13 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </div>
 
           {/* Order Items */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Order Item</h3>
             <div className="space-y-4">
               {/* Main Product */}
-              <div className="flex items-center p-4 bg-[#F5F4E7] rounded-lg">
-                <div className="w-16 h-16 bg-white rounded-lg border border-[#E8E6CF] flex items-center justify-center mr-4 flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex items-center justify-center">
+              <div className="flex items-center p-4 bg-[#F5F4E7] rounded-xl">
+                <div className="w-16 h-16 bg-white rounded-xl border border-[#E8E6CF] flex items-center justify-center mr-4 flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-6 h-6 bg-blue-600 rounded-sm mx-auto mb-1 flex items-center justify-center">
                         <span className="text-white text-xs font-bold">IDP</span>
@@ -589,9 +589,9 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
               </div>
 
               {/* Express Processing */}
-              <div className="flex items-center p-4 bg-[#F5F4E7] rounded-lg">
-                <div className="w-16 h-16 bg-white rounded-lg border border-[#E8E6CF] flex items-center justify-center mr-4 flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-br from-green-50 to-green-100 rounded-lg flex items-center justify-center">
+              <div className="flex items-center p-4 bg-[#F5F4E7] rounded-xl">
+                <div className="w-16 h-16 bg-white rounded-xl border border-[#E8E6CF] flex items-center justify-center mr-4 flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-50 to-green-100 rounded-xl flex items-center justify-center">
                     <div className="text-center">
                       <div className="w-6 h-6 bg-[#00473A] rounded-sm mx-auto mb-1 flex items-center justify-center">
                         <span className="text-white text-xs">⚡</span>
@@ -634,7 +634,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </div>
 
           {/* Payment Information */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Payment Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -664,12 +664,12 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
 
 
           {/* Fulfillment Details */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Fullfilment Details</h3>
               <button
                 onClick={() => setEditingFulfillment(!editingFulfillment)}
-                className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors"
+                className="p-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors"
                 title="Edit Fulfillment Details"
               >
                 <Edit className="w-4 h-4" />
@@ -755,13 +755,13 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                       operation: currentOperation
                     })
                   }}
-                  className="px-4 py-2 text-sm text-gray-600 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]"
+                  className="px-4 py-2 text-sm text-gray-600 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSaveFulfillment}
-                  className="px-4 py-2 text-sm bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90"
+                  className="px-4 py-2 text-sm bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
                 >
                   Save Changes
                 </button>
@@ -770,7 +770,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </div>
 
           {/* Conversion Attributions */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Conversion Attributions</h3>
             
             <div className="space-y-4">
@@ -836,13 +836,13 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
         {/* Right Column - Documents and Activity */}
         <div className="space-y-6">
           {/* Internal Notes */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Internal Notes</h3>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Add internal notes..."
-              className="w-full h-32 px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+              className="w-full h-32 px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
             />
             <div className="flex items-center justify-between mt-3">
               <span className="text-xs text-gray-500">Auto-saves every 5 seconds</span>
@@ -867,7 +867,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </div>
 
           {/* Uploaded Documents */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Uploads</h3>
               <InternalStatusDropdown
@@ -888,12 +888,12 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Selfie Photo */}
               <div className="text-center">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-xl flex items-center justify-center mb-2">
                   {order.documents.selfie?.url ? (
                     <img 
                       src={order.documents.selfie.url} 
                       alt="Selfie" 
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-xl"
                     />
                   ) : (
                     <Upload className="w-8 h-8 text-gray-400" />
@@ -919,12 +919,12 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
 
               {/* Front Document */}
               <div className="text-center">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-xl flex items-center justify-center mb-2">
                   {order.documents.front?.url ? (
                     <img 
                       src={order.documents.front.url} 
                       alt="Front Document" 
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-xl"
                     />
                   ) : (
                     <Upload className="w-8 h-8 text-gray-400" />
@@ -950,12 +950,12 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
 
               {/* Back Document */}
               <div className="text-center">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-xl flex items-center justify-center mb-2">
                   {order.documents.back?.url ? (
                     <img 
                       src={order.documents.back.url} 
                       alt="Back Document" 
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-xl"
                     />
                   ) : (
                     <Upload className="w-8 h-8 text-gray-400" />
@@ -983,7 +983,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             {/* E-signature - Fourth Card */}
             <div className="mt-6">
               <div className="text-center max-w-sm mx-auto">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-xl flex items-center justify-center mb-2">
                   <div className="text-center">
                     <div className="w-8 h-8 bg-gray-400 rounded mx-auto mb-2"></div>
                     <span className="text-gray-500 text-sm">E-signature</span>
@@ -995,11 +995,11 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             
             {/* Action Buttons */}
             <div className="mt-4 flex space-x-2">
-              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
                 <Eye className="w-4 h-4" />
                 <span>Preview All</span>
               </button>
-              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
                 <Download className="w-4 h-4" />
                 <span>Download All</span>
               </button>
@@ -1007,13 +1007,13 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </div>
 
           {/* Application Details */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             {/* Header */}
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Application details</h3>
               <button
                 onClick={() => setIsEditingApplication(!isEditingApplication)}
-                className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-lg"
+                className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-xl"
               >
                 <Edit className="w-4 h-4" />
               </button>
@@ -1160,14 +1160,14 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                 <div className="flex items-center justify-end space-x-2">
                   <button
                     onClick={handleCancelApplication}
-                    className="flex items-center space-x-1 px-3 py-1 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-center space-x-1 px-3 py-1 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors"
                   >
                     <X className="w-4 h-4" />
                     <span>Cancel</span>
                   </button>
                   <button
                     onClick={handleSaveApplication}
-                    className="flex items-center space-x-1 px-3 py-1 text-sm bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90 transition-colors"
+                    className="flex items-center space-x-1 px-3 py-1 text-sm bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90 transition-colors"
                   >
                     <Save className="w-4 h-4" />
                     <span>Save</span>
@@ -1187,7 +1187,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
 
 
           {/* Affiliate Information */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
               <Users className="w-5 h-5 mr-2" />
               Affiliate Information
@@ -1276,7 +1276,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </div>
 
           {/* Activity Panel */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Activity Panel</h3>
             <div className="space-y-4">
               {order.activity?.length > 0 ? (
@@ -1304,7 +1304,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
       {/* Export Order Modal */}
       {showExportModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4">
+          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full mx-4">
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-gray-900">Export Order Data</h3>
@@ -1318,7 +1318,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
               
               <div className="space-y-6">
                 {/* Order Information */}
-                <div className="bg-[#F5F4E7] rounded-lg p-4">
+                <div className="bg-[#F5F4E7] rounded-xl p-4">
                   <h4 className="text-sm font-medium text-gray-900 mb-2">Order Information</h4>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
@@ -1428,14 +1428,14 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                 <div>
                   <h4 className="text-sm font-medium text-gray-900 mb-3">Export Format</h4>
                   <div className="grid grid-cols-2 gap-3">
-                    <label className="flex items-center space-x-2 p-3 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7] cursor-pointer">
+                    <label className="flex items-center space-x-2 p-3 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7] cursor-pointer">
                       <input type="radio" name="format" value="zip" className="w-4 h-4 text-[#00473A] border-gray-300 focus:ring-[#00473A]" />
                       <div>
                         <div className="text-sm font-medium text-gray-700">ZIP Archive</div>
                         <div className="text-xs text-gray-500">All files in a compressed folder</div>
                       </div>
                     </label>
-                    <label className="flex items-center space-x-2 p-3 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7] cursor-pointer">
+                    <label className="flex items-center space-x-2 p-3 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7] cursor-pointer">
                       <input type="radio" name="format" value="pdf" className="w-4 h-4 text-[#00473A] border-gray-300 focus:ring-[#00473A]" />
                       <div>
                         <div className="text-sm font-medium text-gray-700">PDF Report</div>
@@ -1449,7 +1449,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
               <div className="flex items-center justify-end space-x-3 mt-6">
                 <button
                   onClick={() => setShowExportModal(false)}
-                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50"
+                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-xl hover:bg-gray-50"
                 >
                   Cancel
                 </button>
@@ -1459,7 +1459,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                     console.log('Exporting order with selected assets:', selectedAssets)
                     setShowExportModal(false)
                   }}
-                  className="px-4 py-2 text-sm bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90"
+                  className="px-4 py-2 text-sm bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
                 >
                   Export Order
                 </button>

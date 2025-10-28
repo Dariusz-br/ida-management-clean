@@ -161,7 +161,7 @@ export function Sidebar({ activeSection, onSectionChange, collapsed, userRole, o
                       e.stopPropagation()
                       toggleSubmenu(item.id)
                     }}
-                    className="ml-2 p-2 text-[#666666] dark:text-gray-400 hover:text-[#333333] dark:hover:text-white hover:bg-[#F5F4E7] dark:hover:bg-gray-700 rounded-lg transition-colors select-none"
+                    className="ml-2 p-2 text-[#666666] dark:text-gray-400 hover:text-[#333333] dark:hover:text-white hover:bg-[#F5F4E7] dark:hover:bg-gray-700 rounded-xl transition-colors select-none"
                   >
                     {isExpanded ? (
                       <ChevronDown className="w-4 h-4" />

@@ -60,7 +60,7 @@ export function OperationDropdown({ currentOperation, onOperationChange, disable
           !disabled && setIsOpen(!isOpen)
         }}
         disabled={disabled}
-        className={`inline-flex items-center px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
+        className={`inline-flex items-center px-3 py-2 text-sm font-semibold rounded-xl transition-colors ${
           disabled 
             ? 'opacity-50 cursor-not-allowed' 
             : 'hover:opacity-80 cursor-pointer'
@@ -74,7 +74,7 @@ export function OperationDropdown({ currentOperation, onOperationChange, disable
       </button>
 
       {isOpen && !disabled && (
-        <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+        <div className="absolute top-full left-0 mt-1 w-64 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
           <div className="py-1">
             {availableOperations.map((operation) => {
               const config = operationConfig[operation as keyof typeof operationConfig]

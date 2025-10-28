@@ -82,7 +82,7 @@ export function StatusDropdown({ currentStatus, onStatusChange, disabled = false
           !disabled && setIsOpen(!isOpen)
         }}
         disabled={disabled}
-        className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
+        className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-colors ${
           disabled 
             ? 'opacity-50 cursor-not-allowed' 
             : 'hover:opacity-80 cursor-pointer'
@@ -96,7 +96,7 @@ export function StatusDropdown({ currentStatus, onStatusChange, disabled = false
       </button>
 
       {isOpen && !disabled && (
-        <div className="absolute top-full right-0 mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+        <div className="absolute top-full right-0 mt-1 w-56 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
           <div className="py-1">
             {allAvailableStatuses.map((status) => {
               const config = statusConfig[status as keyof typeof statusConfig]

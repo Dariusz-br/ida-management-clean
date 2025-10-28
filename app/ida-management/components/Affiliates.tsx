@@ -154,13 +154,13 @@ export function Affiliates() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Affiliates</h1>
         <div className="flex items-center space-x-3">
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
             <Download className="w-4 h-4" />
             <span>Export</span>
           </button>
         <button 
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90"
+          className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
         >
             <Plus className="w-4 h-4" />
             <span>Add Affiliate</span>
@@ -170,7 +170,7 @@ export function Affiliates() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Affiliates</p>
@@ -179,7 +179,7 @@ export function Affiliates() {
             <Users className="w-8 h-8 text-blue-600" />
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Clicks</p>
@@ -188,7 +188,7 @@ export function Affiliates() {
             <TrendingUp className="w-8 h-8 text-green-600" />
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Revenue</p>
@@ -197,7 +197,7 @@ export function Affiliates() {
             <DollarSign className="w-8 h-8 text-purple-600" />
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">Total Earnings</p>
@@ -209,7 +209,7 @@ export function Affiliates() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-4">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
         <div className="flex items-center space-x-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -218,13 +218,13 @@ export function Affiliates() {
               placeholder="Search affiliates..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
+              className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
             />
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
           >
             <option value="all">All Status</option>
             <option value="active">Active</option>
@@ -235,7 +235,7 @@ export function Affiliates() {
           <select
             value={commissionFilter}
             onChange={(e) => setCommissionFilter(e.target.value)}
-            className="px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
           >
             <option value="all">All Commission</option>
             <option value="low">Low (&lt;10%)</option>
@@ -246,7 +246,7 @@ export function Affiliates() {
       </div>
 
       {/* Affiliates Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-[#F5F4E7]">
@@ -325,7 +325,7 @@ export function Affiliates() {
                       </button>
                       <button 
                         onClick={() => handleEditClick(affiliate)}
-                        className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-lg"
+                        className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-xl"
                         title="Edit Affiliate"
                       >
                         <Edit className="w-4 h-4" />

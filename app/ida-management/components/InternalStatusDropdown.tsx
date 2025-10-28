@@ -55,7 +55,7 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${currentConfig.color} hover:opacity-80 cursor-pointer`}
+        className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-colors ${currentConfig.color} hover:opacity-80 cursor-pointer`}
       >
         <CurrentIcon className="w-4 h-4 mr-2" />
         <span>{currentConfig.label}</span>
@@ -63,7 +63,7 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+        <div className="absolute top-full right-0 mt-1 w-56 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
           <div className="py-1">
             {Object.entries(statusConfig).map(([status, config]) => {
               const Icon = config.icon

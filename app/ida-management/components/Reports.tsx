@@ -40,13 +40,13 @@ export function Reports() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Reports & Analytics</h1>
         <div className="flex items-center space-x-3">
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
             <Filter className="w-4 h-4" />
             <span>Filters</span>
           </button>
           <button 
             onClick={() => setShowExportModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-lg hover:bg-[#00473A]/90"
+            className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
           >
             <Download className="w-4 h-4" />
             <span>Export Report</span>
@@ -55,7 +55,7 @@ export function Reports() {
       </div>
 
       {/* Report Type Selection */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-4">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Report Type</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {reportTypes.map((report) => {
@@ -64,7 +64,7 @@ export function Reports() {
               <button
                 key={report.id}
                 onClick={() => setSelectedReport(report.id)}
-                className={`p-4 rounded-lg border-2 transition-colors ${
+                className={`p-4 rounded-xl border-2 transition-colors ${
                   selectedReport === report.id
                     ? 'border-green-500 bg-green-50'
                     : 'border-[#E8E6CF] hover:border-[#E8E6CF]'
@@ -87,7 +87,7 @@ export function Reports() {
       </div>
 
       {/* Date Range Selection */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-4">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-gray-900">Date Range</h3>
           <div className="flex items-center space-x-2">
@@ -95,7 +95,7 @@ export function Reports() {
             <select
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
-              className="px-3 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
             >
               <option value="today">Today</option>
               <option value="yesterday">Yesterday</option>
@@ -113,7 +113,7 @@ export function Reports() {
         <div className="space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Total Revenue</p>
@@ -123,7 +123,7 @@ export function Reports() {
                 <DollarSign className="w-8 h-8 text-green-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Total Orders</p>
@@ -133,7 +133,7 @@ export function Reports() {
                 <ShoppingCart className="w-8 h-8 text-blue-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600">Average Order Value</p>
@@ -146,7 +146,7 @@ export function Reports() {
           </div>
 
           {/* Revenue Chart */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Revenue Trend</h3>
             <div className="h-64 flex items-end space-x-2">
               {mockRevenueData.map((data, index) => (
@@ -163,7 +163,7 @@ export function Reports() {
           </div>
 
           {/* Revenue Table */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF]">
+          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF]">
             <div className="px-6 py-4 border-b border-[#E8E6CF]">
               <h3 className="text-lg font-semibold text-gray-900">Monthly Breakdown</h3>
             </div>

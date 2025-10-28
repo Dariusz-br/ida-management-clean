@@ -435,7 +435,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       {/* Main Content Grid - 50/50 Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Selling Countries - 50% width */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-[#E0E0E0] dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700">
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-[#333333]">Top Selling Countries</h3>
@@ -523,7 +523,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
         </div>
 
         {/* Top Selling Products - 50% width */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-[#E0E0E0] dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700">
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-[#333333]">Top Selling Products</h3>
@@ -607,7 +607,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
         </div>
 
         {/* Live Visitor Activity Funnel - New Design */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-[#E0E0E0] dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700">
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-[#333333]">Live Visitor Activity</h3>
@@ -723,7 +723,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
         </div>
 
         {/* Global Sales Overview */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-[#E0E0E0] dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700">
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-[#333333]">Global Sales Overview</h3>
@@ -830,7 +830,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       </div>
 
       {/* Recent Orders Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] overflow-hidden">
         <div className="p-6 border-b border-[#E8E6CF]">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-[#333333]">Recent Orders</h3>
@@ -1062,13 +1062,13 @@ function KPICard({ title, value, change, changeType, icon: Icon, description }: 
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-[#E0E0E0] dark:border-gray-700 p-4 hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700 p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1 min-w-0">
           <p className="text-xs font-medium text-[#666666] dark:text-gray-400 mb-1 truncate">{title}</p>
           <p className="text-xl font-bold text-[#333333] dark:text-white mb-1">{value}</p>
         </div>
-        <div className="p-2 bg-[#F5F4E7] dark:bg-gray-700 rounded-lg ml-3 flex-shrink-0">
+        <div className="p-2 bg-[#F5F4E7] dark:bg-gray-700 rounded-xl ml-3 flex-shrink-0">
           <Icon className="w-4 h-4 text-[#666666] dark:text-gray-300" />
         </div>
       </div>
