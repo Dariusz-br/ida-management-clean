@@ -16,7 +16,7 @@ export default function IDALayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-[#FAF9F6] dark:bg-gray-900">
           {children}
         </div>
       </body>

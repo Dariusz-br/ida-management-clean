@@ -65,7 +65,7 @@ export function OrderDetailsActionsDropdown({ order, onAction }: OrderDetailsAct
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-gray-100 text-gray-800 hover:opacity-80 cursor-pointer"
+        className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer"
       >
         <Settings className="w-4 h-4 mr-2" />
         Actions

@@ -55,15 +55,15 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium transition-colors ${currentConfig.color} hover:opacity-80`}
+        className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${currentConfig.color} hover:opacity-80 cursor-pointer`}
       >
-        <CurrentIcon className="w-3 h-3" />
+        <CurrentIcon className="w-4 h-4 mr-2" />
         <span>{currentConfig.label}</span>
-        <ChevronDown className="w-3 h-3" />
+        <ChevronDown className="w-4 h-4 ml-2" />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-[#E8E6CF] rounded-lg shadow-lg z-50">
+        <div className="absolute top-full right-0 mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
           <div className="py-1">
             {Object.entries(statusConfig).map(([status, config]) => {
               const Icon = config.icon
@@ -71,12 +71,14 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
                 <button
                   key={status}
                   onClick={() => handleStatusChange(status as 'pending_review' | 'on_hold' | 'reviewed')}
-                  className={`w-full flex items-center space-x-3 px-4 py-2 text-sm text-left hover:bg-[#F5F4E7] transition-colors ${
-                    status === currentStatus ? 'bg-[#F5F4E7]' : ''
+                  className={`w-full flex items-center px-3 py-2 text-sm whitespace-nowrap ${
+                    status === currentStatus 
+                      ? 'bg-[#F5F4E7] text-gray-500 cursor-not-allowed' 
+                      : 'text-gray-700 hover:bg-[#F5F4E7]'
                   }`}
                 >
-                  <Icon className="w-4 h-4 text-gray-600" />
-                  <span className="text-gray-900">{config.label}</span>
+                  <Icon className="w-4 h-4 mr-3" />
+                  <span>{config.label}</span>
                 </button>
               )
             })}

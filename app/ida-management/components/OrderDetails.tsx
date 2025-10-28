@@ -246,10 +246,6 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             currentStatus={currentStatus}
             onStatusChange={handleStatusChange}
           />
-          <InternalStatusDropdown
-            currentStatus={internalStatus}
-            onStatusChange={(newStatus) => setInternalStatus(newStatus)}
-          />
           <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
             <Download className="w-4 h-4 mr-2" />
             <span>Download Invoice</span>
@@ -471,10 +467,8 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Generated Artifacts</h3>
               <div className="flex items-center space-x-2">
-                <button className="flex items-center space-x-2 px-3 py-2 text-sm bg-green-800 text-white rounded-lg hover:bg-green-900 transition-colors">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
+                <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+                  <Download className="w-4 h-4 mr-2" />
                   <span>Download All</span>
                 </button>
               </div>
@@ -486,10 +480,8 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                 <div className="rounded-lg p-4 border border-[#E8E6CF]">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-sm font-medium text-gray-900">IDP Booklet</h4>
-                    <button className="flex items-center space-x-1 px-2 py-1 text-xs bg-green-800 text-white rounded hover:bg-green-900 transition-colors">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
+                    <button className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+                      <Download className="w-3 h-3 mr-1" />
                       <span>Download</span>
                     </button>
                   </div>
@@ -531,10 +523,8 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                 <div className="rounded-lg p-4 border border-[#E8E6CF]">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-sm font-medium text-gray-900">IDP Card</h4>
-                    <button className="flex items-center space-x-1 px-2 py-1 text-xs bg-green-800 text-white rounded hover:bg-green-900 transition-colors">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
+                    <button className="inline-flex items-center px-3 py-1 text-xs font-semibold rounded-lg bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+                      <Download className="w-3 h-3 mr-1" />
                       <span>Download</span>
                     </button>
                   </div>
@@ -876,6 +866,146 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             </div>
           </div>
 
+          {/* Uploaded Documents */}
+          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Uploads</h3>
+              <InternalStatusDropdown
+                currentStatus={internalStatus}
+                onStatusChange={(newStatus) => {
+                  setInternalStatus(newStatus)
+                  if (newStatus === 'reviewed') {
+                    setDocumentStatuses({
+                      selfie: 'approved',
+                      front: 'approved',
+                      back: 'approved'
+                    })
+                    console.log('Internal status set to reviewed - all documents automatically approved')
+                  }
+                }}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Selfie Photo */}
+              <div className="text-center">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                  {order.documents.selfie?.url ? (
+                    <img 
+                      src={order.documents.selfie.url} 
+                      alt="Selfie" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <Upload className="w-8 h-8 text-gray-400" />
+                  )}
+                </div>
+                <p className="text-sm font-medium text-gray-900">Selfie Photo</p>
+                <div className="mt-2">
+                  <DocumentStatusDropdown
+                    currentStatus={documentStatuses.selfie}
+                    onStatusChange={(newStatus) => {
+                      setDocumentStatuses(prev => ({ ...prev, selfie: newStatus }))
+                      console.log('Selfie status changed to:', newStatus)
+                      if (newStatus === 'approved') {
+                        console.log('Order status changed to shipment_in_progress')
+                      }
+                    }}
+                    onRejectionNote={(note) => {
+                      console.log('Selfie rejection note:', note)
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Front Document */}
+              <div className="text-center">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                  {order.documents.front?.url ? (
+                    <img 
+                      src={order.documents.front.url} 
+                      alt="Front Document" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <Upload className="w-8 h-8 text-gray-400" />
+                  )}
+                </div>
+                <p className="text-sm font-medium text-gray-900">Front Document</p>
+                <div className="mt-2">
+                  <DocumentStatusDropdown
+                    currentStatus={documentStatuses.front}
+                    onStatusChange={(newStatus) => {
+                      setDocumentStatuses(prev => ({ ...prev, front: newStatus }))
+                      console.log('Front document status changed to:', newStatus)
+                      if (newStatus === 'approved') {
+                        console.log('Order status changed to shipment_in_progress')
+                      }
+                    }}
+                    onRejectionNote={(note) => {
+                      console.log('Front document rejection note:', note)
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Back Document */}
+              <div className="text-center">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                  {order.documents.back?.url ? (
+                    <img 
+                      src={order.documents.back.url} 
+                      alt="Back Document" 
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  ) : (
+                    <Upload className="w-8 h-8 text-gray-400" />
+                  )}
+                </div>
+                <p className="text-sm font-medium text-gray-900">Back Document</p>
+                <div className="mt-2">
+                  <DocumentStatusDropdown
+                    currentStatus={documentStatuses.back}
+                    onStatusChange={(newStatus) => {
+                      setDocumentStatuses(prev => ({ ...prev, back: newStatus }))
+                      console.log('Back document status changed to:', newStatus)
+                      if (newStatus === 'approved') {
+                        console.log('Order status changed to shipment_in_progress')
+                      }
+                    }}
+                    onRejectionNote={(note) => {
+                      console.log('Back document rejection note:', note)
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* E-signature - Fourth Card */}
+            <div className="mt-6">
+              <div className="text-center max-w-sm mx-auto">
+                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
+                  <div className="text-center">
+                    <div className="w-8 h-8 bg-gray-400 rounded mx-auto mb-2"></div>
+                    <span className="text-gray-500 text-sm">E-signature</span>
+                  </div>
+                </div>
+                <p className="text-sm font-medium text-gray-900">E-signature</p>
+              </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="mt-4 flex space-x-2">
+              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+                <Eye className="w-4 h-4" />
+                <span>Preview All</span>
+              </button>
+              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
+                <Download className="w-4 h-4" />
+                <span>Download All</span>
+              </button>
+            </div>
+          </div>
+
           {/* Application Details */}
           <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
             {/* Header */}
@@ -1055,146 +1185,6 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             </div>
           </div>
 
-          {/* Uploaded Documents */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-gray-900">Uploaded Documents</h3>
-              <button
-                onClick={() => {
-                  setDocumentStatuses({
-                    selfie: 'approved',
-                    front: 'approved',
-                    back: 'approved'
-                  })
-                  setInternalStatus('reviewed')
-                  console.log('All documents approved and internal status set to reviewed')
-                }}
-                className="flex items-center space-x-2 px-3 py-2 text-sm bg-[#007F0C] text-white rounded-lg hover:bg-[#005a08] transition-colors"
-              >
-                <CheckCircle className="w-4 h-4" />
-                <span>Approve All</span>
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Selfie Photo */}
-              <div className="text-center">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
-                  {order.documents.selfie?.url ? (
-                    <img 
-                      src={order.documents.selfie.url} 
-                      alt="Selfie" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  ) : (
-                    <Upload className="w-8 h-8 text-gray-400" />
-                  )}
-                </div>
-                <p className="text-sm font-medium text-gray-900">Selfie Photo</p>
-                <div className="mt-2">
-                  <DocumentStatusDropdown
-                    currentStatus={documentStatuses.selfie}
-                    onStatusChange={(newStatus) => {
-                      setDocumentStatuses(prev => ({ ...prev, selfie: newStatus }))
-                      console.log('Selfie status changed to:', newStatus)
-                      if (newStatus === 'approved') {
-                        console.log('Order status changed to shipment_in_progress')
-                      }
-                    }}
-                    onRejectionNote={(note) => {
-                      console.log('Selfie rejection note:', note)
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Front Document */}
-              <div className="text-center">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
-                  {order.documents.front?.url ? (
-                    <img 
-                      src={order.documents.front.url} 
-                      alt="Front Document" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  ) : (
-                    <Upload className="w-8 h-8 text-gray-400" />
-                  )}
-                </div>
-                <p className="text-sm font-medium text-gray-900">Front Document</p>
-                <div className="mt-2">
-                  <DocumentStatusDropdown
-                    currentStatus={documentStatuses.front}
-                    onStatusChange={(newStatus) => {
-                      setDocumentStatuses(prev => ({ ...prev, front: newStatus }))
-                      console.log('Front document status changed to:', newStatus)
-                      if (newStatus === 'approved') {
-                        console.log('Order status changed to shipment_in_progress')
-                      }
-                    }}
-                    onRejectionNote={(note) => {
-                      console.log('Front document rejection note:', note)
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Back Document */}
-              <div className="text-center">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
-                  {order.documents.back?.url ? (
-                    <img 
-                      src={order.documents.back.url} 
-                      alt="Back Document" 
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  ) : (
-                    <Upload className="w-8 h-8 text-gray-400" />
-                  )}
-                </div>
-                <p className="text-sm font-medium text-gray-900">Back Document</p>
-                <div className="mt-2">
-                  <DocumentStatusDropdown
-                    currentStatus={documentStatuses.back}
-                    onStatusChange={(newStatus) => {
-                      setDocumentStatuses(prev => ({ ...prev, back: newStatus }))
-                      console.log('Back document status changed to:', newStatus)
-                      if (newStatus === 'approved') {
-                        console.log('Order status changed to shipment_in_progress')
-                      }
-                    }}
-                    onRejectionNote={(note) => {
-                      console.log('Back document rejection note:', note)
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* E-signature - Fourth Card */}
-            <div className="mt-6">
-              <div className="text-center max-w-sm mx-auto">
-                <div className="w-full h-24 bg-[#F5F4E7] rounded-lg flex items-center justify-center mb-2">
-                  <div className="text-center">
-                    <div className="w-8 h-8 bg-gray-400 rounded mx-auto mb-2"></div>
-                    <span className="text-gray-500 text-sm">E-signature</span>
-                  </div>
-                </div>
-                <p className="text-sm font-medium text-gray-900">E-signature</p>
-              </div>
-            </div>
-            
-            {/* Action Buttons */}
-            <div className="mt-4 flex space-x-2">
-              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
-                <Eye className="w-4 h-4" />
-                <span>Preview All</span>
-              </button>
-              <button className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7]">
-                <Download className="w-4 h-4" />
-                <span>Download All</span>
-              </button>
-            </div>
-          </div>
 
           {/* Affiliate Information */}
           <div className="bg-white rounded-lg shadow-sm border border-[#E8E6CF] p-6">
