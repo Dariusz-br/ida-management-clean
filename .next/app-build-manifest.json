@@ -1,0 +1,35 @@
+{
+  "pages": {
+    "/_not-found/page": [
+      "static/chunks/webpack-e44d932d8b425c13.js",
+      "static/chunks/4bd1b696-c90f7ec8ff6ad1a8.js",
+      "static/chunks/215-0cae1069f65a7fff.js",
+      "static/chunks/main-app-87663d263c3662aa.js",
+      "static/chunks/app/_not-found/page-2035c2145f823673.js"
+    ],
+    "/layout": [
+      "static/chunks/webpack-e44d932d8b425c13.js",
+      "static/chunks/4bd1b696-c90f7ec8ff6ad1a8.js",
+      "static/chunks/215-0cae1069f65a7fff.js",
+      "static/chunks/main-app-87663d263c3662aa.js",
+      "static/css/4c4a8f9089a2b8c9.css",
+      "static/chunks/app/layout-c1382a0f53952020.js"
+    ],
+    "/ida-management/layout": [
+      "static/chunks/webpack-e44d932d8b425c13.js",
+      "static/chunks/4bd1b696-c90f7ec8ff6ad1a8.js",
+      "static/chunks/215-0cae1069f65a7fff.js",
+      "static/chunks/main-app-87663d263c3662aa.js",
+      "static/css/4c4a8f9089a2b8c9.css",
+      "static/chunks/app/ida-management/layout-bc0490723e60abff.js"
+    ],
+    "/ida-management/page": [
+      "static/chunks/webpack-e44d932d8b425c13.js",
+      "static/chunks/4bd1b696-c90f7ec8ff6ad1a8.js",
+      "static/chunks/215-0cae1069f65a7fff.js",
+      "static/chunks/main-app-87663d263c3662aa.js",
+      "static/chunks/478-fa76a31c3a07136c.js",
+      "static/chunks/app/ida-management/page-202afbc9896020be.js"
+    ]
+  }
+}
