@@ -22,7 +22,8 @@ import {
   Mail,
   FileText,
   Package,
-  Image
+  Image,
+  ExternalLink
 } from 'lucide-react'
 import { Order } from '../page'
 import { getOperationByCountry } from '../utils/operations'
@@ -466,7 +467,35 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Generated Artifacts</h3>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
+                {/* Order URL Section */}
+                <div className="flex items-center space-x-2 bg-[#F5F4E7] rounded-xl px-3 py-2 border border-[#E8E6CF]">
+                  <span className="text-xs text-gray-600 font-medium">Order URL:</span>
+                  <input
+                    type="text"
+                    value={`https://ida-management.com/orders/${order.orderId}`}
+                    readOnly
+                    className="text-xs text-gray-800 bg-transparent border-none outline-none min-w-0 flex-1"
+                  />
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(`https://ida-management.com/orders/${order.orderId}`)
+                      // You could add a toast notification here
+                    }}
+                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                    title="Copy to clipboard"
+                  >
+                    <Copy className="w-3 h-3 text-gray-600" />
+                  </button>
+                  <button
+                    onClick={() => window.open(`https://ida-management.com/orders/${order.orderId}`, '_blank')}
+                    className="p-1 hover:bg-gray-200 rounded transition-colors"
+                    title="Open in new tab"
+                  >
+                    <ExternalLink className="w-3 h-3 text-gray-600" />
+                  </button>
+                </div>
+                
                 <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
                   <Download className="w-4 h-4 mr-2" />
                   <span>Download All</span>
