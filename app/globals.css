@@ -118,10 +118,6 @@ body {
   @apply text-body-sm;
 }
 
-.text-caption {
-  @apply text-caption;
-}
-
 /* Card Styling */
 .card {
   background: var(--bg-card);
