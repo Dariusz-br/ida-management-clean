@@ -120,8 +120,8 @@ export function Sidebar({ activeSection, onSectionChange, collapsed, userRole, o
           </div>
           {!collapsed && (
             <div>
-              <h1 className="text-sm font-semibold text-[#333333] dark:text-white">INTERNATIONAL</h1>
-              <h2 className="text-xs text-[#666666] dark:text-gray-400">AUTOMOBILE AUTHORITY</h2>
+              <h1 className="text-caption text-[#333333] dark:text-white">INTERNATIONAL</h1>
+              <h2 className="text-label text-[#666666] dark:text-gray-400">AUTOMOBILE AUTHORITY</h2>
             </div>
           )}
         </div>
@@ -142,7 +142,7 @@ export function Sidebar({ activeSection, onSectionChange, collapsed, userRole, o
                 {/* Main button - clickable to navigate */}
                 <button
                   onClick={() => onSectionChange(item.id)}
-                  className={`flex-1 flex items-center px-4 py-4 text-sm font-medium transition-all duration-200 select-none ${
+                  className={`flex-1 flex items-center px-4 py-4 text-button transition-all duration-200 select-none ${
                     isActive
                       ? 'bg-[#00473A] text-white shadow-lg'
                       : 'text-[#666666] dark:text-gray-300 hover:bg-[#F5F4E7] dark:hover:bg-gray-700 hover:text-[#333333] dark:hover:text-white'
@@ -178,7 +178,7 @@ export function Sidebar({ activeSection, onSectionChange, collapsed, userRole, o
                     <button
                       key={subItem.id}
                       onClick={() => onSectionChange(subItem.id)}
-                      className={`w-full flex items-center px-4 py-3 text-sm font-medium transition-all duration-200 select-none ${
+                      className={`w-full flex items-center px-4 py-3 text-button transition-all duration-200 select-none ${
                         activeSection === subItem.id
                           ? 'bg-[#F5F4E7] dark:bg-gray-700 text-[#333333] dark:text-white'
                           : 'text-[#999999] dark:text-gray-400 hover:bg-[#F5F4E7] dark:hover:bg-gray-700 hover:text-[#333333] dark:hover:text-white'

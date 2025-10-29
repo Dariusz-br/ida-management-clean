@@ -334,7 +334,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
     <div className="p-6 space-y-6 min-h-screen" style={{ backgroundColor: '#FAF9F6' }}>
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#333333]">Overview</h1>
+        <h1 className="text-display-md text-[#333333]">Overview</h1>
         <div className="flex items-center space-x-4">
           <form onSubmit={handleSearch} className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -438,8 +438,8 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700">
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-[#333333]">Top Selling Countries</h3>
-              <button className="text-sm text-[#007BFF] hover:text-[#0056b3] font-medium transition-colors">
+              <h3 className="text-display-sm text-[#333333]">Top Selling Countries</h3>
+              <button className="text-button text-[#007BFF] hover:text-[#0056b3] transition-colors">
                 View All
               </button>
             </div>
@@ -865,43 +865,43 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                     className="rounded border-[#E8E6CF]"
                   />
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Order ID
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Customer
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Payment
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Product
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Internal Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Amount
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Country
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Operation
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Delivery Type
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Documents
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-label text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -955,12 +955,12 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                         {order.productType === 'digital' ? (
                           <>
                             <Smartphone className="w-4 h-4 text-blue-600" />
-                            <span className="text-sm text-gray-900 dark:text-white">Digital IDP</span>
+                            <span className="text-body-sm text-gray-900 dark:text-white">Digital IDP</span>
                           </>
                         ) : (
                           <>
                             <Printer className="w-4 h-4 text-green-600" />
-                            <span className="text-sm text-gray-900 dark:text-white">Print + Digital</span>
+                            <span className="text-body-sm text-gray-900 dark:text-white">Print + Digital</span>
                           </>
                         )}
                       </div>
@@ -971,13 +971,13 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                         onStatusChange={(newStatus) => handleInternalStatusChange(order.id, newStatus)}
                       />
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-body-sm text-gray-500">
                       {formatDate(order.date)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-body-sm font-medium text-gray-900">
                       ${order.amount.toFixed(2)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-body-sm text-gray-500">
                       {order.shipping.country}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -1078,8 +1078,8 @@ function KPICard({ title, value, change, changeType, icon: Icon, description }: 
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700 p-4 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium text-[#666666] dark:text-gray-400 mb-1 truncate">{title}</p>
-          <p className="text-xl font-bold text-[#333333] dark:text-white mb-1">{value}</p>
+          <p className="text-label text-[#666666] dark:text-gray-400 mb-1 truncate">{title}</p>
+          <p className="text-display-lg text-[#333333] dark:text-white mb-1">{value}</p>
         </div>
         <div className="p-2 bg-[#F5F4E7] dark:bg-gray-700 rounded-xl ml-3 flex-shrink-0">
           <Icon className="w-4 h-4 text-[#666666] dark:text-gray-300" />
@@ -1087,11 +1087,11 @@ function KPICard({ title, value, change, changeType, icon: Icon, description }: 
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <span className={`text-xs font-semibold ${getChangeColor()}`}>
+          <span className={`text-caption ${getChangeColor()}`}>
             {getChangeIcon()} {change}
           </span>
         </div>
-        <span className="text-xs text-[#999999] truncate">{description}</span>
+        <span className="text-meta truncate">{description}</span>
       </div>
     </div>
   )

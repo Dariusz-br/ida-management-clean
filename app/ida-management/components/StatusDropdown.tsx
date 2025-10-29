@@ -89,7 +89,7 @@ export function StatusDropdown({ currentStatus, onStatusChange, disabled = false
           !disabled && setIsOpen(!isOpen)
         }}
         disabled={disabled}
-        className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-colors ${
+        className={`inline-flex items-center px-4 py-2 text-button rounded-xl transition-colors ${
           disabled 
             ? 'opacity-50 cursor-not-allowed' 
             : 'hover:opacity-80 cursor-pointer'
@@ -118,7 +118,7 @@ export function StatusDropdown({ currentStatus, onStatusChange, disabled = false
                     !isCurrentStatus && handleStatusChange(status)
                   }}
                   disabled={isCurrentStatus}
-                  className={`w-full flex items-center px-3 py-2 text-sm whitespace-nowrap ${
+                  className={`w-full flex items-center px-3 py-2 text-body-sm whitespace-nowrap ${
                     isCurrentStatus 
                       ? 'bg-[#F5F4E7] text-gray-500 cursor-not-allowed' 
                       : 'text-gray-700 hover:bg-[#F5F4E7]'

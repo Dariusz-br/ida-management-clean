@@ -58,7 +58,7 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
           e.stopPropagation()
           setIsOpen(!isOpen)
         }}
-        className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-colors ${currentConfig.color} hover:opacity-80 cursor-pointer`}
+        className={`inline-flex items-center px-4 py-2 text-button rounded-xl transition-colors ${currentConfig.color} hover:opacity-80 cursor-pointer`}
       >
         <CurrentIcon className="w-4 h-4 mr-2" />
         <span>{currentConfig.label}</span>
@@ -77,7 +77,7 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
                     e.stopPropagation()
                     handleStatusChange(status as 'pending_review' | 'on_hold' | 'reviewed')
                   }}
-                  className={`w-full flex items-center px-3 py-2 text-sm whitespace-nowrap ${
+                  className={`w-full flex items-center px-3 py-2 text-body-sm whitespace-nowrap ${
                     status === currentStatus 
                       ? 'bg-[#F5F4E7] text-gray-500 cursor-not-allowed' 
                       : 'text-gray-700 hover:bg-[#F5F4E7]'

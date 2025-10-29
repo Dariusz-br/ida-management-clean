@@ -135,15 +135,15 @@ export function AbandonedOrders({ onOrderSelect, initialSearchTerm = '' }: Aband
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Abandoned Orders</h1>
-          <p className="text-gray-600 mt-1">Manage and recover abandoned orders</p>
+          <h1 className="text-display-md text-gray-900">Abandoned Orders</h1>
+          <p className="text-body-sm text-gray-600 mt-1">Manage and recover abandoned orders</p>
         </div>
         <div className="flex items-center space-x-3">
-          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+          <button className="inline-flex items-center px-4 py-2 text-button rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
             <RefreshCw className="w-4 h-4 mr-2" />
             Refresh
           </button>
-          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+          <button className="inline-flex items-center px-4 py-2 text-button rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
             <Download className="w-4 h-4 mr-2" />
             Export
           </button>

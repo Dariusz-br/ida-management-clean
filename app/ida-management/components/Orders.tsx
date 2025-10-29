@@ -209,11 +209,11 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-display-md text-gray-900">
             {showArchived ? 'Archived Orders' : 'Orders'}
           </h1>
           {showArchived && (
-            <span className="px-2 py-1 text-xs font-semibold bg-[#F5F4E7] text-gray-800 rounded-full">
+            <span className="px-2 py-1 text-caption bg-[#F5F4E7] text-gray-800 rounded-full">
               {archivedOrders.length} archived
             </span>
           )}

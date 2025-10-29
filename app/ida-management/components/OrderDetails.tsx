@@ -238,8 +238,8 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Order Details</h1>
-            <p className="text-sm text-gray-500">Order ID: {order.orderId}</p>
+            <h1 className="text-display-md text-gray-900">Order Details</h1>
+            <p className="text-body-sm text-gray-500">Order ID: {order.orderId}</p>
           </div>
         </div>
         <div className="flex items-center space-x-3">
@@ -247,7 +247,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             currentStatus={currentStatus}
             onStatusChange={handleStatusChange}
           />
-          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+          <button className="inline-flex items-center px-4 py-2 text-button rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
             <Download className="w-4 h-4 mr-2" />
             <span>Download Invoice</span>
           </button>
@@ -258,7 +258,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
             <FileText className="w-4 h-4 mr-2" />
             <span>Export Order</span>
           </button>
-          <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+          <button className="inline-flex items-center px-4 py-2 text-button rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
             <Copy className="w-4 h-4 mr-2" />
             <span>Copy Link</span>
           </button>
@@ -277,9 +277,9 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             {/* Header with Date */}
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Customer Information</h3>
+              <h3 className="text-display-sm text-gray-900">Customer Information</h3>
               <div className="flex items-center space-x-4">
-                <span className="text-sm text-gray-500">{formatDate(order.date)}</span>
+                <span className="text-body-sm text-gray-500">{formatDate(order.date)}</span>
                 <button
                   onClick={() => setIsEditingCustomer(!isEditingCustomer)}
                   className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-xl"
@@ -496,7 +496,7 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
                   </button>
                 </div>
                 
-                <button className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
+                <button className="inline-flex items-center px-4 py-2 text-button rounded-xl bg-[#F5F4E7] text-gray-800 hover:opacity-80 cursor-pointer">
                   <Download className="w-4 h-4 mr-2" />
                   <span>Download All</span>
                 </button>

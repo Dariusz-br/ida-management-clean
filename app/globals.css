@@ -45,35 +45,81 @@ body {
   line-height: 1.5;
 }
 
-/* Typography Scale */
+/* Enhanced Typography System */
+/* Display Text - Large headers and titles */
+.text-display-2xl {
+  @apply text-5xl font-bold leading-tight tracking-tight;
+}
+
+.text-display-xl {
+  @apply text-4xl font-bold leading-tight tracking-tight;
+}
+
+.text-display-lg {
+  @apply text-3xl font-bold leading-snug tracking-tight;
+}
+
+.text-display-md {
+  @apply text-2xl font-bold leading-snug tracking-tight;
+}
+
+.text-display-sm {
+  @apply text-xl font-semibold leading-snug tracking-tight;
+}
+
+/* Body Text - Main content */
+.text-body-lg {
+  @apply text-lg font-normal leading-relaxed;
+}
+
+.text-body-md {
+  @apply text-base font-normal leading-normal;
+}
+
+.text-body-sm {
+  @apply text-sm font-normal leading-normal;
+}
+
+.text-body-xs {
+  @apply text-xs font-normal leading-normal;
+}
+
+/* Specialized Text */
+.text-caption {
+  @apply text-xs font-medium leading-tight tracking-wide;
+}
+
+.text-button {
+  @apply text-sm font-semibold leading-none tracking-wide;
+}
+
+.text-label {
+  @apply text-xs font-medium leading-tight tracking-wide;
+}
+
+.text-meta {
+  @apply text-xs font-normal leading-normal text-gray-500;
+}
+
+/* Legacy Typography (for backward compatibility) */
 .text-display {
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.2;
+  @apply text-display-lg;
 }
 
 .text-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.3;
+  @apply text-display-md;
 }
 
 .text-heading {
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.4;
+  @apply text-display-sm;
 }
 
 .text-body {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
+  @apply text-body-sm;
 }
 
 .text-caption {
-  font-size: 0.75rem;
-  font-weight: 400;
-  line-height: 1.4;
+  @apply text-caption;
 }
 
 /* Card Styling */
