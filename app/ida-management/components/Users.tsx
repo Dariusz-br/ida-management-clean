@@ -105,9 +105,8 @@ export function Users() {
   
   // Apply status filter
   const filteredUsers = searchFilteredUsers.filter(user => {
-    // Active shows all non-archived and non-desactive users
-    if (statusFilter === 'active') return user.status !== 'archived' && user.status !== 'desactive'
-    if (statusFilter === 'desactive') return user.status === 'desactive'
+    // Active shows all non-archived users (includes active, desactive, pending)
+    if (statusFilter === 'active') return user.status !== 'archived'
     if (statusFilter === 'archived') return user.status === 'archived'
     if (statusFilter === 'pending') return user.status === 'pending'
     return true
@@ -199,16 +198,7 @@ export function Users() {
               >
                 Active
               </button>
-              <button
-                onClick={() => setStatusFilter('desactive')}
-                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
-                  statusFilter === 'desactive'
-                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
-                    : 'text-black font-semibold hover:text-gray-700'
-                }`}
-              >
-                Desactive
-              </button>
+              
               <button
                 onClick={() => setStatusFilter('archived')}
                 className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
