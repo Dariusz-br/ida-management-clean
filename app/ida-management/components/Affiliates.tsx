@@ -755,15 +755,66 @@ export function Affiliates() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900">Payout Details</h2>
-                <button
-                  onClick={() => {
-                    setShowPayoutModal(false)
-                    setSelectedPayout(null)
-                  }}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <X className="w-6 h-6" />
-                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => {
+                      // Generate and download transfer receipt
+                      const receiptData = {
+                        payoutId: selectedPayout.id,
+                        affiliateName: selectedPayout.affiliateName,
+                        amount: selectedPayout.amount,
+                        paymentMethod: selectedPayout.paymentMethod,
+                        paymentDate: selectedPayout.paymentDate,
+                        processedDate: selectedPayout.processedDate,
+                        period: selectedPayout.period,
+                        transactions: selectedPayout.transactions,
+                        commission: selectedPayout.commission
+                      }
+                      
+                      // Create a simple text receipt
+                      const receiptText = `
+TRANSFER RECEIPT
+================
+Payout ID: ${receiptData.payoutId}
+Affiliate: ${receiptData.affiliateName}
+Amount: $${receiptData.amount.toFixed(2)}
+Payment Method: ${receiptData.paymentMethod.replace('_', ' ').toUpperCase()}
+Payment Date: ${new Date(receiptData.paymentDate).toLocaleDateString()}
+Processed Date: ${receiptData.processedDate ? new Date(receiptData.processedDate).toLocaleDateString() : 'N/A'}
+Period: ${receiptData.period}
+Transactions: ${receiptData.transactions}
+Commission Rate: ${receiptData.commission}%
+Status: ${selectedPayout.status.toUpperCase()}
+
+Generated: ${new Date().toLocaleString()}
+                      `.trim()
+                      
+                      // Create and download file
+                      const blob = new Blob([receiptText], { type: 'text/plain' })
+                      const url = window.URL.createObjectURL(blob)
+                      const a = document.createElement('a')
+                      a.href = url
+                      a.download = `transfer-receipt-${selectedPayout.id}.txt`
+                      document.body.appendChild(a)
+                      a.click()
+                      document.body.removeChild(a)
+                      window.URL.revokeObjectURL(url)
+                    }}
+                    className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl bg-[#00473A] text-white hover:bg-[#00473A]/90 transition-colors"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download Transfer Receipt
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowPayoutModal(false)
+                      setSelectedPayout(null)
+                    }}
+                    className="text-gray-400 hover:text-gray-600"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
               </div>
 
               <div className="space-y-6">
