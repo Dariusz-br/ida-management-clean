@@ -46,7 +46,6 @@ const navigationItems = [
     roles: ['admin', 'team', 'agent', 'supplier'],
     hasSubmenu: true,
     submenu: [
-      { id: 'applications', label: 'Applications' },
       { id: 'abandoned-orders', label: 'Abandoned Orders' },
       { id: 'quiz', label: 'Quiz' }
     ]

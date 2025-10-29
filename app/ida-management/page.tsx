@@ -6,6 +6,7 @@ import { TopBar } from './components/TopBar'
 import { Dashboard } from './components/Dashboard'
 import { Dashboard2 } from './components/Dashboard2'
 import { Orders } from './components/Orders'
+import { AbandonedOrders } from './components/AbandonedOrders'
 import { OrderDetails } from './components/OrderDetails'
 import { Products } from './components/Products'
 import { Users } from './components/Users'
@@ -17,7 +18,7 @@ import { Settings } from './components/Settings'
 import { sharedOrdersData } from './data/orders'
 
 export type UserRole = 'admin' | 'team' | 'agent' | 'supplier'
-export type OrderStatus = 'processing' | 'shipment_in_progress' | 'completed' | 'on_hold' | 'refunded'
+export type OrderStatus = 'processing' | 'shipment_in_progress' | 'completed' | 'on_hold' | 'refunded' | 'abandoned'
 export type DeliveryType = 'vip_express' | 'standard'
 export type InternalStatus = 'pending_review' | 'on_hold' | 'reviewed'
 
@@ -85,6 +86,11 @@ export interface Order {
     couponCode?: string
     channel?: string
   }
+  // Abandoned order specific fields
+  abandonmentReason?: 'cart_abandoned' | 'document_upload' | 'payment_failed' | 'form_abandonment' | 'document_rejection'
+  abandonmentStage?: 'personal_info' | 'document_verification' | 'payment' | 'checkout'
+  lastActivity?: string
+  recoveryAttempts?: number
 }
 
 export default function IDAManagementApp() {
@@ -160,6 +166,8 @@ export default function IDAManagementApp() {
         }} onNavigate={handleNavigation} onSearch={handleSearch} />
       case 'orders':
         return <Orders onOrderSelect={setSelectedOrder} initialSearchTerm={searchTerm} />
+      case 'abandoned-orders':
+        return <AbandonedOrders onOrderSelect={setSelectedOrder} initialSearchTerm={searchTerm} />
       case 'products':
         return <Products />
       case 'users':

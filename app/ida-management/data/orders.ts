@@ -461,3 +461,297 @@ export const sharedOrdersData = [
     }
   }
 ]
+
+// Abandoned orders data
+export const abandonedOrdersData = [
+  {
+    id: 'abandoned-1',
+    orderId: 'IAA-24152740',
+    customer: {
+      name: 'Sarah Johnson',
+      email: 'sarah.johnson@email.com'
+    },
+    shipping: {
+      address: '456 Oak Avenue',
+      city: 'Los Angeles',
+      country: 'USA',
+      postalCode: '90210'
+    },
+    payment: {
+      status: 'pending' as const,
+      method: 'credit_card'
+    },
+    status: 'abandoned' as const,
+    internalStatus: 'pending_review' as const,
+    amount: 89.00,
+    currency: 'USD',
+    date: '2024-01-20T14:22:00Z',
+    deliveryType: 'standard' as const,
+    productType: 'digital' as const,
+    documents: {
+      selfie: { status: 'missing' as const },
+      front: { status: 'missing' as const },
+      back: { status: 'missing' as const }
+    },
+    abandonmentReason: 'cart_abandoned',
+    abandonmentStage: 'payment',
+    lastActivity: '2024-01-20T14:22:00Z',
+    recoveryAttempts: 2,
+    notes: 'Customer abandoned at payment stage - sent recovery email',
+    activity: [
+      {
+        id: '1',
+        type: 'status_change' as const,
+        message: 'Order created',
+        timestamp: '2024-01-20T14:22:00Z',
+        user: 'System'
+      },
+      {
+        id: '2',
+        type: 'status_change' as const,
+        message: 'Order abandoned at payment stage',
+        timestamp: '2024-01-20T14:25:00Z',
+        user: 'System'
+      }
+    ]
+  },
+  {
+    id: 'abandoned-2',
+    orderId: 'IAA-24152741',
+    customer: {
+      name: 'Michael Brown',
+      email: 'michael.brown@email.com'
+    },
+    shipping: {
+      address: '789 Pine Street',
+      city: 'Chicago',
+      country: 'USA',
+      postalCode: '60601'
+    },
+    payment: {
+      status: 'pending' as const,
+      method: 'paypal'
+    },
+    status: 'abandoned' as const,
+    internalStatus: 'on_hold' as const,
+    amount: 199.00,
+    currency: 'USD',
+    date: '2024-01-19T09:15:00Z',
+    deliveryType: 'vip_express' as const,
+    productType: 'print_digital' as const,
+    documents: {
+      selfie: { status: 'pending' as const, url: '/documents/selfie_abandoned1.jpg' },
+      front: { status: 'missing' as const },
+      back: { status: 'missing' as const }
+    },
+    abandonmentReason: 'document_upload',
+    abandonmentStage: 'document_verification',
+    lastActivity: '2024-01-19T09:15:00Z',
+    recoveryAttempts: 1,
+    notes: 'Customer uploaded selfie but abandoned during document verification',
+    activity: [
+      {
+        id: '1',
+        type: 'status_change' as const,
+        message: 'Order created',
+        timestamp: '2024-01-19T09:15:00Z',
+        user: 'System'
+      },
+      {
+        id: '2',
+        type: 'document_upload' as const,
+        message: 'Selfie document uploaded',
+        timestamp: '2024-01-19T09:18:00Z',
+        user: 'System'
+      },
+      {
+        id: '3',
+        type: 'status_change' as const,
+        message: 'Order abandoned during document verification',
+        timestamp: '2024-01-19T09:45:00Z',
+        user: 'System'
+      }
+    ]
+  },
+  {
+    id: 'abandoned-3',
+    orderId: 'IAA-24152742',
+    customer: {
+      name: 'Emma Wilson',
+      email: 'emma.wilson@email.com'
+    },
+    shipping: {
+      address: '321 Elm Street',
+      city: 'Miami',
+      country: 'USA',
+      postalCode: '33101'
+    },
+    payment: {
+      status: 'failed' as const,
+      method: 'credit_card'
+    },
+    status: 'abandoned' as const,
+    internalStatus: 'pending_review' as const,
+    amount: 149.00,
+    currency: 'USD',
+    date: '2024-01-18T16:30:00Z',
+    deliveryType: 'standard' as const,
+    productType: 'digital' as const,
+    documents: {
+      selfie: { status: 'approved' as const, url: '/documents/selfie_abandoned2.jpg' },
+      front: { status: 'approved' as const, url: '/documents/front_abandoned2.jpg' },
+      back: { status: 'missing' as const }
+    },
+    abandonmentReason: 'payment_failed',
+    abandonmentStage: 'payment',
+    lastActivity: '2024-01-18T16:30:00Z',
+    recoveryAttempts: 3,
+    notes: 'Payment failed multiple times - customer support contacted',
+    activity: [
+      {
+        id: '1',
+        type: 'status_change' as const,
+        message: 'Order created',
+        timestamp: '2024-01-18T16:30:00Z',
+        user: 'System'
+      },
+      {
+        id: '2',
+        type: 'document_upload' as const,
+        message: 'Selfie document uploaded and approved',
+        timestamp: '2024-01-18T16:35:00Z',
+        user: 'System'
+      },
+      {
+        id: '3',
+        type: 'document_upload' as const,
+        message: 'Front document uploaded and approved',
+        timestamp: '2024-01-18T16:40:00Z',
+        user: 'System'
+      },
+      {
+        id: '4',
+        type: 'status_change' as const,
+        message: 'Payment failed - order abandoned',
+        timestamp: '2024-01-18T16:45:00Z',
+        user: 'System'
+      }
+    ]
+  },
+  {
+    id: 'abandoned-4',
+    orderId: 'IAA-24152743',
+    customer: {
+      name: 'David Lee',
+      email: 'david.lee@email.com'
+    },
+    shipping: {
+      address: '654 Maple Drive',
+      city: 'Seattle',
+      country: 'USA',
+      postalCode: '98101'
+    },
+    payment: {
+      status: 'pending' as const,
+      method: 'stripe'
+    },
+    status: 'abandoned' as const,
+    internalStatus: 'reviewed' as const,
+    amount: 79.00,
+    currency: 'USD',
+    date: '2024-01-17T11:45:00Z',
+    deliveryType: 'standard' as const,
+    productType: 'digital' as const,
+    documents: {
+      selfie: { status: 'missing' as const },
+      front: { status: 'missing' as const },
+      back: { status: 'missing' as const }
+    },
+    abandonmentReason: 'form_abandonment',
+    abandonmentStage: 'personal_info',
+    lastActivity: '2024-01-17T11:45:00Z',
+    recoveryAttempts: 0,
+    notes: 'Customer started filling form but never completed personal information',
+    activity: [
+      {
+        id: '1',
+        type: 'status_change' as const,
+        message: 'Order created',
+        timestamp: '2024-01-17T11:45:00Z',
+        user: 'System'
+      },
+      {
+        id: '2',
+        type: 'status_change' as const,
+        message: 'Order abandoned at personal information stage',
+        timestamp: '2024-01-17T11:50:00Z',
+        user: 'System'
+      }
+    ]
+  },
+  {
+    id: 'abandoned-5',
+    orderId: 'IAA-24152744',
+    customer: {
+      name: 'Lisa Garcia',
+      email: 'lisa.garcia@email.com'
+    },
+    shipping: {
+      address: '987 Cedar Lane',
+      city: 'Boston',
+      country: 'USA',
+      postalCode: '02101'
+    },
+    payment: {
+      status: 'pending' as const,
+      method: 'credit_card'
+    },
+    status: 'abandoned' as const,
+    internalStatus: 'pending_review' as const,
+    amount: 219.00,
+    currency: 'USD',
+    date: '2024-01-16T13:20:00Z',
+    deliveryType: 'vip_express' as const,
+    productType: 'print_digital' as const,
+    documents: {
+      selfie: { status: 'rejected' as const, url: '/documents/selfie_abandoned3.jpg', rejectionNote: 'Image quality too low' },
+      front: { status: 'missing' as const },
+      back: { status: 'missing' as const }
+    },
+    abandonmentReason: 'document_rejection',
+    abandonmentStage: 'document_verification',
+    lastActivity: '2024-01-16T13:20:00Z',
+    recoveryAttempts: 1,
+    notes: 'Customer abandoned after selfie document was rejected',
+    activity: [
+      {
+        id: '1',
+        type: 'status_change' as const,
+        message: 'Order created',
+        timestamp: '2024-01-16T13:20:00Z',
+        user: 'System'
+      },
+      {
+        id: '2',
+        type: 'document_upload' as const,
+        message: 'Selfie document uploaded',
+        timestamp: '2024-01-16T13:25:00Z',
+        user: 'System'
+      },
+      {
+        id: '3',
+        type: 'document_upload' as const,
+        message: 'Selfie document rejected - image quality too low',
+        timestamp: '2024-01-16T13:30:00Z',
+        user: 'Admin User'
+      },
+      {
+        id: '4',
+        type: 'status_change' as const,
+        message: 'Order abandoned after document rejection',
+        timestamp: '2024-01-16T13:35:00Z',
+        user: 'System'
+      }
+    ]
+  }
+]

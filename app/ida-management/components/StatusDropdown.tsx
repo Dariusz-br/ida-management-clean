@@ -39,6 +39,12 @@ const statusConfig = {
     color: 'bg-[#F5F4E7] text-gray-800', 
     icon: RotateCcw,
     nextStatuses: ['processing', 'shipment_in_progress', 'completed', 'on_hold']
+  },
+  abandoned: { 
+    label: 'Abandoned', 
+    color: 'bg-orange-100 text-orange-800', 
+    icon: AlertCircle,
+    nextStatuses: ['processing', 'shipment_in_progress', 'completed', 'on_hold', 'refunded']
   }
 }
 
