@@ -629,7 +629,11 @@ export function Affiliates() {
               </thead>
               <tbody className="bg-white divide-y divide-[#E8E6CF]">
                 {filteredPayouts.map((payout) => (
-                  <tr key={payout.id} className="hover:bg-[#F5F4E7]">
+                  <tr 
+                    key={payout.id} 
+                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    onClick={() => handleViewPayout(payout)}
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="w-10 h-10 bg-[#E8E6CF] rounded-full flex items-center justify-center">
@@ -681,14 +685,20 @@ export function Affiliates() {
                         {payout.status === 'pending' && (
                           <>
                             <button 
-                              onClick={() => handleProcessPayout(payout.id)}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleProcessPayout(payout.id)
+                              }}
                               className="text-blue-600 hover:text-blue-800"
                               title="Process Payout"
                             >
                               <Send className="w-4 h-4" />
                             </button>
                             <button 
-                              onClick={() => handleMarkPaid(payout.id)}
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                handleMarkPaid(payout.id)
+                              }}
                               className="text-green-600 hover:text-green-800"
                               title="Mark as Paid"
                             >
@@ -698,7 +708,10 @@ export function Affiliates() {
                         )}
                         {payout.status === 'failed' && (
                           <button 
-                            onClick={() => handleRetryPayout(payout.id)}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleRetryPayout(payout.id)
+                            }}
                             className="text-orange-600 hover:text-orange-800"
                             title="Retry Payout"
                           >
@@ -706,7 +719,10 @@ export function Affiliates() {
                           </button>
                         )}
                         <button 
-                          onClick={() => handleViewPayout(payout)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleViewPayout(payout)
+                          }}
                           className="text-gray-600 hover:text-gray-800"
                           title="View Details"
                         >
