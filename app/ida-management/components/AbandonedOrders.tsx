@@ -21,7 +21,7 @@ import {
   XCircle,
   AlertTriangle
 } from 'lucide-react'
-import { Order } from '../page'
+// Importing Order caused type mismatch with abandoned-specific fields; use a local type for flexibility
 import { abandonedOrdersData } from '../data/orders'
 import { StatusDropdown } from './StatusDropdown'
 import { InternalStatusDropdown } from './InternalStatusDropdown'
@@ -31,7 +31,7 @@ import { OrderActionsDropdown } from './OrderActionsDropdown'
 import { FilterPills } from './FilterPills'
 
 interface AbandonedOrdersProps {
-  onOrderSelect: (order: Order) => void
+  onOrderSelect: (order: any) => void
   initialSearchTerm?: string
 }
 
