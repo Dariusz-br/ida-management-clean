@@ -1,11 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Edit, Trash2, Eye, Users, DollarSign, TrendingUp, Download, MoreHorizontal, CreditCard, Calendar, CheckCircle, Clock, AlertCircle, Send, RotateCcw, X } from 'lucide-react'
+import { Plus, Search, Filter, Edit, Trash2, Eye, Users, DollarSign, TrendingUp, Download, MoreHorizontal, CreditCard, Calendar, CheckCircle, Clock, AlertCircle, Send, RotateCcw, X, ChevronDown } from 'lucide-react'
 import { AffiliateCreateModal } from './AffiliateCreateModal'
 import { AffiliateEditModal } from './AffiliateEditModal'
 import { AffiliateViewModal } from './AffiliateViewModal'
 import { useGenericSearch } from '../hooks/useSearch'
+import { MinimalTabs } from './MinimalTabs'
+import { FilterPills } from './FilterPills'
 
 export function Affiliates() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -166,6 +168,36 @@ export function Affiliates() {
   const [payoutStatusFilter, setPayoutStatusFilter] = useState('all')
   const [payoutMethodFilter, setPayoutMethodFilter] = useState('all')
   
+  // Tab configuration
+  const affiliateTabs = [
+    { id: 'affiliates', label: 'Affiliates', icon: Users },
+    { id: 'payouts', label: 'Payouts', icon: CreditCard }
+  ]
+
+  // Filter options
+  const statusOptions = [
+    { id: 'all', label: 'ALL', count: affiliates.length },
+    { id: 'active', label: 'Active' },
+    { id: 'pending', label: 'Pending' },
+    { id: 'inactive', label: 'Inactive' },
+    { id: 'suspended', label: 'Suspended' }
+  ]
+
+  const commissionOptions = [
+    { id: 'all', label: 'ALL', count: affiliates.length },
+    { id: 'low', label: 'Low (<10%)' },
+    { id: 'medium', label: 'Medium (10-20%)' },
+    { id: 'high', label: 'High (>20%)' }
+  ]
+
+  const payoutStatusOptions = [
+    { id: 'all', label: 'ALL', count: payouts.length },
+    { id: 'paid', label: 'Paid' },
+    { id: 'pending', label: 'Pending' },
+    { id: 'processing', label: 'Processing' },
+    { id: 'failed', label: 'Failed' }
+  ]
+  
   // Use search hook for filtering affiliates
   const searchFilteredAffiliates = useGenericSearch(affiliates, searchTerm, ['name', 'contactPerson', 'email', 'website', 'referralCode'])
 
@@ -313,29 +345,12 @@ export function Affiliates() {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-1">
-        <div className="flex space-x-1">
-          <button
-            onClick={() => setActiveTab('affiliates')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-xl transition-colors ${
-              activeTab === 'affiliates'
-                ? 'bg-[#00473A] text-white'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-[#F5F4E7]'
-            }`}
-          >
-            Affiliates
-          </button>
-          <button
-            onClick={() => setActiveTab('payouts')}
-            className={`flex-1 px-4 py-2 text-sm font-medium rounded-xl transition-colors ${
-              activeTab === 'payouts'
-                ? 'bg-[#00473A] text-white'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-[#F5F4E7]'
-            }`}
-          >
-            Payouts
-          </button>
-        </div>
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
+        <MinimalTabs
+          tabs={affiliateTabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
       </div>
 
       {/* Summary Cards */}
@@ -422,74 +437,89 @@ export function Affiliates() {
       {/* Filters */}
       {activeTab === 'affiliates' ? (
         <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-          <div className="flex items-center space-x-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search affiliates..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-              />
+          <div className="space-y-4">
+            {/* Search Input */}
+            <div>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Search affiliates..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
+                />
+              </div>
             </div>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="all">All Status</option>
-              <option value="active">Active</option>
-              <option value="pending">Pending</option>
-              <option value="inactive">Inactive</option>
-              <option value="suspended">Suspended</option>
-            </select>
-            <select
-              value={commissionFilter}
-              onChange={(e) => setCommissionFilter(e.target.value)}
-              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="all">All Commission</option>
-              <option value="low">Low (&lt;10%)</option>
-              <option value="medium">Medium (10-20%)</option>
-              <option value="high">High (&gt;20%)</option>
-            </select>
+
+            {/* Filter Pills and Dropdowns */}
+            <div className="flex flex-wrap items-center gap-4">
+              {/* Status Filter Pills */}
+              <div className="flex-1 min-w-0">
+                <FilterPills
+                  options={statusOptions}
+                  activeOption={statusFilter}
+                  onOptionChange={setStatusFilter}
+                />
+              </div>
+
+              {/* Commission Filter Pills */}
+              <div className="flex-1 min-w-0">
+                <FilterPills
+                  options={commissionOptions}
+                  activeOption={commissionFilter}
+                  onOptionChange={setCommissionFilter}
+                />
+              </div>
+            </div>
           </div>
         </div>
       ) : (
         <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-          <div className="flex items-center space-x-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search payouts..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-              />
+          <div className="space-y-4">
+            {/* Search Input */}
+            <div>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <input
+                  type="text"
+                  placeholder="Search payouts..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
+                />
+              </div>
             </div>
-            <select
-              value={payoutStatusFilter}
-              onChange={(e) => setPayoutStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="all">All Status</option>
-              <option value="paid">Paid</option>
-              <option value="pending">Pending</option>
-              <option value="processing">Processing</option>
-              <option value="failed">Failed</option>
-            </select>
-            <select
-              value={payoutMethodFilter}
-              onChange={(e) => setPayoutMethodFilter(e.target.value)}
-              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="all">All Methods</option>
-              <option value="bank_transfer">Bank Transfer</option>
-              <option value="paypal">PayPal</option>
-              <option value="stripe">Stripe</option>
-            </select>
+
+            {/* Filter Pills and Dropdowns */}
+            <div className="flex flex-wrap items-center gap-4">
+              {/* Status Filter Pills */}
+              <div className="flex-1 min-w-0">
+                <FilterPills
+                  options={payoutStatusOptions}
+                  activeOption={payoutStatusFilter}
+                  onOptionChange={setPayoutStatusFilter}
+                />
+              </div>
+
+              {/* Payment Method Dropdown */}
+              <div className="min-w-[140px]">
+                <div className="relative">
+                  <select
+                    value={payoutMethodFilter}
+                    onChange={(e) => setPayoutMethodFilter(e.target.value)}
+                    className="w-full px-4 py-2 bg-[#F5F4E7] text-gray-800 rounded-xl text-sm font-semibold appearance-none cursor-pointer hover:opacity-80 transition-opacity pl-10 pr-10"
+                  >
+                    <option value="all">All Methods</option>
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="paypal">PayPal</option>
+                    <option value="stripe">Stripe</option>
+                  </select>
+                  <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

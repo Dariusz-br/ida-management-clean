@@ -17,7 +17,10 @@ import {
   Archive,
   Smartphone,
   Printer,
-  Upload
+  Upload,
+  ChevronDown,
+  CreditCard,
+  Calendar
 } from 'lucide-react'
 import { Order } from '../page'
 import { OrderStatusModal } from './OrderStatusModal'
@@ -30,6 +33,7 @@ import { getOperationByCountry, getOperationColor, getOperationIcon, getOperatio
 import { FlatFlag } from './FlatFlag'
 import { sharedOrdersData } from '../data/orders'
 import { useOrderSearch } from '../hooks/useSearch'
+import { FilterPills } from './FilterPills'
 
 interface OrdersProps {
   onOrderSelect: (order: Order) => void
@@ -51,6 +55,15 @@ const paymentConfig = {
   pending: { label: 'Pending', color: 'bg-yellow-100 text-yellow-800' },
   failed: { label: 'Failed', color: 'bg-red-100 text-red-800' }
 }
+
+const statusOptions = [
+  { id: 'all', label: 'ALL', count: 531 },
+  { id: 'processing', label: 'Processing' },
+  { id: 'shipment_in_progress', label: 'Shipment in Progress' },
+  { id: 'completed', label: 'Completed' },
+  { id: 'on_hold', label: 'On Hold' },
+  { id: 'refunded', label: 'Refunded' }
+]
 
 export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm)
@@ -205,7 +218,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
   }
 
   return (
-    <div className="p-6 space-y-6" style={{ backgroundColor: '#FAF9F6' }}>
+    <div className="p-6 space-y-6" style={{ backgroundColor: '#FFFFFF' }}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
@@ -219,6 +232,17 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
           )}
         </div>
         <div className="flex items-center space-x-3">
+          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
+            <Download className="w-4 h-4" />
+            <span>Export</span>
+          </button>
+          <button 
+            onClick={() => setShowImportModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
+          >
+            <Upload className="w-4 h-4" />
+            <span>Import tracking</span>
+          </button>
           <button 
             onClick={() => setShowArchived(!showArchived)}
             className={`flex items-center space-x-2 px-4 py-2 rounded-xl ${
@@ -228,76 +252,47 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
             }`}
           >
             <Archive className="w-4 h-4" />
-            <span>{showArchived ? 'Show Active Orders' : 'Show Archived Orders'}</span>
-          </button>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
-            <Filter className="w-4 h-4" />
-            <span>Filters</span>
-          </button>
-          <button 
-            onClick={() => setShowImportModal(true)}
-            className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
-          >
-            <Upload className="w-4 h-4" />
-            <span>Import tracking</span>
-          </button>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
-            <Download className="w-4 h-4" />
-            <span>Export</span>
+            <span>{showArchived ? 'Show Active Orders' : 'Archive'}</span>
           </button>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Search</label>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Search orders..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 pr-4 py-2 w-full border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="all">All Statuses</option>
-              <option value="processing">Processing</option>
-              <option value="shipment_in_progress">Shipment in Progress</option>
-              <option value="completed">Completed</option>
-              <option value="on_hold">On Hold</option>
-              <option value="refunded">Refunded</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Payment</label>
+      <div className="flex flex-wrap items-center gap-4">
+        {/* Status Filter Pills */}
+        <div className="flex-1 min-w-0">
+          <FilterPills
+            options={statusOptions}
+            activeOption={statusFilter}
+            onOptionChange={setStatusFilter}
+          />
+        </div>
+
+        {/* Payment Dropdown */}
+        <div className="min-w-[140px]">
+          <div className="relative">
             <select
               value={paymentFilter}
               onChange={(e) => setPaymentFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-4 py-2 bg-[#F5F4E7] text-gray-800 rounded-xl text-sm font-semibold appearance-none cursor-pointer hover:opacity-80 transition-opacity pl-10 pr-10"
             >
               <option value="all">All Payments</option>
               <option value="paid">Paid</option>
               <option value="pending">Pending</option>
               <option value="failed">Failed</option>
             </select>
+            <CreditCard className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
+        </div>
+
+        {/* Time Dropdown */}
+        <div className="min-w-[140px]">
+          <div className="relative">
             <select
               value={timeFilter}
               onChange={(e) => setTimeFilter(e.target.value)}
-              className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-4 py-2 bg-[#F5F4E7] text-gray-800 rounded-xl text-sm font-semibold appearance-none cursor-pointer hover:opacity-80 transition-opacity pl-10 pr-10"
             >
               <option value="all">All Time</option>
               <option value="today">Today</option>
@@ -306,18 +301,20 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
               <option value="last15days">Last 15 days</option>
               <option value="last30days">Last 30 days</option>
             </select>
-          </div>
-          <div className="flex items-end">
-            {selectedOrders.length > 0 && (
-              <button
-                onClick={() => setShowBulkActionsModal(true)}
-                className="w-full px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
-              >
-                Bulk Actions ({selectedOrders.length})
-              </button>
-            )}
+            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-600 pointer-events-none" />
           </div>
         </div>
+
+        {/* Bulk Actions Button */}
+        {selectedOrders.length > 0 && (
+          <button
+            onClick={() => setShowBulkActionsModal(true)}
+            className="px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90 whitespace-nowrap"
+          >
+            Bulk Actions ({selectedOrders.length})
+          </button>
+        )}
       </div>
 
       {/* Orders Table */}

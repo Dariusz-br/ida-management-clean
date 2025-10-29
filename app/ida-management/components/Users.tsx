@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Edit, Trash2, Eye, Shield, User, Users as UsersIcon } from 'lucide-react'
+import { Plus, Search, Filter, Edit, Archive, Eye, Shield, User, Users as UsersIcon } from 'lucide-react'
 import { UserProfileModal } from './UserProfileModal'
 import { UserEditModal } from './UserEditModal'
 import { UserCreateModal } from './UserCreateModal'
@@ -32,7 +32,7 @@ export function Users() {
       name: 'Mike Wilson',
       email: 'mike.w@ida.com',
       role: 'agent',
-      status: 'active',
+      status: 'pending',
       lastLogin: '2024-01-14T16:45:00Z',
       orders: 156
     },
@@ -41,9 +41,54 @@ export function Users() {
       name: 'Lisa Chen',
       email: 'lisa.c@ida.com',
       role: 'supplier',
-      status: 'active',
+      status: 'archived',
       lastLogin: '2024-01-14T14:20:00Z',
       orders: 0
+    },
+    {
+      id: '5',
+      name: 'David Brown',
+      email: 'david.b@ida.com',
+      role: 'team',
+      status: 'active',
+      lastLogin: '2024-01-15T08:30:00Z',
+      orders: 78
+    },
+    {
+      id: '6',
+      name: 'Emma Davis',
+      email: 'emma.d@ida.com',
+      role: 'agent',
+      status: 'pending',
+      lastLogin: '2024-01-13T12:15:00Z',
+      orders: 23
+    },
+    {
+      id: '7',
+      name: 'Robert Taylor',
+      email: 'robert.t@ida.com',
+      role: 'admin',
+      status: 'archived',
+      lastLogin: '2024-01-10T15:45:00Z',
+      orders: 312
+    },
+    {
+      id: '8',
+      name: 'Maria Garcia',
+      email: 'maria.g@ida.com',
+      role: 'agent',
+      status: 'desactive',
+      lastLogin: '2024-01-12T11:20:00Z',
+      orders: 45
+    },
+    {
+      id: '9',
+      name: 'James Wilson',
+      email: 'james.w@ida.com',
+      role: 'team',
+      status: 'desactive',
+      lastLogin: '2024-01-11T14:30:00Z',
+      orders: 12
     }
   ]
 
@@ -53,9 +98,20 @@ export function Users() {
   const [showEditModal, setShowEditModal] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [users, setUsers] = useState(mockUsers)
+  const [statusFilter, setStatusFilter] = useState('active')
   
   // Use search hook for filtering users
-  const filteredUsers = useGenericSearch(users, searchTerm, ['name', 'email', 'role', 'status'])
+  const searchFilteredUsers = useGenericSearch(users, searchTerm, ['name', 'email', 'role', 'status'])
+  
+  // Apply status filter
+  const filteredUsers = searchFilteredUsers.filter(user => {
+    // Active shows all non-archived and non-desactive users
+    if (statusFilter === 'active') return user.status !== 'archived' && user.status !== 'desactive'
+    if (statusFilter === 'desactive') return user.status === 'desactive'
+    if (statusFilter === 'archived') return user.status === 'archived'
+    if (statusFilter === 'pending') return user.status === 'pending'
+    return true
+  })
 
   const roleConfig = {
     admin: { label: 'Admin', color: 'bg-red-100 text-red-800', icon: Shield },
@@ -105,10 +161,23 @@ export function Users() {
     setShowCreateModal(false)
   }
 
-  const handleDeleteUser = (userId: string) => {
-    if (confirm('Are you sure you want to delete this user?')) {
-      setUsers(users.filter(user => user.id !== userId))
+  const handleArchiveUser = (userId: string) => {
+    if (confirm('Are you sure you want to archive this user?')) {
+      setUsers(users.map(user => 
+        user.id === userId 
+          ? { ...user, status: 'archived' }
+          : user
+      ))
     }
+  }
+
+  const handleToggleUserStatus = (userId: string, currentStatus: string) => {
+    const newStatus = currentStatus === 'active' ? 'desactive' : 'active'
+    setUsers(users.map(user => 
+      user.id === userId 
+        ? { ...user, status: newStatus }
+        : user
+    ))
   }
 
   return (
@@ -116,34 +185,62 @@ export function Users() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Users</h1>
-        <button 
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add User</span>
-        </button>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-        <div className="flex items-center space-x-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search users..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-            />
+        <div className="flex items-center gap-3">
+          {/* Status Filter Tabs */}
+          <div className="bg-[#F5F4E7] rounded-full p-1">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setStatusFilter('active')}
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  statusFilter === 'active'
+                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
+                    : 'text-black font-semibold hover:text-gray-700'
+                }`}
+              >
+                Active
+              </button>
+              <button
+                onClick={() => setStatusFilter('desactive')}
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  statusFilter === 'desactive'
+                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
+                    : 'text-black font-semibold hover:text-gray-700'
+                }`}
+              >
+                Desactive
+              </button>
+              <button
+                onClick={() => setStatusFilter('archived')}
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  statusFilter === 'archived'
+                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
+                    : 'text-black font-semibold hover:text-gray-700'
+                }`}
+              >
+                Archived
+              </button>
+              <button
+                onClick={() => setStatusFilter('pending')}
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  statusFilter === 'pending'
+                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
+                    : 'text-black font-semibold hover:text-gray-700'
+                }`}
+              >
+                Pending
+              </button>
+            </div>
           </div>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
-            <Filter className="w-4 h-4" />
-            <span>Filters</span>
+          <button 
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add User</span>
           </button>
         </div>
       </div>
+
 
       {/* Users Table */}
       <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] overflow-hidden">
@@ -200,11 +297,34 @@ export function Users() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-          user.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-[#F5F4E7] text-gray-800'
-        }`}>
-                        {user.status}
-                      </span>
+                      {(user.status === 'active' || user.status === 'desactive') ? (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleToggleUserStatus(user.id, user.status)
+                          }}
+                          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                            user.status === 'active' 
+                              ? 'bg-green-600 focus:ring-green-500' 
+                              : 'bg-gray-400 focus:ring-gray-500'
+                          }`}
+                          title={`Click to change to ${user.status === 'active' ? 'desactive' : 'active'}`}
+                        >
+                          <span
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                              user.status === 'active' ? 'translate-x-6' : 'translate-x-1'
+                            }`}
+                          />
+                        </button>
+                      ) : (
+                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                          user.status === 'archived'
+                            ? 'bg-gray-100 text-gray-800'
+                            : 'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {user.status}
+                        </span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {user.orders.toLocaleString()}
@@ -237,12 +357,12 @@ export function Users() {
                         <button 
                           onClick={(e) => {
                             e.stopPropagation()
-                            handleDeleteUser(user.id)
+                            handleArchiveUser(user.id)
                           }}
-                          className="text-red-600 hover:text-red-800"
-                          title="Delete User"
+                          className="text-orange-600 hover:text-orange-800"
+                          title="Archive User"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Archive className="w-4 h-4" />
                         </button>
                       </div>
                     </td>

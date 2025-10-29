@@ -6,6 +6,7 @@ import { ReportsExportModal } from './ReportsExportModal'
 import { OrdersReport } from './OrdersReport'
 import { CustomerReport } from './CustomerReport'
 import { FunnelAnalysis } from './FunnelAnalysis'
+import { MinimalTabs } from './MinimalTabs'
 
 export function Reports() {
   const [selectedReport, setSelectedReport] = useState('revenue')
@@ -13,6 +14,13 @@ export function Reports() {
   const [showExportModal, setShowExportModal] = useState(false)
 
   const reportTypes = [
+    { id: 'revenue', label: 'Revenue Report', icon: DollarSign },
+    { id: 'orders', label: 'Orders Report', icon: ShoppingCart },
+    { id: 'customers', label: 'Customer Report', icon: Users },
+    { id: 'funnel', label: 'Funnel Analysis', icon: TrendingUp }
+  ]
+
+  const reportTabs = [
     { id: 'revenue', label: 'Revenue Report', icon: DollarSign },
     { id: 'orders', label: 'Orders Report', icon: ShoppingCart },
     { id: 'customers', label: 'Customer Report', icon: Users },
@@ -55,35 +63,13 @@ export function Reports() {
       </div>
 
       {/* Report Type Selection */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Report Type</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {reportTypes.map((report) => {
-            const Icon = report.icon
-            return (
-              <button
-                key={report.id}
-                onClick={() => setSelectedReport(report.id)}
-                className={`p-4 rounded-xl border-2 transition-colors ${
-                  selectedReport === report.id
-                    ? 'border-green-500 bg-green-50'
-                    : 'border-[#E8E6CF] hover:border-[#E8E6CF]'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <Icon className={`w-6 h-6 ${
-                    selectedReport === report.id ? 'text-green-600' : 'text-gray-600'
-                  }`} />
-                  <span className={`font-medium ${
-                    selectedReport === report.id ? 'text-green-900' : 'text-gray-900'
-                  }`}>
-                    {report.label}
-                  </span>
-                </div>
-              </button>
-            )
-          })}
-        </div>
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
+        <MinimalTabs
+          tabs={reportTabs}
+          activeTab={selectedReport}
+          onTabChange={setSelectedReport}
+          label="Select Report Type"
+        />
       </div>
 
       {/* Date Range Selection */}

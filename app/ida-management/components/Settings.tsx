@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Save, User, Bell, Shield, Globe, Database, Mail } from 'lucide-react'
+import { MinimalTabs } from './MinimalTabs'
 
 export function Settings() {
   const [activeTab, setActiveTab] = useState('profile')
@@ -38,6 +39,15 @@ export function Settings() {
   const [isSaving, setIsSaving] = useState(false)
 
   const tabs = [
+    { id: 'profile', label: 'Profile', icon: User },
+    { id: 'notifications', label: 'Notifications', icon: Bell },
+    { id: 'system', label: 'System', icon: Shield },
+    { id: 'integrations', label: 'Integrations', icon: Globe },
+    { id: 'database', label: 'Database', icon: Database },
+    { id: 'email', label: 'Email Settings', icon: Mail }
+  ]
+
+  const settingsTabs = [
     { id: 'profile', label: 'Profile', icon: User },
     { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'system', label: 'System', icon: Shield },
@@ -84,35 +94,17 @@ export function Settings() {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Settings Navigation */}
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-            <nav className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors ${
-                      activeTab === tab.id
-                        ? 'bg-green-600 text-white'
-                        : 'text-gray-700 hover:bg-[#F5F4E7]'
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span>{tab.label}</span>
-                  </button>
-                )
-              })}
-            </nav>
-          </div>
-        </div>
+      {/* Settings Navigation */}
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
+        <MinimalTabs
+          tabs={settingsTabs}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+      </div>
 
-        {/* Settings Content */}
-        <div className="lg:col-span-3">
-          <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
+      {/* Settings Content */}
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             {/* Profile Settings */}
             {activeTab === 'profile' && (
               <div className="space-y-6">
@@ -313,8 +305,6 @@ export function Settings() {
                 </p>
               </div>
             )}
-          </div>
-        </div>
       </div>
     </div>
   )

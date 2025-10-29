@@ -28,6 +28,7 @@ import {
 import { getOperationByCountry, getOperationColor, getOperationIcon, getOperationFlagCountry } from '../utils/operations'
 import { sharedOrdersData } from '../data/orders'
 import { StatusDropdown } from './StatusDropdown'
+import { DateFilterButton } from './DateFilterButton'
 import { InternalStatusDropdown } from './InternalStatusDropdown'
 import { DocumentStatusCircles } from './DocumentStatusCircles'
 import { OrderActionsDropdown } from './OrderActionsDropdown'
@@ -336,16 +337,6 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       <div className="flex items-center justify-between">
         <h1 className="text-display-md text-[#333333]">Overview</h1>
         <div className="flex items-center space-x-4">
-          <form onSubmit={handleSearch} className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search by orders, customers..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-[#007BFF] focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-            />
-          </form>
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setIsDateDropdownOpen(!isDateDropdownOpen)}
@@ -835,21 +826,11 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-[#333333]">Recent Orders</h3>
             <div className="flex items-center space-x-4">
-              <form onSubmit={handleSearch} className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search by orders, customers..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-lg focus:ring-2 focus:ring-[#007BFF] focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-                />
-              </form>
-              <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7] transition-colors">
-                <Calendar className="w-4 h-4 text-gray-600" />
-                <span className="text-sm font-medium text-gray-700">Today</span>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
-              </button>
+              <DateFilterButton 
+                label="Today"
+                onClick={() => setIsDateDropdownOpen(!isDateDropdownOpen)}
+                isOpen={isDateDropdownOpen}
+              />
             </div>
           </div>
         </div>

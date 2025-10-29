@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Edit, Trash2, Eye, Upload, Camera } from 'lucide-react'
+import { Plus, Search, Filter, Edit, Trash2, Eye, Upload, Camera, Package } from 'lucide-react'
 import { ProductCreateModal } from './ProductCreateModal'
 import { ProductEditModal } from './ProductEditModal'
 import { useGenericSearch } from '../hooks/useSearch'
 
 export function Products() {
+  const [statusFilter, setStatusFilter] = useState('published')
+  
   const mockProducts = [
     {
       id: '1',
@@ -40,6 +42,28 @@ export function Products() {
       orders: 800,
       revenue: 63992,
       image: '/products/vip.jpg'
+    },
+    {
+      id: '4',
+      name: 'Premium Package',
+      description: 'All-inclusive driver\'s license package',
+      price: 99.99,
+      type: 'premium',
+      status: 'draft',
+      orders: 0,
+      revenue: 0,
+      image: null
+    },
+    {
+      id: '5',
+      name: 'Legacy Product',
+      description: 'Old product no longer available',
+      price: 19.99,
+      type: 'legacy',
+      status: 'archived',
+      orders: 500,
+      revenue: 9995,
+      image: null
     }
   ]
 
@@ -51,7 +75,15 @@ export function Products() {
   const [uploadingImage, setUploadingImage] = useState<string | null>(null)
   
   // Use search hook for filtering products
-  const filteredProducts = useGenericSearch(products, searchTerm, ['name', 'description', 'type', 'status'])
+  const searchFilteredProducts = useGenericSearch(products, searchTerm, ['name', 'description', 'type', 'status'])
+  
+  // Apply status filter
+  const filteredProducts = searchFilteredProducts.filter(product => {
+    if (statusFilter === 'published') return product.status === 'active'
+    if (statusFilter === 'draft') return product.status === 'draft'
+    if (statusFilter === 'archive') return product.status === 'archived'
+    return true
+  })
 
   const handleViewProduct = (product: any) => {
     setSelectedProduct(product)
@@ -114,129 +146,146 @@ export function Products() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-        <button 
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Add Product</span>
-        </button>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-        <div className="flex items-center space-x-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-            />
+        <div className="flex items-center gap-3">
+          {/* Compact Status Tabs */}
+          <div className="bg-[#F5F4E7] rounded-full p-1">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setStatusFilter('published')}
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  statusFilter === 'published'
+                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
+                    : 'text-black font-semibold hover:text-gray-700'
+                }`}
+              >
+                Published
+              </button>
+              <button
+                onClick={() => setStatusFilter('draft')}
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  statusFilter === 'draft'
+                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
+                    : 'text-black font-semibold hover:text-gray-700'
+                }`}
+              >
+                Draft
+              </button>
+              <button
+                onClick={() => setStatusFilter('archive')}
+                className={`px-4 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  statusFilter === 'archive'
+                    ? 'bg-[#00473A] text-white border border-[#E8E6CF]'
+                    : 'text-black font-semibold hover:text-gray-700'
+                }`}
+              >
+                Archive
+              </button>
+            </div>
           </div>
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
-            <Filter className="w-4 h-4" />
-            <span>Filters</span>
+
+          <button 
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Add Product</span>
           </button>
         </div>
       </div>
 
-      {/* Products Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProducts.map((product) => (
-          <div key={product.id} className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
-            {/* Product Image */}
-            <div className="relative mb-4">
-              <div className="w-full h-32 bg-[#F5F4E7] rounded-xl overflow-hidden relative group">
-                {product.image ? (
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Camera className="w-8 h-8 text-gray-400" />
-                  </div>
-                )}
-                
-                {/* Upload Overlay */}
-                <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <label className="cursor-pointer">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleImageUpload(product.id, e)}
-                      className="hidden"
-                    />
-                    <div className="bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
-                      {uploadingImage === product.id ? (
-                        <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
-                      ) : (
-                        <Upload className="w-6 h-6 text-gray-600" />
-                      )}
+      {/* Products Table */}
+      <div className="bg-white rounded-[10px] shadow-sm border border-[#E8E6CF] overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-[#F5F4E7]">
+              <tr>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Product</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Price</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Total Order</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Total Revenue</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#E8E6CF]">
+              {filteredProducts.map((product) => (
+                <tr key={product.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-36 h-36 bg-[#F5F4E7] rounded-[10px] flex items-center justify-center relative group">
+                        {product.image ? (
+                          <img 
+                            src={product.image} 
+                            alt={product.name}
+                            className="w-full h-full object-cover rounded-[10px]"
+                          />
+                        ) : (
+                          <Package className="w-6 h-6 text-gray-400" />
+                        )}
+                        
+                        {/* Upload Overlay */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-[10px]">
+                          <label className="cursor-pointer">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageUpload(product.id, e)}
+                              className="hidden"
+                            />
+                            <div className="bg-white rounded-full p-1 hover:bg-gray-100 transition-colors">
+                              {uploadingImage === product.id ? (
+                                <div className="w-3 h-3 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+                              ) : (
+                                <Upload className="w-3 h-3 text-gray-600" />
+                              )}
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-bold text-gray-900">{product.name}</h3>
+                        <p className="text-xs text-gray-600">{product.description}</p>
+                      </div>
                     </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
-                <p className="text-sm text-gray-600 mt-1">{product.description}</p>
-              </div>
-              <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                product.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-[#F5F4E7] text-gray-800'
-              }`}>
-                {product.status}
-              </span>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Price</span>
-                <span className="text-lg font-semibold text-gray-900">${product.price}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Orders</span>
-                <span className="text-sm font-medium text-gray-900">{product.orders.toLocaleString()}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Revenue</span>
-                <span className="text-sm font-medium text-gray-900">${product.revenue.toLocaleString()}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-2 mt-4">
-              <button 
-                onClick={() => handleViewProduct(product)}
-                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
-                title="View Product"
-              >
-                <Eye className="w-4 h-4" />
-                <span>View</span>
-              </button>
-              <button 
-                onClick={() => handleEditProduct(product)}
-                className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 text-sm border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7] bg-[#E2EAFF]"
-                title="Edit Product"
-              >
-                <Edit className="w-4 h-4" />
-                <span>Edit</span>
-              </button>
-              <button 
-                onClick={() => handleDeleteProduct(product.id)}
-                className="p-2 text-red-600 hover:bg-red-50 rounded-xl"
-                title="Delete Product"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        ))}
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-sm font-semibold text-gray-900">${product.price}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-sm text-gray-900">{product.orders.toLocaleString()}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className="text-sm text-gray-900">${product.revenue.toLocaleString()}</span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center space-x-2">
+                      <button 
+                        onClick={() => handleViewProduct(product)}
+                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                        title="View Product"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      <button 
+                        onClick={() => handleEditProduct(product)}
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        title="Edit Product"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteProduct(product.id)}
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Delete Product"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Modals */}

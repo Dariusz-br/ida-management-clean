@@ -28,6 +28,7 @@ import { InternalStatusDropdown } from './InternalStatusDropdown'
 import { OperationDropdown } from './OperationDropdown'
 import { DocumentStatusCircles } from './DocumentStatusCircles'
 import { OrderActionsDropdown } from './OrderActionsDropdown'
+import { FilterPills } from './FilterPills'
 
 interface AbandonedOrdersProps {
   onOrderSelect: (order: Order) => void
@@ -41,6 +42,29 @@ export function AbandonedOrders({ onOrderSelect, initialSearchTerm = '' }: Aband
   const [stageFilter, setStageFilter] = useState('all')
   const [selectedOrders, setSelectedOrders] = useState<string[]>([])
   const [showFilters, setShowFilters] = useState(false)
+
+  // Filter options
+  const statusOptions = [
+    { id: 'all', label: 'ALL', count: abandonedOrdersData.length },
+    { id: 'abandoned', label: 'Abandoned' }
+  ]
+
+  const reasonOptions = [
+    { id: 'all', label: 'ALL', count: abandonedOrdersData.length },
+    { id: 'cart_abandoned', label: 'Cart Abandoned' },
+    { id: 'document_upload', label: 'Document Upload' },
+    { id: 'payment_failed', label: 'Payment Failed' },
+    { id: 'form_abandonment', label: 'Form Abandonment' },
+    { id: 'document_rejection', label: 'Document Rejected' }
+  ]
+
+  const stageOptions = [
+    { id: 'all', label: 'ALL', count: abandonedOrdersData.length },
+    { id: 'personal_info', label: 'Personal Info' },
+    { id: 'document_verification', label: 'Doc Verification' },
+    { id: 'payment', label: 'Payment' },
+    { id: 'checkout', label: 'Checkout' }
+  ]
 
   // Filter orders based on search and filters
   const filteredOrders = useMemo(() => {
@@ -206,78 +230,46 @@ export function AbandonedOrders({ onOrderSelect, initialSearchTerm = '' }: Aband
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-[#F5F4E7] rounded-xl hover:bg-[#E8E6CF]"
-          >
-            <Filter className="w-4 h-4 mr-2" />
-            {showFilters ? 'Hide Filters' : 'Show Filters'}
-          </button>
-        </div>
-        
-        {showFilters && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <input
-                  type="text"
-                  placeholder="Search orders..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-[#00473A] focus:border-transparent bg-[#F5F4E7]"
-                />
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-[#00473A] focus:border-transparent bg-[#F5F4E7]"
-              >
-                <option value="all">All Statuses</option>
-                <option value="abandoned">Abandoned</option>
-              </select>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Abandonment Reason</label>
-              <select
-                value={reasonFilter}
-                onChange={(e) => setReasonFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-[#00473A] focus:border-transparent bg-[#F5F4E7]"
-              >
-                <option value="all">All Reasons</option>
-                <option value="cart_abandoned">Cart Abandoned</option>
-                <option value="document_upload">Document Upload</option>
-                <option value="payment_failed">Payment Failed</option>
-                <option value="form_abandonment">Form Abandonment</option>
-                <option value="document_rejection">Document Rejection</option>
-              </select>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Abandonment Stage</label>
-              <select
-                value={stageFilter}
-                onChange={(e) => setStageFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-[#00473A] focus:border-transparent bg-[#F5F4E7]"
-              >
-                <option value="all">All Stages</option>
-                <option value="personal_info">Personal Info</option>
-                <option value="document_verification">Document Verification</option>
-                <option value="payment">Payment</option>
-                <option value="checkout">Checkout</option>
-              </select>
+      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
+        <div className="space-y-4">
+          {/* Search Input */}
+          <div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search orders..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-[#00473A] focus:border-transparent bg-[#F5F4E7]"
+              />
             </div>
           </div>
-        )}
+
+          {/* Filter Pills */}
+          <div className="space-y-3">
+            {/* Status Filter Pills */}
+            <FilterPills
+              options={statusOptions}
+              activeOption={statusFilter}
+              onOptionChange={setStatusFilter}
+            />
+
+            {/* Reason Filter Pills */}
+            <FilterPills
+              options={reasonOptions}
+              activeOption={reasonFilter}
+              onOptionChange={setReasonFilter}
+            />
+
+            {/* Stage Filter Pills */}
+            <FilterPills
+              options={stageOptions}
+              activeOption={stageFilter}
+              onOptionChange={setStageFilter}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Orders Table */}

@@ -96,14 +96,14 @@ export function TopBar({ user, onUserChange, onToggleSidebar, onNavigate, onSear
           </button>
           
           {/* Global Search */}
-          <form onSubmit={handleSearch} className="relative max-w-md">
+          <form onSubmit={handleSearch} className="relative w-96">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
               type="text"
               placeholder="Search by orders, customers..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-[#E8E6CF] dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-[#007BFF] focus:border-transparent w-full bg-[#F5F4E7] dark:bg-gray-700 focus:bg-[#F5F4E7] dark:focus:bg-gray-600 transition-colors text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+              className="pl-10 pr-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#00473A] focus:border-transparent w-full bg-white text-gray-900 placeholder-gray-400 transition-colors"
             />
           </form>
         </div>

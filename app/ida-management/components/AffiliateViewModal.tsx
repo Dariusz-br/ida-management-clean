@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { X, Copy, Download, Mail, Phone, MapPin, DollarSign, Link, FileText, User, TrendingUp, BarChart3, Calendar, Globe, CreditCard } from 'lucide-react'
+import { MinimalTabs } from './MinimalTabs'
 
 interface AffiliateViewModalProps {
   isOpen: boolean
@@ -48,6 +49,13 @@ export function AffiliateViewModal({ isOpen, onClose, affiliate }: AffiliateView
     { id: 'links', label: 'Referral Links', icon: Link }
   ]
 
+  const modalTabs = [
+    { id: 'overview', label: 'Overview', icon: BarChart3 },
+    { id: 'performance', label: 'Performance', icon: TrendingUp },
+    { id: 'payment', label: 'Payment', icon: DollarSign },
+    { id: 'links', label: 'Referral Links', icon: Link }
+  ]
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-6xl max-h-[90vh] overflow-y-auto">
@@ -65,26 +73,12 @@ export function AffiliateViewModal({ isOpen, onClose, affiliate }: AffiliateView
         </div>
 
         {/* Tab Navigation */}
-        <div className="border-b border-gray-200">
-          <nav className="flex space-x-8 px-6">
-            {tabs.map((tab) => {
-              const Icon = tab.icon
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
-                    activeTab === tab.id
-                      ? 'border-green-500 text-green-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span>{tab.label}</span>
-                </button>
-              )
-            })}
-          </nav>
+        <div className="px-6 py-4">
+          <MinimalTabs
+            tabs={modalTabs}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
         </div>
 
         <div className="p-6">
