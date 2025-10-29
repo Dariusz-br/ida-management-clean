@@ -713,108 +713,135 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
           </div>
         </div>
 
-        {/* Global Sales Overview */}
+        {/* Recent Activities */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700">
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-[#333333]">Global Sales Overview</h3>
+              <h3 className="text-lg font-semibold text-[#333333]">Recent Activities</h3>
               <div className="flex items-center space-x-1 text-xs text-[#666666]">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>Live data</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span>Live updates</span>
               </div>
             </div>
           </div>
           <div className="p-6">
-            {/* World Map */}
-            <div className="mb-6">
-              <div className="bg-[#F5F4E7] rounded-lg p-4 border border-[#E8E6CF]">
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-sm font-semibold text-[#333333]">Global Sales Map</h4>
-                  <div className="text-xs text-[#666666] bg-white px-2 py-1 rounded">
-                    Total Revenue: $2.2M
+            <div className="space-y-4">
+              {/* Activity Card 1 */}
+              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-[#333333]">Order #IDA-2024-001 completed</p>
+                      <span className="text-xs text-[#666666]">2 min ago</span>
+                    </div>
+                    <p className="text-xs text-[#666666] mt-1">John Doe's Digital IDP order has been successfully processed and shipped</p>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+                        Completed
+                      </span>
+                      <span className="text-xs text-[#666666]">$89.99</span>
+                    </div>
                   </div>
                 </div>
-                
-                {/* Realistic World Map with Green Countries */}
-                <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden">
-                  <svg viewBox="0 0 800 400" className="w-full h-full">
-                    {/* United States - More realistic shape */}
-                    <path d="M80 120 Q90 100 110 110 Q130 105 150 120 Q160 140 150 160 Q130 170 110 165 Q90 160 80 140 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="115" y="140" className="text-xs fill-white font-semibold">US</text>
-                    
-                    {/* Canada - Above US */}
-                    <path d="M90 80 Q110 70 130 85 Q140 100 130 115 Q110 120 90 110 Q80 95 90 80 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="110" y="100" className="text-xs fill-white font-semibold">CA</text>
-                    
-                    {/* United Kingdom - Island shape */}
-                    <path d="M420 100 Q425 95 430 100 Q435 105 430 110 Q425 115 420 110 Q415 105 420 100 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="425" y="108" className="text-xs fill-white font-semibold">UK</text>
-                    
-                    {/* Germany - Central European shape */}
-                    <path d="M450 110 Q460 105 470 115 Q475 125 470 135 Q460 140 450 135 Q440 130 445 120 Q450 110 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="460" y="125" className="text-xs fill-white font-semibold">DE</text>
-                    
-                    {/* China - Large Asian country */}
-                    <path d="M580 100 Q620 95 660 105 Q680 120 670 140 Q650 150 620 145 Q590 140 580 125 Q575 110 580 100 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="625" y="125" className="text-xs fill-white font-semibold">CN</text>
-                    
-                    {/* Japan - Island chain */}
-                    <path d="M700 110 Q705 105 710 110 Q715 115 710 120 Q705 125 700 120 Q695 115 700 110 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="705" y="118" className="text-xs fill-white font-semibold">JP</text>
-                    
-                    {/* India - Triangular shape */}
-                    <path d="M520 140 Q540 130 560 140 Q570 160 550 170 Q530 175 520 165 Q515 150 520 140 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="545" y="155" className="text-xs fill-white font-semibold">IN</text>
-                    
-                    {/* Australia - Island continent */}
-                    <path d="M650 220 Q680 210 710 220 Q720 240 710 260 Q680 270 650 260 Q640 240 650 220 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="680" y="245" className="text-xs fill-white font-semibold">AU</text>
-                    
-                    {/* Brazil - South American shape */}
-                    <path d="M200 200 Q220 190 240 200 Q250 220 240 240 Q220 250 200 240 Q190 220 200 200 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="220" y="225" className="text-xs fill-white font-semibold">BR</text>
-                    
-                    {/* France - European shape */}
-                    <path d="M400 120 Q410 115 420 125 Q425 135 420 145 Q410 150 400 145 Q395 135 400 120 Z" fill="#10B981" stroke="#E5E7EB" strokeWidth="1" />
-                    <text x="410" y="135" className="text-xs fill-white font-semibold">FR</text>
-                    
-                    {/* Background continents (grey) */}
-                    <path d="M300 100 Q350 90 400 100 Q450 110 500 100 Q550 90 600 100 Q650 110 700 100 Q750 90 780 100 Q790 120 780 140 Q750 150 700 140 Q650 130 600 140 Q550 150 500 140 Q450 130 400 140 Q350 150 300 140 Q270 130 280 110 Q300 100 Z" fill="#E5E7EB" stroke="#D1D5DB" strokeWidth="1" />
-                    
-                    {/* Africa */}
-                    <path d="M400 180 Q420 170 440 180 Q450 200 440 220 Q420 230 400 220 Q390 200 400 180 Z" fill="#E5E7EB" stroke="#D1D5DB" strokeWidth="1" />
-                    
-                    {/* South America background */}
-                    <path d="M150 200 Q200 190 250 200 Q300 210 350 200 Q400 190 450 200 Q500 210 550 200 Q600 190 650 200 Q700 210 750 200 Q780 220 750 240 Q700 250 650 240 Q600 230 550 240 Q500 250 450 240 Q400 230 350 240 Q300 250 250 240 Q200 230 150 240 Q120 220 150 200 Z" fill="#E5E7EB" stroke="#D1D5DB" strokeWidth="1" />
-                  </svg>
-                  
-                  {/* Map Legend */}
-                  <div className="absolute bottom-2 left-2 bg-white rounded px-2 py-1 text-xs">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded"></div>
-                      <span>Sales Countries</span>
+              </div>
+
+              {/* Activity Card 2 */}
+              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <ShoppingCart className="w-4 h-4 text-blue-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-[#333333]">New order received</p>
+                      <span className="text-xs text-[#666666]">5 min ago</span>
+                    </div>
+                    <p className="text-xs text-[#666666] mt-1">Sarah Johnson placed a VIP Express order for Physical + Digital package</p>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                        Processing
+                      </span>
+                      <span className="text-xs text-[#666666]">$199.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Activity Card 3 */}
+              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <AlertCircle className="w-4 h-4 text-orange-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-[#333333]">Document approval required</p>
+                      <span className="text-xs text-[#666666]">12 min ago</span>
+                    </div>
+                    <p className="text-xs text-[#666666] mt-1">Mike Wilson's selfie photo needs review before processing order #IDA-2024-003</p>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                        Pending Review
+                      </span>
+                      <span className="text-xs text-[#666666]">$89.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Activity Card 4 */}
+              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Users className="w-4 h-4 text-purple-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-[#333333]">New customer registered</p>
+                      <span className="text-xs text-[#666666]">18 min ago</span>
+                    </div>
+                    <p className="text-xs text-[#666666] mt-1">Emma Davis created an account and is browsing Digital IDP products</p>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+                        New User
+                      </span>
+                      <span className="text-xs text-[#666666]">Canada</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Activity Card 5 */}
+              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+                <div className="flex items-start space-x-3">
+                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <RotateCcw className="w-4 h-4 text-red-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-medium text-[#333333]">Refund processed</p>
+                      <span className="text-xs text-[#666666]">25 min ago</span>
+                    </div>
+                    <p className="text-xs text-[#666666] mt-1">Order #IDA-2024-004 refunded due to customer request - $199.99 returned</p>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
+                        Refunded
+                      </span>
+                      <span className="text-xs text-[#666666]">$199.99</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Summary Stats */}
-            <div className="bg-[#F5F4E7] rounded-lg p-4 border border-[#E8E6CF]">
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-lg font-bold text-[#333333]">10</div>
-                  <div className="text-sm text-[#666666]">Countries</div>
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-green-600">$2.2M</div>
-                  <div className="text-sm text-[#666666]">Revenue</div>
-                </div>
-                <div>
-                  <div className="text-lg font-bold text-blue-600">555.0K</div>
-                  <div className="text-sm text-[#666666]">Visits</div>
-                </div>
-              </div>
+            {/* View All Activities Button */}
+            <div className="mt-6 text-center">
+              <button className="text-sm text-[#00473A] hover:text-[#00473A]/80 font-medium transition-colors">
+                View All Activities →
+              </button>
             </div>
           </div>
         </div>
