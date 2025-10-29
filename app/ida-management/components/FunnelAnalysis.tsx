@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { TrendingDown, TrendingUp, Users, Eye, Upload, CreditCard, CheckCircle, AlertCircle, Filter } from 'lucide-react'
+import { TrendingDown, TrendingUp, Users, Eye, Upload, CreditCard, CheckCircle, AlertCircle, Calendar, Filter } from 'lucide-react'
 import { DateFilterButton } from './DateFilterButton'
 
 export function FunnelAnalysis() {
