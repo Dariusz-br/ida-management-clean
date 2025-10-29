@@ -16,7 +16,7 @@ export function Affiliates() {
   const [showViewModal, setShowViewModal] = useState(false)
   const [showPayoutModal, setShowPayoutModal] = useState(false)
   const [selectedAffiliate, setSelectedAffiliate] = useState(null)
-  const [selectedPayout, setSelectedPayout] = useState(null)
+  const [selectedPayout, setSelectedPayout] = useState<any>(null)
   const [activeTab, setActiveTab] = useState('affiliates') // 'affiliates' or 'payouts'
   const [affiliates, setAffiliates] = useState([
     {
