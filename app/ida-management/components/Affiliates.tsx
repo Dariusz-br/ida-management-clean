@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Edit, Trash2, Eye, Users, DollarSign, TrendingUp, Download, MoreHorizontal, CreditCard, Calendar, CheckCircle, Clock, AlertCircle, Send, RotateCcw } from 'lucide-react'
+import { Plus, Search, Filter, Edit, Trash2, Eye, Users, DollarSign, TrendingUp, Download, MoreHorizontal, CreditCard, Calendar, CheckCircle, Clock, AlertCircle, Send, RotateCcw, X } from 'lucide-react'
 import { AffiliateCreateModal } from './AffiliateCreateModal'
 import { AffiliateEditModal } from './AffiliateEditModal'
 import { AffiliateViewModal } from './AffiliateViewModal'
@@ -14,7 +14,9 @@ export function Affiliates() {
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const [showViewModal, setShowViewModal] = useState(false)
+  const [showPayoutModal, setShowPayoutModal] = useState(false)
   const [selectedAffiliate, setSelectedAffiliate] = useState(null)
+  const [selectedPayout, setSelectedPayout] = useState(null)
   const [activeTab, setActiveTab] = useState('affiliates') // 'affiliates' or 'payouts'
   const [affiliates, setAffiliates] = useState([
     {
@@ -253,6 +255,11 @@ export function Affiliates() {
         ? { ...payout, status: 'pending', processedDate: null }
         : payout
     ))
+  }
+
+  const handleViewPayout = (payout: any) => {
+    setSelectedPayout(payout)
+    setShowPayoutModal(true)
   }
 
   // Apply additional filters to search results
@@ -699,6 +706,7 @@ export function Affiliates() {
                           </button>
                         )}
                         <button 
+                          onClick={() => handleViewPayout(payout)}
                           className="text-gray-600 hover:text-gray-800"
                           title="View Details"
                         >
@@ -739,6 +747,183 @@ export function Affiliates() {
         }}
         affiliate={selectedAffiliate}
       />
+
+      {/* Payout Details Modal */}
+      {showPayoutModal && selectedPayout && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-gray-900">Payout Details</h2>
+                <button
+                  onClick={() => {
+                    setShowPayoutModal(false)
+                    setSelectedPayout(null)
+                  }}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Payout Overview */}
+                <div className="bg-[#F5F4E7] rounded-xl p-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-gray-600">Payout Amount</p>
+                      <p className="text-2xl font-bold text-gray-900">${selectedPayout.amount.toFixed(2)}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Status</p>
+                      <span className={`inline-flex items-center px-3 py-1 text-sm font-semibold rounded-full ${getPayoutStatusColor(selectedPayout.status)}`}>
+                        {getPayoutStatusIcon(selectedPayout.status)}
+                        <span className="ml-1">{selectedPayout.status}</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Affiliate Information */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Affiliate Information</h3>
+                  <div className="bg-white border border-[#E8E6CF] rounded-xl p-4">
+                    <div className="flex items-center mb-3">
+                      <div className="w-12 h-12 bg-[#E8E6CF] rounded-full flex items-center justify-center mr-4">
+                        <span className="text-lg font-medium text-gray-700">
+                          {selectedPayout.affiliateName.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{selectedPayout.affiliateName}</p>
+                        <p className="text-sm text-gray-500">ID: {selectedPayout.affiliateId}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Payment Details */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Payment Details</h3>
+                  <div className="bg-white border border-[#E8E6CF] rounded-xl p-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-600">Payment Method</p>
+                        <div className="flex items-center mt-1">
+                          <CreditCard className="w-4 h-4 mr-2 text-gray-400" />
+                          <span className="text-sm font-medium text-gray-900">
+                            {selectedPayout.paymentMethod.replace('_', ' ').toUpperCase()}
+                          </span>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Commission Rate</p>
+                        <p className="text-sm font-medium text-gray-900">{selectedPayout.commission}%</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Payment Date</p>
+                        <div className="flex items-center mt-1">
+                          <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+                          <span className="text-sm font-medium text-gray-900">
+                            {formatDate(selectedPayout.paymentDate)}
+                          </span>
+                        </div>
+                      </div>
+                      {selectedPayout.processedDate && (
+                        <div>
+                          <p className="text-sm text-gray-600">Processed Date</p>
+                          <div className="flex items-center mt-1">
+                            <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+                            <span className="text-sm font-medium text-gray-900">
+                              {formatDate(selectedPayout.processedDate)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Period & Transactions */}
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Period & Transactions</h3>
+                  <div className="bg-white border border-[#E8E6CF] rounded-xl p-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-gray-600">Period</p>
+                        <p className="text-sm font-medium text-gray-900">{selectedPayout.period}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Number of Transactions</p>
+                        <p className="text-sm font-medium text-gray-900">{selectedPayout.transactions}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notes */}
+                {selectedPayout.notes && (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Notes</h3>
+                    <div className="bg-white border border-[#E8E6CF] rounded-xl p-4">
+                      <p className="text-sm text-gray-700">{selectedPayout.notes}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex justify-end space-x-3 pt-4 border-t border-[#E8E6CF]">
+                  <button
+                    onClick={() => {
+                      setShowPayoutModal(false)
+                      setSelectedPayout(null)
+                    }}
+                    className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
+                  >
+                    Close
+                  </button>
+                  {selectedPayout.status === 'pending' && (
+                    <>
+                      <button
+                        onClick={() => {
+                          handleProcessPayout(selectedPayout.id)
+                          setShowPayoutModal(false)
+                          setSelectedPayout(null)
+                        }}
+                        className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-xl hover:bg-blue-700"
+                      >
+                        Process Payout
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleMarkPaid(selectedPayout.id)
+                          setShowPayoutModal(false)
+                          setSelectedPayout(null)
+                        }}
+                        className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-xl hover:bg-green-700"
+                      >
+                        Mark as Paid
+                      </button>
+                    </>
+                  )}
+                  {selectedPayout.status === 'failed' && (
+                    <button
+                      onClick={() => {
+                        handleRetryPayout(selectedPayout.id)
+                        setShowPayoutModal(false)
+                        setSelectedPayout(null)
+                      }}
+                      className="px-4 py-2 text-sm font-medium text-white bg-orange-600 rounded-xl hover:bg-orange-700"
+                    >
+                      Retry Payout
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
