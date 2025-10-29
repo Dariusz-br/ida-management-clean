@@ -696,84 +696,140 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">Fullfilment Details</h3>
-              <button
-                onClick={() => setEditingFulfillment(!editingFulfillment)}
-                className="p-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors"
-                title="Edit Fulfillment Details"
-              >
-                <Edit className="w-4 h-4" />
-              </button>
+              {order.status !== 'abandoned' && (
+                <button
+                  onClick={() => setEditingFulfillment(!editingFulfillment)}
+                  className="p-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors"
+                  title="Edit Fulfillment Details"
+                >
+                  <Edit className="w-4 h-4" />
+                </button>
+              )}
             </div>
             
-            <div className="space-y-4">
-              {/* Shipping Carriers */}
-              <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
-                <span className="text-sm font-medium text-gray-900">Shipping Carriers</span>
-                {editingFulfillment ? (
-                  <select
-                    value={editedFulfillment.carrier}
-                    onChange={(e) => setEditedFulfillment({...editedFulfillment, carrier: e.target.value})}
-                    className="text-sm text-gray-600 border border-[#E8E6CF] rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="USPS Standard shipping">USPS Standard shipping</option>
-                    <option value="FedEx Express">FedEx Express</option>
-                    <option value="DHL Express">DHL Express</option>
-                    <option value="UPS Ground">UPS Ground</option>
-                  </select>
-                ) : (
-                  <span className="text-sm text-gray-600">{order.tracking?.carrier || 'USPS Standard shipping'}</span>
-                )}
-              </div>
+            {order.status === 'abandoned' ? (
+              <div className="space-y-4">
+                {/* Abandoned Order Message */}
+                <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+                  <div className="flex items-center">
+                    <AlertCircle className="w-5 h-5 text-orange-600 mr-3" />
+                    <div>
+                      <h4 className="text-sm font-medium text-orange-800">Order Abandoned</h4>
+                      <p className="text-sm text-orange-700 mt-1">
+                        This order was abandoned and has no fulfillment details. 
+                        {order.abandonmentReason && (
+                          <span> Reason: {order.abandonmentReason.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
-              {/* Tracking Number */}
-              <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
-                <span className="text-sm font-medium text-gray-900">Tracking number</span>
-                {editingFulfillment ? (
-                  <input
-                    type="text"
-                    value={editedFulfillment.trackingNumber}
-                    onChange={(e) => setEditedFulfillment({...editedFulfillment, trackingNumber: e.target.value})}
-                    className="text-sm text-gray-600 border border-[#E8E6CF] rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
-                    placeholder="Enter tracking number"
-                  />
-                ) : (
-                  <span className="text-sm text-gray-600 font-mono">{order.tracking?.number || 'IPA-12416273883'}</span>
-                )}
-              </div>
+                {/* Empty Fulfillment Details */}
+                <div className="space-y-4">
+                  {/* Shipping Carriers */}
+                  <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
+                    <span className="text-sm font-medium text-gray-900">Shipping Carriers</span>
+                    <span className="text-sm text-gray-400 italic">Not applicable</span>
+                  </div>
 
-              {/* Fulfillment Center */}
-              <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
-                <span className="text-sm font-medium text-gray-900">Fulfillment Center</span>
-                {editingFulfillment ? (
-                  <OperationDropdown
-                    currentOperation={editedFulfillment.operation}
-                    onOperationChange={(operation) => setEditedFulfillment({...editedFulfillment, operation: operation as 'UK OP' | 'China OP'})}
-                  />
-                ) : (
-                  <span className="text-sm text-gray-600">{currentOperation}</span>
-                )}
-              </div>
+                  {/* Tracking Number */}
+                  <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
+                    <span className="text-sm font-medium text-gray-900">Tracking number</span>
+                    <span className="text-sm text-gray-400 italic">Not assigned</span>
+                  </div>
 
-              {/* Document Status */}
-              <div className="flex items-center justify-between py-3">
-                <span className="text-sm font-medium text-gray-900">Document Status</span>
-                <div className="flex items-center space-x-2">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    order.fulfillment?.generated ? 'bg-green-100 text-green-800' : 'bg-[#F5F4E7] text-gray-800'
-                  }`}>
-                    {order.fulfillment?.generated ? 'Generated' : 'Not Generated'}
-                  </span>
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                    order.fulfillment?.printed ? 'bg-green-100 text-green-800' : 'bg-[#F5F4E7] text-gray-800'
-                  }`}>
-                    {order.fulfillment?.printed ? 'Printed' : 'Not Printed'}
-                  </span>
+                  {/* Fulfillment Center */}
+                  <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
+                    <span className="text-sm font-medium text-gray-900">Fulfillment Center</span>
+                    <span className="text-sm text-gray-400 italic">Not assigned</span>
+                  </div>
+
+                  {/* Document Status */}
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-sm font-medium text-gray-900">Document Status</span>
+                    <div className="flex items-center space-x-2">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-500">
+                        Not Generated
+                      </span>
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-500">
+                        Not Printed
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <div className="space-y-4">
+                {/* Shipping Carriers */}
+                <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
+                  <span className="text-sm font-medium text-gray-900">Shipping Carriers</span>
+                  {editingFulfillment ? (
+                    <select
+                      value={editedFulfillment.carrier}
+                      onChange={(e) => setEditedFulfillment({...editedFulfillment, carrier: e.target.value})}
+                      className="text-sm text-gray-600 border border-[#E8E6CF] rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="USPS Standard shipping">USPS Standard shipping</option>
+                      <option value="FedEx Express">FedEx Express</option>
+                      <option value="DHL Express">DHL Express</option>
+                      <option value="UPS Ground">UPS Ground</option>
+                    </select>
+                  ) : (
+                    <span className="text-sm text-gray-600">{order.tracking?.carrier || 'USPS Standard shipping'}</span>
+                  )}
+                </div>
+
+                {/* Tracking Number */}
+                <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
+                  <span className="text-sm font-medium text-gray-900">Tracking number</span>
+                  {editingFulfillment ? (
+                    <input
+                      type="text"
+                      value={editedFulfillment.trackingNumber}
+                      onChange={(e) => setEditedFulfillment({...editedFulfillment, trackingNumber: e.target.value})}
+                      className="text-sm text-gray-600 border border-[#E8E6CF] rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono"
+                      placeholder="Enter tracking number"
+                    />
+                  ) : (
+                    <span className="text-sm text-gray-600 font-mono">{order.tracking?.number || 'IPA-12416273883'}</span>
+                  )}
+                </div>
+
+                {/* Fulfillment Center */}
+                <div className="flex items-center justify-between py-3 border-b border-[#E8E6CF]">
+                  <span className="text-sm font-medium text-gray-900">Fulfillment Center</span>
+                  {editingFulfillment ? (
+                    <OperationDropdown
+                      currentOperation={editedFulfillment.operation}
+                      onOperationChange={(operation) => setEditedFulfillment({...editedFulfillment, operation: operation as 'UK OP' | 'China OP'})}
+                    />
+                  ) : (
+                    <span className="text-sm text-gray-600">{currentOperation}</span>
+                  )}
+                </div>
+
+                {/* Document Status */}
+                <div className="flex items-center justify-between py-3">
+                  <span className="text-sm font-medium text-gray-900">Document Status</span>
+                  <div className="flex items-center space-x-2">
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      order.fulfillment?.generated ? 'bg-green-100 text-green-800' : 'bg-[#F5F4E7] text-gray-800'
+                    }`}>
+                      {order.fulfillment?.generated ? 'Generated' : 'Not Generated'}
+                    </span>
+                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                      order.fulfillment?.printed ? 'bg-green-100 text-green-800' : 'bg-[#F5F4E7] text-gray-800'
+                    }`}>
+                      {order.fulfillment?.printed ? 'Printed' : 'Not Printed'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Edit Actions */}
-            {editingFulfillment && (
+            {editingFulfillment && order.status !== 'abandoned' && (
               <div className="flex items-center justify-end space-x-3 mt-6 pt-4 border-t border-[#E8E6CF]">
                 <button
                   onClick={() => {
