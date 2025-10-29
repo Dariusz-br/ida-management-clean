@@ -7,10 +7,12 @@ import { OrdersReport } from './OrdersReport'
 import { CustomerReport } from './CustomerReport'
 import { FunnelAnalysis } from './FunnelAnalysis'
 import { MinimalTabs } from './MinimalTabs'
+import { DateFilterButton } from './DateFilterButton'
 
 export function Reports() {
   const [selectedReport, setSelectedReport] = useState('revenue')
-  const [dateRange, setDateRange] = useState('last_30_days')
+  const [dateRange, setDateRange] = useState('today')
+  const [isDateOpen, setIsDateOpen] = useState(false)
   const [showExportModal, setShowExportModal] = useState(false)
 
   const reportTypes = [
@@ -48,10 +50,11 @@ export function Reports() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-gray-900">Reports & Analytics</h1>
         <div className="flex items-center space-x-3">
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
-            <Filter className="w-4 h-4" />
-            <span>Filters</span>
-          </button>
+          <DateFilterButton 
+            label="Today" 
+            onClick={() => setIsDateOpen(!isDateOpen)} 
+            isOpen={isDateOpen}
+          />
           <button 
             onClick={() => setShowExportModal(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
@@ -72,27 +75,7 @@ export function Reports() {
         />
       </div>
 
-      {/* Date Range Selection */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">Date Range</h3>
-          <div className="flex items-center space-x-2">
-            <Calendar className="w-4 h-4 text-gray-500" />
-            <select
-              value={dateRange}
-              onChange={(e) => setDateRange(e.target.value)}
-              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="today">Today</option>
-              <option value="yesterday">Yesterday</option>
-              <option value="last_7_days">Last 7 Days</option>
-              <option value="last_30_days">Last 30 Days</option>
-              <option value="last_90_days">Last 90 Days</option>
-              <option value="custom">Custom Range</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      {/* Date Range Selection removed as requested; using quick Today button in header */}
 
       {/* Revenue Report */}
       {selectedReport === 'revenue' && (
