@@ -727,7 +727,16 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
           <div className="p-6">
             <div className="space-y-4">
               {/* Activity Card 1 */}
-              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+              <div 
+                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
+                onClick={() => {
+                  // Find the order with ID IDA-2024-001
+                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-001')
+                  if (order && onOrderSelect) {
+                    onOrderSelect(order as Order)
+                  }
+                }}
+              >
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <CheckCircle className="w-4 h-4 text-green-600" />
@@ -749,7 +758,16 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               </div>
 
               {/* Activity Card 2 */}
-              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+              <div 
+                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
+                onClick={() => {
+                  // Find the order with ID IDA-2024-002
+                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-002')
+                  if (order && onOrderSelect) {
+                    onOrderSelect(order as Order)
+                  }
+                }}
+              >
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <ShoppingCart className="w-4 h-4 text-blue-600" />
@@ -771,7 +789,16 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               </div>
 
               {/* Activity Card 3 */}
-              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+              <div 
+                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
+                onClick={() => {
+                  // Find the order with ID IDA-2024-003
+                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-003')
+                  if (order && onOrderSelect) {
+                    onOrderSelect(order as Order)
+                  }
+                }}
+              >
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <AlertCircle className="w-4 h-4 text-orange-600" />
@@ -792,7 +819,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                 </div>
               </div>
 
-              {/* Activity Card 4 */}
+              {/* Activity Card 4 - Non-clickable (customer registration) */}
               <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -815,7 +842,16 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               </div>
 
               {/* Activity Card 5 */}
-              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
+              <div 
+                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
+                onClick={() => {
+                  // Find the order with ID IDA-2024-004
+                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-004')
+                  if (order && onOrderSelect) {
+                    onOrderSelect(order as Order)
+                  }
+                }}
+              >
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <RotateCcw className="w-4 h-4 text-red-600" />
