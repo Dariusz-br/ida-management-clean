@@ -85,7 +85,10 @@ export function OperationDropdown({ currentOperation, onOperationChange, disable
               return (
                 <button
                   key={operation}
-                  onClick={() => !isCurrentOperation && handleOperationChange(operation)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    !isCurrentOperation && handleOperationChange(operation)
+                  }}
                   disabled={isCurrentOperation}
                   className={`w-full flex items-start px-3 py-3 text-sm ${
                     isCurrentOperation 

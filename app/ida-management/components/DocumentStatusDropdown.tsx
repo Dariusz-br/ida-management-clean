@@ -110,7 +110,10 @@ export function DocumentStatusDropdown({
                 return (
                   <button
                     key={status}
-                    onClick={() => handleStatusChange(status)}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleStatusChange(status)
+                    }}
                     className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
                   >
                     <Icon className="w-4 h-4 mr-3" />

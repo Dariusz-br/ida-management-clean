@@ -107,7 +107,10 @@ export function StatusDropdown({ currentStatus, onStatusChange, disabled = false
               return (
                 <button
                   key={status}
-                  onClick={() => !isCurrentStatus && handleStatusChange(status)}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    !isCurrentStatus && handleStatusChange(status)
+                  }}
                   disabled={isCurrentStatus}
                   className={`w-full flex items-center px-3 py-2 text-sm whitespace-nowrap ${
                     isCurrentStatus 

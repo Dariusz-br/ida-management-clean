@@ -73,7 +73,10 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
               return (
                 <button
                   key={status}
-                  onClick={() => handleStatusChange(status as 'pending_review' | 'on_hold' | 'reviewed')}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleStatusChange(status as 'pending_review' | 'on_hold' | 'reviewed')
+                  }}
                   className={`w-full flex items-center px-3 py-2 text-sm whitespace-nowrap ${
                     status === currentStatus 
                       ? 'bg-[#F5F4E7] text-gray-500 cursor-not-allowed' 
