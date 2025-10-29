@@ -6,7 +6,6 @@ import { DateFilterButton } from './DateFilterButton'
 
 export function FunnelAnalysis() {
   const [dateRange, setDateRange] = useState('today')
-  const [isDateOpen, setIsDateOpen] = useState(false)
   const [funnelType, setFunnelType] = useState('conversion')
 
   // Mock funnel data
@@ -118,24 +117,7 @@ export function FunnelAnalysis() {
 
   return (
     <div className="space-y-6">
-      {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <div className="flex items-center space-x-4">
-          <DateFilterButton label="Today" onClick={() => setIsDateOpen(!isDateOpen)} isOpen={isDateOpen} />
-          <div className="flex items-center space-x-2">
-            <Filter className="w-4 h-4 text-gray-500" />
-            <select
-              value={funnelType}
-              onChange={(e) => setFunnelType(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="conversion">Conversion Funnel</option>
-              <option value="recovery">Recovery Funnel</option>
-              <option value="mobile">Mobile Funnel</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      {/* Filters removed per spec (using global Today button in header) */}
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

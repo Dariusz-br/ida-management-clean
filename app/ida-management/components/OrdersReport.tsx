@@ -1,14 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { TrendingUp, TrendingDown, Globe, Package, DollarSign, Users, Filter } from 'lucide-react'
-import { DateFilterButton } from './DateFilterButton'
+import { TrendingUp, TrendingDown, Globe, Package, DollarSign, Users } from 'lucide-react'
 import { getOperationByCountry, getOperationColor, getOperationIcon } from '../utils/operations'
 import { FlatFlag } from './FlatFlag'
 
 export function OrdersReport() {
   const [dateRange, setDateRange] = useState('today')
-  const [isDateOpen, setIsDateOpen] = useState(false)
   const [selectedOperation, setSelectedOperation] = useState<'all' | 'UK OP' | 'China OP'>('all')
 
   // Mock data for orders report
@@ -159,24 +157,7 @@ export function OrdersReport() {
 
   return (
     <div className="space-y-6">
-      {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <div className="flex items-center space-x-4">
-          <DateFilterButton label="Today" onClick={() => setIsDateOpen(!isDateOpen)} isOpen={isDateOpen} />
-          <div className="flex items-center space-x-2">
-            <Filter className="w-4 h-4 text-gray-500" />
-            <select
-              value={selectedOperation}
-              onChange={(e) => setSelectedOperation(e.target.value as 'all' | 'UK OP' | 'China OP')}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="all">All Operations</option>
-              <option value="UK OP">UK Operation</option>
-              <option value="China OP">China Operation</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      {/* Filters removed per spec (using global Today button in header) */}
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
