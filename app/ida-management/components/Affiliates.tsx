@@ -791,7 +791,7 @@ export function Affiliates() {
                     <div className="flex items-center mb-3">
                       <div className="w-12 h-12 bg-[#E8E6CF] rounded-full flex items-center justify-center mr-4">
                         <span className="text-lg font-medium text-gray-700">
-                          {selectedPayout.affiliateName.split(' ').map(n => n[0]).join('')}
+                          {selectedPayout.affiliateName.split(' ').map((n: string) => n[0]).join('')}
                         </span>
                       </div>
                       <div>
