@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Users, TrendingUp, DollarSign, Calendar, MapPin, Star, Repeat, Filter } from 'lucide-react'
+import { Users, TrendingUp, DollarSign, MapPin, Star, Repeat, Filter } from 'lucide-react'
+import { DateFilterButton } from './DateFilterButton'
 
 export function CustomerReport() {
-  const [dateRange, setDateRange] = useState('last_30_days')
+  const [dateRange, setDateRange] = useState('today')
+  const [isDateOpen, setIsDateOpen] = useState(false)
   const [segment, setSegment] = useState('all')
 
   // Mock customer data
@@ -180,19 +182,7 @@ export function CustomerReport() {
       {/* Filters */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
         <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Calendar className="w-4 h-4 text-gray-500" />
-            <select
-              value={dateRange}
-              onChange={(e) => setDateRange(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
-            >
-              <option value="last_7_days">Last 7 days</option>
-              <option value="last_30_days">Last 30 days</option>
-              <option value="last_90_days">Last 90 days</option>
-              <option value="last_year">Last year</option>
-            </select>
-          </div>
+          <DateFilterButton label="Today" onClick={() => setIsDateOpen(!isDateOpen)} isOpen={isDateOpen} />
           <div className="flex items-center space-x-2">
             <Filter className="w-4 h-4 text-gray-500" />
             <select
