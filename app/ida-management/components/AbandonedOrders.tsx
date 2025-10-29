@@ -461,12 +461,30 @@ export function AbandonedOrders({ onOrderSelect, initialSearchTerm = '' }: Aband
                         <Phone className="w-4 h-4" />
                       </button>
                       <OrderActionsDropdown
-                        orderId={order.id}
-                        onStatusChange={() => {}}
-                        onCancel={() => {}}
-                        onRegenerateBooklet={() => {}}
-                        onRegenerateCard={() => {}}
-                        onArchive={() => {}}
+                        order={order}
+                        onAction={(action, order) => {
+                          console.log('Action:', action, 'Order:', order)
+                          // Handle different actions here
+                          switch (action) {
+                            case 'cancel':
+                              // Handle cancel order
+                              break
+                            case 'regenerate_booklet':
+                              // Handle regenerate booklet
+                              break
+                            case 'regenerate_card':
+                              // Handle regenerate card
+                              break
+                            case 'archive':
+                              // Handle archive order
+                              break
+                            case 'view':
+                              onOrderSelect(order)
+                              break
+                            default:
+                              break
+                          }
+                        }}
                       />
                     </div>
                   </td>
