@@ -909,12 +909,19 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
             <tbody className="bg-white divide-y divide-[#E8E6CF]">
               {sharedOrdersData.map((order) => {
                 return (
-                  <tr key={order.id} className="hover:bg-[#F5F4E7]">
+                  <tr 
+                    key={order.id} 
+                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    onClick={() => onOrderSelect?.(order as Order)}
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <input
                         type="checkbox"
                         checked={selectedOrders.includes(order.id)}
-                        onChange={(e) => handleSelectOrder(order.id, e.target.checked)}
+                        onChange={(e) => {
+                          e.stopPropagation()
+                          handleSelectOrder(order.id, e.target.checked)
+                        }}
                         className="rounded border-[#E8E6CF]"
                       />
                     </td>
@@ -997,14 +1004,20 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center space-x-2">
         <button
-          onClick={() => onOrderSelect?.(order as Order)}
+          onClick={(e) => {
+            e.stopPropagation()
+            onOrderSelect?.(order as Order)
+          }}
           className="text-[#00473A] hover:text-[#00473A]/80"
           title="View Order"
         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => handleStatusModalOpen(order as Order)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleStatusModalOpen(order as Order)
+                          }}
                           className="p-2 text-blue-600 hover:text-blue-800 bg-[#E2EAFF] rounded-lg"
                           title="Change Status"
                         >

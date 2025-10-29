@@ -64,7 +64,10 @@ export function OrderActionsDropdown({ order, onAction }: OrderActionsDropdownPr
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={(e) => {
+          e.stopPropagation()
+          setIsOpen(!isOpen)
+        }}
         className="text-gray-400 hover:text-gray-600 p-1 rounded-xl hover:bg-gray-100"
         title="More actions"
       >

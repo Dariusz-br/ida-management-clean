@@ -529,7 +529,11 @@ export function Affiliates() {
               </thead>
               <tbody className="bg-white divide-y divide-[#E8E6CF]">
                 {filteredAffiliates.map((affiliate) => (
-                  <tr key={affiliate.id} className="hover:bg-[#F5F4E7]">
+                  <tr 
+                    key={affiliate.id} 
+                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    onClick={() => handleViewAffiliate(affiliate)}
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="w-10 h-10 bg-[#E8E6CF] rounded-full flex items-center justify-center">
@@ -567,21 +571,30 @@ export function Affiliates() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center space-x-2">
                         <button 
-                          onClick={() => handleViewAffiliate(affiliate)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleViewAffiliate(affiliate)
+                          }}
                           className="text-[#00473A] hover:text-[#00473A]/80"
                           title="View Details"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button 
-                          onClick={() => handleEditClick(affiliate)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleEditClick(affiliate)
+                          }}
                           className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-xl"
                           title="Edit Affiliate"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button 
-                          onClick={() => handleDeleteAffiliate(affiliate.id)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDeleteAffiliate(affiliate.id)
+                          }}
                           className="text-red-600 hover:text-red-800"
                           title="Delete Affiliate"
                         >

@@ -175,7 +175,11 @@ export function Users() {
               {filteredUsers.map((user) => {
                 const RoleIcon = roleConfig[user.role as keyof typeof roleConfig].icon
                 return (
-                  <tr key={user.id} className="hover:bg-[#F5F4E7]">
+                  <tr 
+                    key={user.id} 
+                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    onClick={() => handleViewUser(user)}
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="w-10 h-10 bg-[#E8E6CF] rounded-full flex items-center justify-center">
@@ -211,21 +215,30 @@ export function Users() {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center space-x-2">
         <button 
-          onClick={() => handleViewUser(user)}
+          onClick={(e) => {
+            e.stopPropagation()
+            handleViewUser(user)
+          }}
           className="text-[#00473A] hover:text-[#00473A]/80"
           title="View Profile"
         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button 
-                          onClick={() => handleEditUser(user)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleEditUser(user)
+                          }}
                           className="p-2 text-gray-600 hover:text-gray-800 bg-[#E2EAFF] rounded-xl"
                           title="Edit User"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button 
-                          onClick={() => handleDeleteUser(user.id)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleDeleteUser(user.id)
+                          }}
                           className="text-red-600 hover:text-red-800"
                           title="Delete User"
                         >

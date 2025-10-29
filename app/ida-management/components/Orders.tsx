@@ -378,12 +378,19 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
             <tbody className="bg-white divide-y divide-[#E8E6CF]">
               {filteredOrders.map((order) => {
                 return (
-                  <tr key={order.id} className="hover:bg-[#F5F4E7]">
+                  <tr 
+                    key={order.id} 
+                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    onClick={() => onOrderSelect(order)}
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <input
                         type="checkbox"
                         checked={selectedOrders.includes(order.id)}
-                        onChange={(e) => handleSelectOrder(order.id, e.target.checked)}
+                        onChange={(e) => {
+                          e.stopPropagation()
+                          handleSelectOrder(order.id, e.target.checked)
+                        }}
                         className="rounded border-[#E8E6CF]"
                       />
                     </td>
@@ -466,14 +473,20 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center space-x-2">
         <button
-          onClick={() => onOrderSelect(order)}
+          onClick={(e) => {
+            e.stopPropagation()
+            onOrderSelect(order)
+          }}
           className="text-[#00473A] hover:text-[#00473A]/80"
           title="View Order"
         >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => handleStatusModalOpen(order)}
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            handleStatusModalOpen(order)
+                          }}
                           className="p-2 text-blue-600 hover:text-blue-800 bg-[#E2EAFF] rounded-xl"
                           title="Change Status"
                         >
