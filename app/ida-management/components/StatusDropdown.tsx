@@ -77,7 +77,8 @@ export function StatusDropdown({ currentStatus, onStatusChange, disabled = false
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation()
           console.log('StatusDropdown: Button clicked, disabled:', disabled, 'isOpen:', isOpen)
           !disabled && setIsOpen(!isOpen)
         }}

@@ -82,7 +82,10 @@ export function DocumentStatusDropdown({
     <>
       <div className="relative" ref={dropdownRef}>
         <button
-          onClick={() => !disabled && setIsOpen(!isOpen)}
+          onClick={(e) => {
+            e.stopPropagation()
+            !disabled && setIsOpen(!isOpen)
+          }}
           disabled={disabled}
           className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full transition-colors ${
             disabled 

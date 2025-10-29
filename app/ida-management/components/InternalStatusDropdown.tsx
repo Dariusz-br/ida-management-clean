@@ -54,7 +54,10 @@ export function InternalStatusDropdown({ currentStatus, onStatusChange }: Intern
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={(e) => {
+          e.stopPropagation()
+          setIsOpen(!isOpen)
+        }}
         className={`inline-flex items-center px-4 py-2 text-sm font-semibold rounded-xl transition-colors ${currentConfig.color} hover:opacity-80 cursor-pointer`}
       >
         <CurrentIcon className="w-4 h-4 mr-2" />

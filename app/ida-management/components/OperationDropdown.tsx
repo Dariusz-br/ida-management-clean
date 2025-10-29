@@ -55,7 +55,8 @@ export function OperationDropdown({ currentOperation, onOperationChange, disable
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation()
           console.log('OperationDropdown: Button clicked, disabled:', disabled, 'isOpen:', isOpen)
           !disabled && setIsOpen(!isOpen)
         }}
