@@ -1,14 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Search, Filter, Edit, Trash2, Eye, Users, DollarSign, TrendingUp, Download, MoreHorizontal, CreditCard, Calendar, CheckCircle, Clock, AlertCircle, Send } from 'lucide-react'
+import { Plus, Search, Filter, Edit, Trash2, Eye, Users, DollarSign, TrendingUp, Download, MoreHorizontal, CreditCard, Calendar, CheckCircle, Clock, AlertCircle, Send, RotateCcw } from 'lucide-react'
 import { AffiliateCreateModal } from './AffiliateCreateModal'
 import { AffiliateEditModal } from './AffiliateEditModal'
 import { AffiliateViewModal } from './AffiliateViewModal'
 import { useGenericSearch } from '../hooks/useSearch'
 
 export function Affiliates() {
-  const [activeTab, setActiveTab] = useState('affiliates')
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState('all')
   const [commissionFilter, setCommissionFilter] = useState('all')
@@ -16,8 +15,7 @@ export function Affiliates() {
   const [showEditModal, setShowEditModal] = useState(false)
   const [showViewModal, setShowViewModal] = useState(false)
   const [selectedAffiliate, setSelectedAffiliate] = useState(null)
-  const [payoutStatusFilter, setPayoutStatusFilter] = useState('all')
-  const [showPayoutModal, setShowPayoutModal] = useState(false)
+  const [activeTab, setActiveTab] = useState('affiliates') // 'affiliates' or 'payouts'
   const [affiliates, setAffiliates] = useState([
     {
       id: '1',
@@ -89,6 +87,7 @@ export function Affiliates() {
     }
   ])
 
+  // Payouts data
   const [payouts, setPayouts] = useState([
     {
       id: '1',
@@ -98,10 +97,9 @@ export function Affiliates() {
       status: 'paid',
       paymentMethod: 'bank_transfer',
       paymentDate: '2024-01-15T00:00:00Z',
-      processedBy: 'Jonathan Doe',
-      reference: 'PAY-2024-001',
+      processedDate: '2024-01-15T10:30:00Z',
       period: '2024-01-01 to 2024-01-31',
-      orders: 12,
+      transactions: 89,
       commission: 15,
       notes: 'Monthly payout for January 2024'
     },
@@ -110,68 +108,64 @@ export function Affiliates() {
       affiliateId: '2',
       affiliateName: 'Adventure Guides',
       amount: 402.00,
-      status: 'pending',
+      status: 'paid',
       paymentMethod: 'paypal',
-      paymentDate: null,
-      processedBy: null,
-      reference: 'PAY-2024-002',
+      paymentDate: '2024-01-15T00:00:00Z',
+      processedDate: '2024-01-15T10:30:00Z',
       period: '2024-01-01 to 2024-01-31',
-      orders: 8,
+      transactions: 67,
       commission: 12,
-      notes: 'Pending approval for January 2024'
+      notes: 'Monthly payout for January 2024'
     },
     {
       id: '3',
       affiliateId: '1',
       affiliateName: 'Travel Blog Network',
-      amount: 445.25,
-      status: 'processing',
+      amount: 234.75,
+      status: 'pending',
       paymentMethod: 'bank_transfer',
-      paymentDate: null,
-      processedBy: 'Jonathan Doe',
-      reference: 'PAY-2024-003',
-      period: '2024-02-01 to 2024-02-15',
-      orders: 7,
+      paymentDate: '2024-02-15T00:00:00Z',
+      processedDate: null,
+      period: '2024-02-01 to 2024-02-14',
+      transactions: 34,
       commission: 15,
       notes: 'Mid-month payout for February 2024'
     },
     {
       id: '4',
-      affiliateId: '2',
-      affiliateName: 'Adventure Guides',
-      amount: 234.50,
-      status: 'failed',
-      paymentMethod: 'paypal',
-      paymentDate: null,
-      processedBy: 'Jonathan Doe',
-      reference: 'PAY-2024-004',
-      period: '2024-01-15 to 2024-01-31',
-      orders: 4,
-      commission: 12,
-      notes: 'Payment failed - invalid PayPal email'
+      affiliateId: '3',
+      affiliateName: 'Global Travel Hub',
+      amount: 0,
+      status: 'pending',
+      paymentMethod: 'stripe',
+      paymentDate: '2024-02-15T00:00:00Z',
+      processedDate: null,
+      period: '2024-02-01 to 2024-02-14',
+      transactions: 0,
+      commission: 10,
+      notes: 'No earnings for this period'
     },
     {
       id: '5',
-      affiliateId: '1',
-      affiliateName: 'Travel Blog Network',
-      amount: 890.75,
-      status: 'paid',
-      paymentMethod: 'bank_transfer',
-      paymentDate: '2024-01-01T00:00:00Z',
-      processedBy: 'Jonathan Doe',
-      reference: 'PAY-2023-050',
-      period: '2023-12-01 to 2023-12-31',
-      orders: 18,
-      commission: 15,
-      notes: 'December 2023 monthly payout'
+      affiliateId: '2',
+      affiliateName: 'Adventure Guides',
+      amount: 156.80,
+      status: 'failed',
+      paymentMethod: 'paypal',
+      paymentDate: '2024-01-10T00:00:00Z',
+      processedDate: '2024-01-10T14:20:00Z',
+      period: '2023-12-16 to 2023-12-31',
+      transactions: 23,
+      commission: 12,
+      notes: 'Payment failed - invalid PayPal email address'
     }
   ])
+
+  const [payoutStatusFilter, setPayoutStatusFilter] = useState('all')
+  const [payoutMethodFilter, setPayoutMethodFilter] = useState('all')
   
   // Use search hook for filtering affiliates
   const searchFilteredAffiliates = useGenericSearch(affiliates, searchTerm, ['name', 'contactPerson', 'email', 'website', 'referralCode'])
-  
-  // Use search hook for filtering payouts
-  const searchFilteredPayouts = useGenericSearch(payouts, searchTerm, ['affiliateName', 'reference', 'notes'])
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -185,20 +179,20 @@ export function Affiliates() {
   const getPayoutStatusColor = (status: string) => {
     switch (status) {
       case 'paid': return 'bg-green-100 text-green-800'
-      case 'processing': return 'bg-blue-100 text-blue-800'
       case 'pending': return 'bg-yellow-100 text-yellow-800'
       case 'failed': return 'bg-red-100 text-red-800'
+      case 'processing': return 'bg-blue-100 text-blue-800'
       default: return 'bg-[#F5F4E7] text-gray-800'
     }
   }
 
   const getPayoutStatusIcon = (status: string) => {
     switch (status) {
-      case 'paid': return CheckCircle
-      case 'processing': return Clock
-      case 'pending': return AlertCircle
-      case 'failed': return AlertCircle
-      default: return Clock
+      case 'paid': return <CheckCircle className="w-4 h-4" />
+      case 'pending': return <Clock className="w-4 h-4" />
+      case 'failed': return <AlertCircle className="w-4 h-4" />
+      case 'processing': return <Clock className="w-4 h-4" />
+      default: return <Clock className="w-4 h-4" />
     }
   }
 
@@ -236,10 +230,11 @@ export function Affiliates() {
     }
   }
 
+  // Payout handler functions
   const handleProcessPayout = (payoutId: string) => {
     setPayouts(prev => prev.map(payout => 
       payout.id === payoutId 
-        ? { ...payout, status: 'processing', processedBy: 'Jonathan Doe' }
+        ? { ...payout, status: 'processing', processedDate: new Date().toISOString() }
         : payout
     ))
   }
@@ -247,7 +242,7 @@ export function Affiliates() {
   const handleMarkPaid = (payoutId: string) => {
     setPayouts(prev => prev.map(payout => 
       payout.id === payoutId 
-        ? { ...payout, status: 'paid', paymentDate: new Date().toISOString(), processedBy: 'Jonathan Doe' }
+        ? { ...payout, status: 'paid', processedDate: new Date().toISOString() }
         : payout
     ))
   }
@@ -255,7 +250,7 @@ export function Affiliates() {
   const handleRetryPayout = (payoutId: string) => {
     setPayouts(prev => prev.map(payout => 
       payout.id === payoutId 
-        ? { ...payout, status: 'processing', processedBy: 'Jonathan Doe' }
+        ? { ...payout, status: 'pending', processedDate: null }
         : payout
     ))
   }
@@ -271,9 +266,12 @@ export function Affiliates() {
     return matchesStatus && matchesCommission
   })
 
-  const filteredPayouts = searchFilteredPayouts.filter(payout => {
+  // Filter payouts
+  const filteredPayouts = payouts.filter(payout => {
     const matchesStatus = payoutStatusFilter === 'all' || payout.status === payoutStatusFilter
-    return matchesStatus
+    const matchesMethod = payoutMethodFilter === 'all' || payout.paymentMethod === payoutMethodFilter
+    
+    return matchesStatus && matchesMethod
   })
 
   // Calculate totals
@@ -285,7 +283,7 @@ export function Affiliates() {
   const totalPayouts = payouts.reduce((sum, payout) => sum + payout.amount, 0)
   const paidPayouts = payouts.filter(p => p.status === 'paid').reduce((sum, payout) => sum + payout.amount, 0)
   const pendingPayouts = payouts.filter(p => p.status === 'pending').reduce((sum, payout) => sum + payout.amount, 0)
-  const processingPayouts = payouts.filter(p => p.status === 'processing').reduce((sum, payout) => sum + payout.amount, 0)
+  const failedPayouts = payouts.filter(p => p.status === 'failed').reduce((sum, payout) => sum + payout.amount, 0)
 
   return (
     <div className="p-6 space-y-6" style={{ backgroundColor: '#FAF9F6' }}>
@@ -297,24 +295,13 @@ export function Affiliates() {
             <Download className="w-4 h-4" />
             <span>Export</span>
           </button>
-          {activeTab === 'affiliates' && (
-            <button 
-              onClick={() => setShowCreateModal(true)}
-              className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Add Affiliate</span>
-            </button>
-          )}
-          {activeTab === 'payouts' && (
-            <button 
-              onClick={() => setShowPayoutModal(true)}
-              className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
-            >
-              <Send className="w-4 h-4" />
-              <span>Process Payouts</span>
-            </button>
-          )}
+        <button 
+          onClick={() => setShowCreateModal(true)}
+          className="flex items-center space-x-2 px-4 py-2 bg-[#00473A] text-white rounded-xl hover:bg-[#00473A]/90"
+        >
+            <Plus className="w-4 h-4" />
+            <span>Add Affiliate</span>
+          </button>
         </div>
       </div>
 
@@ -329,10 +316,7 @@ export function Affiliates() {
                 : 'text-gray-600 hover:text-gray-900 hover:bg-[#F5F4E7]'
             }`}
           >
-            <div className="flex items-center justify-center space-x-2">
-              <Users className="w-4 h-4" />
-              <span>Affiliates</span>
-            </div>
+            Affiliates
           </button>
           <button
             onClick={() => setActiveTab('payouts')}
@@ -342,16 +326,13 @@ export function Affiliates() {
                 : 'text-gray-600 hover:text-gray-900 hover:bg-[#F5F4E7]'
             }`}
           >
-            <div className="flex items-center justify-center space-x-2">
-              <CreditCard className="w-4 h-4" />
-              <span>Payouts</span>
-            </div>
+            Payouts
           </button>
         </div>
       </div>
 
       {/* Summary Cards */}
-      {activeTab === 'affiliates' && (
+      {activeTab === 'affiliates' ? (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between">
@@ -390,9 +371,7 @@ export function Affiliates() {
             </div>
           </div>
         </div>
-      )}
-
-      {activeTab === 'payouts' && (
+      ) : (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between">
@@ -400,13 +379,13 @@ export function Affiliates() {
                 <p className="text-sm font-medium text-gray-600">Total Payouts</p>
                 <p className="text-2xl font-bold text-gray-900">${totalPayouts.toFixed(2)}</p>
               </div>
-              <CreditCard className="w-8 h-8 text-blue-600" />
+              <DollarSign className="w-8 h-8 text-blue-600" />
             </div>
           </div>
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Paid</p>
+                <p className="text-sm font-medium text-gray-600">Paid Payouts</p>
                 <p className="text-2xl font-bold text-gray-900">${paidPayouts.toFixed(2)}</p>
               </div>
               <CheckCircle className="w-8 h-8 text-green-600" />
@@ -415,63 +394,74 @@ export function Affiliates() {
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Processing</p>
-                <p className="text-2xl font-bold text-gray-900">${processingPayouts.toFixed(2)}</p>
+                <p className="text-sm font-medium text-gray-600">Pending Payouts</p>
+                <p className="text-2xl font-bold text-gray-900">${pendingPayouts.toFixed(2)}</p>
               </div>
-              <Clock className="w-8 h-8 text-blue-600" />
+              <Clock className="w-8 h-8 text-yellow-600" />
             </div>
           </div>
           <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Pending</p>
-                <p className="text-2xl font-bold text-gray-900">${pendingPayouts.toFixed(2)}</p>
+                <p className="text-sm font-medium text-gray-600">Failed Payouts</p>
+                <p className="text-2xl font-bold text-gray-900">${failedPayouts.toFixed(2)}</p>
               </div>
-              <AlertCircle className="w-8 h-8 text-yellow-600" />
+              <AlertCircle className="w-8 h-8 text-red-600" />
             </div>
           </div>
         </div>
       )}
 
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
-        <div className="flex items-center space-x-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-            <input
-              type="text"
-              placeholder={activeTab === 'affiliates' ? "Search affiliates..." : "Search payouts..."}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
-            />
+      {activeTab === 'affiliates' ? (
+        <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
+          <div className="flex items-center space-x-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search affiliates..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
+              />
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            >
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="pending">Pending</option>
+              <option value="inactive">Inactive</option>
+              <option value="suspended">Suspended</option>
+            </select>
+            <select
+              value={commissionFilter}
+              onChange={(e) => setCommissionFilter(e.target.value)}
+              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            >
+              <option value="all">All Commission</option>
+              <option value="low">Low (&lt;10%)</option>
+              <option value="medium">Medium (10-20%)</option>
+              <option value="high">High (&gt;20%)</option>
+            </select>
           </div>
-          {activeTab === 'affiliates' && (
-            <>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              >
-                <option value="all">All Status</option>
-                <option value="active">Active</option>
-                <option value="pending">Pending</option>
-                <option value="inactive">Inactive</option>
-                <option value="suspended">Suspended</option>
-              </select>
-              <select
-                value={commissionFilter}
-                onChange={(e) => setCommissionFilter(e.target.value)}
-                className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
-              >
-                <option value="all">All Commission</option>
-                <option value="low">Low (&lt;10%)</option>
-                <option value="medium">Medium (10-20%)</option>
-                <option value="high">High (&gt;20%)</option>
-              </select>
-            </>
-          )}
-          {activeTab === 'payouts' && (
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] p-4">
+          <div className="flex items-center space-x-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search payouts..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-[#F5F4E7] focus:bg-[#F5F4E7] transition-colors"
+              />
+            </div>
             <select
               value={payoutStatusFilter}
               onChange={(e) => setPayoutStatusFilter(e.target.value)}
@@ -479,16 +469,26 @@ export function Affiliates() {
             >
               <option value="all">All Status</option>
               <option value="paid">Paid</option>
-              <option value="processing">Processing</option>
               <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
               <option value="failed">Failed</option>
             </select>
-          )}
+            <select
+              value={payoutMethodFilter}
+              onChange={(e) => setPayoutMethodFilter(e.target.value)}
+              className="px-3 py-2 border border-[#E8E6CF] rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            >
+              <option value="all">All Methods</option>
+              <option value="bank_transfer">Bank Transfer</option>
+              <option value="paypal">PayPal</option>
+              <option value="stripe">Stripe</option>
+            </select>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Affiliates Table */}
-      {activeTab === 'affiliates' && (
+      {/* Tables */}
+      {activeTab === 'affiliates' ? (
         <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -559,11 +559,11 @@ export function Affiliates() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center space-x-2">
-            <button 
-              onClick={() => handleViewAffiliate(affiliate)}
-              className="text-[#00473A] hover:text-[#00473A]/80"
-              title="View Details"
-            >
+                        <button 
+                          onClick={() => handleViewAffiliate(affiliate)}
+                          className="text-[#00473A] hover:text-[#00473A]/80"
+                          title="View Details"
+                        >
                           <Eye className="w-4 h-4" />
                         </button>
                         <button 
@@ -588,10 +588,7 @@ export function Affiliates() {
             </table>
           </div>
         </div>
-      )}
-
-      {/* Payouts Table */}
-      {activeTab === 'payouts' && (
+      ) : (
         <div className="bg-white rounded-xl shadow-sm border border-[#E8E6CF] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -613,10 +610,10 @@ export function Affiliates() {
                     Period
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Orders
+                    Transactions
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Reference
+                    Payment Date
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
@@ -624,58 +621,65 @@ export function Affiliates() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-[#E8E6CF]">
-                {filteredPayouts.map((payout) => {
-                  const StatusIcon = getPayoutStatusIcon(payout.status)
-                  return (
-                    <tr key={payout.id} className="hover:bg-[#F5F4E7]">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-[#E8E6CF] rounded-full flex items-center justify-center">
-                            <span className="text-sm font-medium text-gray-700">
-                              {payout.affiliateName.split(' ').map(n => n[0]).join('')}
-                            </span>
-                          </div>
-                          <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900">{payout.affiliateName}</div>
-                            <div className="text-xs text-gray-400">Commission: {payout.commission}%</div>
-                          </div>
+                {filteredPayouts.map((payout) => (
+                  <tr key={payout.id} className="hover:bg-[#F5F4E7]">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 bg-[#E8E6CF] rounded-full flex items-center justify-center">
+                          <span className="text-sm font-medium text-gray-700">
+                            {payout.affiliateName.split(' ').map(n => n[0]).join('')}
+                          </span>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">${payout.amount.toFixed(2)}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${getPayoutStatusColor(payout.status)}`}>
-                          <StatusIcon className="w-3 h-3 mr-1" />
-                          {payout.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {payout.paymentMethod === 'bank_transfer' ? 'Bank Transfer' : 
-                         payout.paymentMethod === 'paypal' ? 'PayPal' : 
-                         payout.paymentMethod === 'stripe' ? 'Stripe' : payout.paymentMethod}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {payout.period}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {payout.orders}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {payout.reference}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div className="flex items-center space-x-2">
-                          {payout.status === 'pending' && (
+                        <div className="ml-4">
+                          <div className="text-sm font-medium text-gray-900">{payout.affiliateName}</div>
+                          <div className="text-xs text-gray-400">ID: {payout.affiliateId}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">${payout.amount.toFixed(2)}</div>
+                      <div className="text-xs text-gray-500">{payout.commission}% commission</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full ${getPayoutStatusColor(payout.status)}`}>
+                        {getPayoutStatusIcon(payout.status)}
+                        <span className="ml-1">{payout.status}</span>
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="flex items-center">
+                        <CreditCard className="w-4 h-4 mr-2 text-gray-400" />
+                        {payout.paymentMethod.replace('_', ' ').toUpperCase()}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {payout.period}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {payout.transactions}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="flex items-center">
+                        <Calendar className="w-4 h-4 mr-2 text-gray-400" />
+                        {formatDate(payout.paymentDate)}
+                      </div>
+                      {payout.processedDate && (
+                        <div className="text-xs text-gray-500">
+                          Processed: {formatDate(payout.processedDate)}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex items-center space-x-2">
+                        {payout.status === 'pending' && (
+                          <>
                             <button 
                               onClick={() => handleProcessPayout(payout.id)}
-                              className="text-[#00473A] hover:text-[#00473A]/80"
+                              className="text-blue-600 hover:text-blue-800"
                               title="Process Payout"
                             >
                               <Send className="w-4 h-4" />
                             </button>
-                          )}
-                          {payout.status === 'processing' && (
                             <button 
                               onClick={() => handleMarkPaid(payout.id)}
                               className="text-green-600 hover:text-green-800"
@@ -683,27 +687,27 @@ export function Affiliates() {
                             >
                               <CheckCircle className="w-4 h-4" />
                             </button>
-                          )}
-                          {payout.status === 'failed' && (
-                            <button 
-                              onClick={() => handleRetryPayout(payout.id)}
-                              className="text-blue-600 hover:text-blue-800"
-                              title="Retry Payout"
-                            >
-                              <Clock className="w-4 h-4" />
-                            </button>
-                          )}
+                          </>
+                        )}
+                        {payout.status === 'failed' && (
                           <button 
-                            className="text-gray-600 hover:text-gray-800"
-                            title="View Details"
+                            onClick={() => handleRetryPayout(payout.id)}
+                            className="text-orange-600 hover:text-orange-800"
+                            title="Retry Payout"
                           >
-                            <Eye className="w-4 h-4" />
+                            <RotateCcw className="w-4 h-4" />
                           </button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })}
+                        )}
+                        <button 
+                          className="text-gray-600 hover:text-gray-800"
+                          title="View Details"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
