@@ -34,6 +34,7 @@ import { FlatFlag } from './FlatFlag'
 import { sharedOrdersData } from '../data/orders'
 import { useOrderSearch } from '../hooks/useSearch'
 import { FilterPills } from './FilterPills'
+import { ReportsExportModal } from './ReportsExportModal'
 
 interface OrdersProps {
   onOrderSelect: (order: Order) => void
@@ -78,6 +79,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
   const [orders, setOrders] = useState(mockOrders)
   const [archivedOrders, setArchivedOrders] = useState<Order[]>([])
   const [showImportModal, setShowImportModal] = useState(false)
+  const [showExportModal, setShowExportModal] = useState(false)
 
   const currentOrders = showArchived ? archivedOrders : orders
   
@@ -232,7 +234,10 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
           )}
         </div>
         <div className="flex items-center space-x-3">
-          <button className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]">
+          <button 
+            onClick={() => setShowExportModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
+          >
             <Download className="w-4 h-4" />
             <span>Export</span>
           </button>
@@ -502,6 +507,54 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
           </table>
         </div>
       </div>
+
+      {/* Export Modal */}
+      <ReportsExportModal 
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        onExport={(config) => {
+          try {
+            const rows = filteredOrders.map(o => ({
+              orderId: o.orderId,
+              customer: o.customer.name,
+              email: o.customer.email,
+              amount: o.amount,
+              currency: o.currency,
+              status: o.status,
+              paymentStatus: o.payment.status,
+              date: o.date,
+              trackingCarrier: o.tracking?.carrier || '',
+              trackingNumber: o.tracking?.number || ''
+            }))
+
+            const headers = Object.keys(rows[0] || {
+              orderId: '', customer: '', email: '', amount: '', currency: '', status: '', paymentStatus: '', date: '', trackingCarrier: '', trackingNumber: ''
+            })
+
+            const csv = [
+              headers.join(','),
+              ...rows.map(r => headers.map(h => {
+                const cell = String((r as any)[h] ?? '')
+                const escaped = cell.replace(/"/g, '""')
+                return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped
+              }).join(','))
+            ].join('\n')
+
+            const filename = config?.filename || `orders_export_${new Date().toISOString().slice(0,10)}.csv`
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+            const url = URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = url
+            link.download = filename
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            URL.revokeObjectURL(url)
+          } catch (e) {
+            alert('Failed to export. Please try again.')
+          }
+        }}
+      />
 
       {/* Modals */}
       {selectedOrder && (

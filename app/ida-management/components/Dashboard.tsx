@@ -24,7 +24,8 @@ import {
   Printer,
   Edit,
   Calendar,
-  Bell
+  Bell,
+  Download
 } from 'lucide-react'
 import { getOperationByCountry, getOperationColor, getOperationIcon, getOperationFlagCountry } from '../utils/operations'
 import { sharedOrdersData } from '../data/orders'
@@ -37,6 +38,7 @@ import { OrderStatusModal } from './OrderStatusModal'
 import { FlatFlag } from './FlatFlag'
 // import { useOrderSearch } from '../hooks/useSearch'
 import { Order } from '../page'
+import { ReportsExportModal } from './ReportsExportModal'
 
 interface KPICardProps {
   title: string
@@ -74,6 +76,47 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [searchTerm, setSearchTerm] = useState('')
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const [showExportModal, setShowExportModal] = useState(false)
+
+  const handleExportRecentOrders = () => {
+    try {
+      const rows = (sharedOrdersData || []).map((o) => ({
+        orderId: o.orderId,
+        customer: o.customer.name,
+        email: o.customer.email,
+        amount: o.amount,
+        currency: o.currency,
+        status: o.status,
+        paymentStatus: o.payment.status,
+        date: o.date,
+        trackingCarrier: (o as any).tracking?.carrier || '',
+        trackingNumber: (o as any).tracking?.number || ''
+      }))
+      const headers = Object.keys(rows[0] || {
+        orderId: '', customer: '', email: '', amount: '', currency: '', status: '', paymentStatus: '', date: '', trackingCarrier: '', trackingNumber: ''
+      })
+      const csv = [
+        headers.join(','),
+        ...rows.map(r => headers.map(h => {
+          const cell = String((r as any)[h] ?? '')
+          const escaped = cell.replace(/"/g, '""')
+          return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped
+        }).join(','))
+      ].join('\n')
+      const filename = `recent_orders_${new Date().toISOString().slice(0,10)}.csv`
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = filename
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    } catch (e) {
+      alert('Failed to export. Please try again.')
+    }
+  }
 
   const handleDateRangeChange = (startDate: Date, endDate: Date, label: string) => {
     console.log('Date range selected:', label, startDate, endDate)
@@ -413,8 +456,60 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               </div>
             )}
           </div>
+          <button
+            onClick={() => setShowExportModal(true)}
+            className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-lg hover:bg-[#F5F4E7] transition-colors"
+          >
+            <Download className="w-4 h-4 text-gray-600" />
+            <span className="text-sm font-medium text-gray-700">Export</span>
+          </button>
         </div>
       </div>
+
+      {/* Export Modal */}
+      <ReportsExportModal 
+        isOpen={showExportModal}
+        onClose={() => setShowExportModal(false)}
+        onExport={() => {
+          try {
+            const rows = (sharedOrdersData || []).map((o) => ({
+              orderId: o.orderId,
+              customer: o.customer.name,
+              email: o.customer.email,
+              amount: o.amount,
+              currency: o.currency,
+              status: o.status,
+              paymentStatus: o.payment.status,
+              date: o.date,
+              trackingCarrier: (o as any).tracking?.carrier || '',
+              trackingNumber: (o as any).tracking?.number || ''
+            }))
+            const headers = Object.keys(rows[0] || {
+              orderId: '', customer: '', email: '', amount: '', currency: '', status: '', paymentStatus: '', date: '', trackingCarrier: '', trackingNumber: ''
+            })
+            const csv = [
+              headers.join(','),
+              ...rows.map(r => headers.map(h => {
+                const cell = String((r as any)[h] ?? '')
+                const escaped = cell.replace(/"/g, '""')
+                return /[",\n]/.test(escaped) ? `"${escaped}"` : escaped
+              }).join(','))
+            ].join('\n')
+            const filename = `recent_orders_${new Date().toISOString().slice(0,10)}.csv`
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+            const url = URL.createObjectURL(blob)
+            const link = document.createElement('a')
+            link.href = url
+            link.download = filename
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            URL.revokeObjectURL(url)
+          } catch (e) {
+            alert('Failed to export. Please try again.')
+          }
+        }}
+      />
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -719,16 +814,27 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-[#333333]">Recent Activity</h3>
-              <span className="text-xs text-[#666666]">Last 24 hours</span>
+              <span className="text-xs text-[#666666] inline-flex items-center">
+                <span className="relative flex items-center mr-2">
+                  <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                Live activity
+              </span>
             </div>
           </div>
-          <div className="p-0 divide-y divide-[#E8E6CF]">
-            {sharedOrdersData.slice(0, 8).map((order, idx) => {
+          <div className="p-0 divide-y divide-[#E8E6CF] max-h-[720px] overflow-y-auto">
+            {sharedOrdersData.map((order) => {
               const isCompleted = order.status === 'completed'
               const isShipped = order.status === 'shipment_in_progress'
               const isCreated = order.status === 'processing'
               const paid = order.payment.status === 'paid'
-              const title = isCreated
+              const hasTracking = Boolean((order as any).tracking && (order as any).tracking.number)
+              const trackingCarrier = hasTracking ? (order as any).tracking.carrier : null
+              const trackingNumber = hasTracking ? (order as any).tracking.number : null
+              const title = hasTracking
+                ? 'Tracking Number Added'
+                : isCreated
                 ? 'New Order Created'
                 : paid
                 ? 'Payment Received'
@@ -737,7 +843,9 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                 : isCompleted
                 ? 'Order Completed'
                 : 'Order Status Updated'
-              const desc = isCreated
+              const desc = hasTracking
+                ? `Tracking ${trackingCarrier || 'carrier'} • ${trackingNumber}`
+                : isCreated
                 ? `Order #${order.orderId} has been created by ${order.customer.name}`
                 : paid
                 ? `Payment of $${order.amount.toFixed(2)} received for order #${order.orderId}`
@@ -746,39 +854,61 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                 : isCompleted
                 ? `Order #${order.orderId} has been marked as completed`
                 : `Order #${order.orderId} status changed to "${order.status.replace(/_/g,' ')}"`
-              const leftBorder = paid
-                ? 'border-l-blue-400 bg-blue-50'
+              const priorityBorder = hasTracking
+                ? 'border-l-indigo-500'
+                : paid
+                ? 'border-l-blue-500'
                 : isCompleted
-                ? 'border-l-green-500 bg-green-50'
+                ? 'border-l-green-600'
                 : isShipped
-                ? 'border-l-purple-500 bg-purple-50'
-                : 'border-l-orange-400 bg-orange-50'
+                ? 'border-l-purple-500'
+                : 'border-l-amber-500'
               return (
-                <div key={order.id} className={`px-6 py-4 ${idx % 2 === 1 ? 'bg-white' : 'bg-white'} hover:bg-gray-50 transition-colors`}>
-                  <div className={`rounded-xl border border-[#E8E6CF] ${leftBorder} pl-4 pr-4 py-3`}> 
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-[#E8E6CF]">
-                          <Bell className="w-4 h-4 text-[#00473A]" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-semibold text-[#0f172a]">{title}</div>
-                          <div className="text-sm text-[#334155] mt-0.5">{desc}</div>
+                <div
+                  key={order.id}
+                  className={`px-6 py-3 hover:bg-gray-50 transition-colors cursor-pointer border-l-4 ${priorityBorder}`}
+                  onClick={() => onOrderSelect?.(order as Order)}
+                >
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 mt-1">
+                      {hasTracking ? (
+                        <svg className="w-4 h-4 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7h13v10H3z"></path><path d="M16 9h4l1 2v6h-5z"></path><circle cx="7.5" cy="17.5" r="1.5"></circle><circle cx="18.5" cy="17.5" r="1.5"></circle></svg>
+                      ) : (
+                        <Bell className="w-4 h-4 text-[#00473A]" />
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-sm font-semibold text-[#0f172a] truncate">{title}</h4>
+                        <span className="text-xs text-[#64748b] ml-3">
+                          {new Date(order.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+                      <p className="text-sm text-[#334155] mt-0.5">{desc}</p>
+                      {hasTracking && (
+                        <div className="mt-2">
                           <button
-                            onClick={() => onOrderSelect?.(order as Order)}
-                            className="mt-2 text-xs font-semibold text-[#065f46] hover:underline"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              navigator.clipboard?.writeText(String(trackingNumber))
+                            }}
+                            className="text-xs text-indigo-600 hover:text-indigo-700 font-medium"
                           >
-                            {order.orderId}
+                            Copy tracking number
                           </button>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-[#64748b]">{new Date(order.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      )}
+                      <div className="flex items-center justify-between mt-2">
+                        <span className="text-xs text-[#00473A] font-medium">{order.orderId}</span>
                         <button
-                          onClick={() => onOrderSelect?.(order as Order)}
-                          className="text-[#00473A] hover:text-[#00473A]/80 text-xs font-semibold inline-flex items-center gap-1"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onOrderSelect?.(order as Order)
+                          }}
+                          className="flex items-center gap-1 text-xs text-[#00473A] hover:text-[#00473A]/80"
                         >
-                          <Eye className="w-3 h-3" /> View Order
+                          <Eye className="w-3 h-3" />
+                          <span>View Order</span>
                         </button>
                       </div>
                     </div>
@@ -801,6 +931,13 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                 onClick={() => setIsDateDropdownOpen(!isDateDropdownOpen)}
                 isOpen={isDateDropdownOpen}
               />
+              <button
+                onClick={() => setShowExportModal(true)}
+                className="flex items-center space-x-2 px-4 py-2 border border-[#E8E6CF] rounded-xl hover:bg-[#F5F4E7]"
+              >
+                <Download className="w-4 h-4" />
+                <span>Export</span>
+              </button>
             </div>
           </div>
         </div>
