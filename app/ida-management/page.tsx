@@ -16,6 +16,7 @@ import { Affiliates } from './components/Affiliates'
 import { ComponentLab } from './components/ComponentLab'
 import { Settings } from './components/Settings'
 import { sharedOrdersData } from './data/orders'
+import { ErrorBoundary } from './components/ErrorBoundary'
 
 export type UserRole = 'admin' | 'team' | 'agent' | 'supplier'
 export type OrderStatus = 'processing' | 'shipment_in_progress' | 'completed' | 'on_hold' | 'refunded' | 'abandoned'
@@ -188,6 +189,7 @@ export default function IDAManagementApp() {
   }
 
   return (
+    <ErrorBoundary>
     <div className="flex h-screen bg-[#FAF9F6] dark:bg-gray-900">
       <Sidebar
         activeSection={activeSection}
@@ -211,5 +213,6 @@ export default function IDAManagementApp() {
         </main>
       </div>
     </div>
+    </ErrorBoundary>
   )
 }
