@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Serve the app under /ida-management (fixes _next chunk 404s on subpath)
+  basePath: '/ida-management',
   images: {
     domains: ['localhost'],
   },
