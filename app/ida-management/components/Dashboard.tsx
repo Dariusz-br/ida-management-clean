@@ -36,6 +36,7 @@ import { OrderStatusModal } from './OrderStatusModal'
 import { FlatFlag } from './FlatFlag'
 // import { useOrderSearch } from '../hooks/useSearch'
 import { Order } from '../page'
+import { OrdersStats } from './OrdersStats'
 
 interface KPICardProps {
   title: string
@@ -415,12 +416,15 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
         </div>
       </div>
 
-      {/* KPI Cards */}
+      {/* KPI Cards */
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpiData.map((kpi, index) => (
           <KPICard key={index} {...kpi} />
         ))}
       </div>
+
+      {/* Orders Stats Section */}
+      <OrdersStats />
 
 
       {/* Main Content Grid - 50/50 Layout */}
