@@ -739,7 +739,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                         {order.customer.name} • {order.orderId}
                       </div>
                       <div className="text-xs text-[#666666]">
-                        Status: {order.status.replaceAll('_',' ')} • {order.payment.status === 'paid' ? 'Payment confirmed' : 'Payment ' + order.payment.status}
+                        Status: {order.status.replace(/_/g,' ')} • {order.payment.status === 'paid' ? 'Payment confirmed' : 'Payment ' + order.payment.status}
                       </div>
                     </div>
                   </div>
