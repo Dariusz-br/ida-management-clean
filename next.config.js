@@ -8,6 +8,22 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  async redirects() {
+    // Ensure production root routes to our basePath on Vercel
+    return [
+      {
+        source: '/',
+        destination: '/ida-management',
+        permanent: false,
+      },
+      // If someone hits a path not starting with the basePath, push them under it
+      {
+        source: '/:path((?!ida-management).*)',
+        destination: '/ida-management/:path',
+        permanent: false,
+      },
+    ]
+  },
   // Fix font preload warnings
   async headers() {
     return [
