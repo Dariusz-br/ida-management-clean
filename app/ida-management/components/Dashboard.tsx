@@ -36,7 +36,6 @@ import { OrderStatusModal } from './OrderStatusModal'
 import { FlatFlag } from './FlatFlag'
 // import { useOrderSearch } from '../hooks/useSearch'
 import { Order } from '../page'
-import { OrdersStats } from './OrdersStats'
 
 interface KPICardProps {
   title: string
@@ -416,15 +415,12 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
         </div>
       </div>
 
-      {/* KPI Cards */
+      {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpiData.map((kpi, index) => (
           <KPICard key={index} {...kpi} />
         ))}
       </div>
-
-      {/* Orders Stats Section */}
-      <OrdersStats />
 
 
       {/* Main Content Grid - 50/50 Layout */}
@@ -734,7 +730,6 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               <div 
                 className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
                 onClick={() => {
-                  // Find the order with ID IDA-2024-001
                   const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-001')
                   if (order && onOrderSelect) {
                     onOrderSelect(order as Order)
@@ -765,7 +760,6 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               <div 
                 className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
                 onClick={() => {
-                  // Find the order with ID IDA-2024-002
                   const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-002')
                   if (order && onOrderSelect) {
                     onOrderSelect(order as Order)
@@ -796,7 +790,6 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               <div 
                 className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
                 onClick={() => {
-                  // Find the order with ID IDA-2024-003
                   const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-003')
                   if (order && onOrderSelect) {
                     onOrderSelect(order as Order)
@@ -823,7 +816,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                 </div>
               </div>
 
-              {/* Activity Card 4 - Non-clickable (customer registration) */}
+              {/* Activity Card 4 */}
               <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
@@ -849,7 +842,6 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               <div 
                 className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
                 onClick={() => {
-                  // Find the order with ID IDA-2024-004
                   const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-004')
                   if (order && onOrderSelect) {
                     onOrderSelect(order as Order)
