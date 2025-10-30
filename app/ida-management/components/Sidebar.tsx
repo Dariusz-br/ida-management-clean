@@ -111,7 +111,7 @@ export function Sidebar({ activeSection, onSectionChange, collapsed, userRole, o
   const isSubmenuExpanded = (itemId: string) => expandedMenus.includes(itemId)
 
   return (
-    <div className={`bg-white dark:bg-gray-800 border-r border-[#E8E6CF] dark:border-gray-700 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} relative select-none z-20`}>
+    <div className={`bg-white dark:bg-gray-800 border-r border-[#E8E6CF] dark:border-gray-700 transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'} relative select-none`}>
       {/* Logo */}
       <div className="p-6 border-b border-[#E8E6CF] dark:border-gray-700">
         <div className="flex items-center space-x-3">

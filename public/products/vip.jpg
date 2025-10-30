@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <rect width="200" height="200" fill="#F5F4E7"/>
-  <polygon points="100,30 125,85 185,85 138,120 155,175 100,145 45,175 62,120 15,85 75,85" fill="#FFD54F" stroke="#B68B00"/>
-  <text x="100" y="190" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#333">VIP</text>
-</svg>
-
