@@ -12,6 +12,11 @@ const nextConfig = {
     // Ensure production root routes to our basePath on Vercel
     return [
       {
+        source: '/favicon.ico',
+        destination: '/ida-management/icon.svg',
+        permanent: false,
+      },
+      {
         source: '/',
         destination: '/ida-management',
         permanent: false,

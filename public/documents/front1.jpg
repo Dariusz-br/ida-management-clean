@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#F5F4E7"/>
+  <rect x="30" y="60" width="140" height="80" rx="8" fill="#E5E7EB" stroke="#9CA3AF"/>
+  <rect x="45" y="75" width="60" height="50" rx="6" fill="#D1D5DB"/>
+  <rect x="115" y="75" width="45" height="10" rx="3" fill="#9CA3AF"/>
+  <rect x="115" y="90" width="45" height="8" rx="3" fill="#9CA3AF"/>
+  <rect x="115" y="104" width="45" height="8" rx="3" fill="#9CA3AF"/>
+  <text x="100" y="170" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#666">Front Doc</text>
+</svg>
+
