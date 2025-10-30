@@ -286,6 +286,9 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       image: '/products/vip.jpg'
     }
   ]
+  const totalProductOrders = topSellingProducts.reduce((sum, p) => sum + p.orders, 0)
+  // Colors mapping by product order: [Digital, Physical, Express]
+  const productColors = ['#D6F1A2', '#00473A', '#6B97FF']
 
   // Live Visitor Activity Funnel Data
   const funnelData = [
@@ -607,6 +610,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               </div>
             </div>
           </div>
+          
         </div>
 
         {/* Top Selling Products - 50% width */}
@@ -620,75 +624,74 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
             </div>
           </div>
           <div className="p-6">
-            {/* Table Header */}
-            <div className="grid grid-cols-12 gap-4 pb-3 border-b border-[#E0E0E0] mb-4">
-              <div className="col-span-6">
-                <span className="text-sm font-medium text-[#666666]">Product</span>
-              </div>
-              <div className="col-span-3 text-center">
-                <span className="text-sm font-medium text-[#666666]">Total Order</span>
-              </div>
-              <div className="col-span-3 text-center">
-                <span className="text-sm font-medium text-[#666666]">Total Revenue</span>
-              </div>
-            </div>
-            
-            {/* Product Rows */}
+            {/* Enhanced List inspired by Products page */}
+            {(() => { const total = topSellingProducts.reduce((s,p)=>s + p.orders, 0); return (
             <div className="space-y-4">
-              {topSellingProducts.map((product, index) => (
-                <div key={index} className="grid grid-cols-12 gap-4 items-center py-3 border-b border-[#F0F0F0] last:border-b-0">
-                  {/* Product Column */}
-                  <div className="col-span-6 flex items-center space-x-3">
-                    {/* Product Thumbnail */}
-                    <div className="w-12 h-12 bg-[#F5F4E7] rounded-lg overflow-hidden flex-shrink-0">
-                      {product.image ? (
-                        <img 
-                          src={product.image} 
-                          alt={product.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          {index === 0 && (
-                            <div className="w-8 h-8 bg-gradient-to-r from-[#007BFF] to-[#28A745] rounded flex items-center justify-center">
-                              <span className="text-white text-xs font-bold">⚡</span>
-                            </div>
-                          )}
-                          {index === 1 && (
-                            <div className="w-8 h-8 bg-[#E8E6CF] rounded flex items-center justify-center">
-                              <span className="text-[#666666] text-xs">📱</span>
-                            </div>
-                          )}
-                          {index === 2 && (
-                            <div className="w-8 h-8 bg-[#E8E6CF] rounded flex items-center justify-center">
-                              <span className="text-[#666666] text-xs">🚚</span>
-                            </div>
-                          )}
+              {topSellingProducts.map((product, index) => {
+                const share = total > 0 ? Math.round((product.orders / total) * 100) : 0
+                const badge = product.name.toLowerCase().includes('digital') ? 'Digital' : product.name.toLowerCase().includes('physical') ? 'Physical' : 'Service'
+                return (
+                  <div key={index} className="flex items-center justify-between gap-4 p-3 rounded-xl border border-[#E8E6CF] hover:bg-[#F5F4E7]/50 transition-colors">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-16 h-16 rounded-[5px] overflow-hidden bg-[#F5F4E7] flex-shrink-0">
+                        {product.image ? (
+                          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-lg">📦</div>
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="font-medium text-[#111827] truncate">{product.name}</p>
+                          <span className="px-2 py-0.5 text-xs rounded-full bg-[#F5F4E7] text-gray-700 border border-[#E8E6CF]">{badge}</span>
                         </div>
-                      )}
+                        {/* per-item bar removed; replaced by global stacked bar below */}
+                      </div>
                     </div>
-                    
-                    {/* Product Name */}
-                    <div>
-                      <p className="font-medium text-[#333333] text-sm">{product.name}</p>
+                    <div className="flex items-center gap-8 flex-shrink-0">
+                      <div className="text-right">
+                        <p className="text-xs text-gray-500">Total Orders</p>
+                        <p className="text-sm font-semibold text-[#111827]">{product.orders.toLocaleString()}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-gray-500">Revenue</p>
+                        <p className="text-sm font-semibold text-[#111827]">{product.revenue}</p>
+                      </div>
                     </div>
                   </div>
-                  
-                  {/* Total Order Column */}
-                  <div className="col-span-3 text-center">
-                    <p className="text-sm font-bold text-[#333333]">
-                      {product.orders.toLocaleString()}
-                    </p>
-                  </div>
-                  
-                  {/* Total Revenue Column */}
-                  <div className="col-span-3 text-center">
-                    <p className="text-sm font-medium text-[#333333]">
-                      {product.revenue}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
+            </div>
+            )})()}
+            {/* Stacked share bar + legend for Top Selling Products */}
+            <div className="mt-6">
+              <div className="w-full h-4 bg-gray-100 rounded-full overflow-hidden flex">
+                {topSellingProducts.map((p, i) => {
+                  const share = totalProductOrders > 0 ? (p.orders / totalProductOrders) * 100 : 0
+                  return (
+                    <div
+                      key={`tsp-stack-${i}`}
+                      style={{ width: `${share}%`, backgroundColor: productColors[i % productColors.length] }}
+                      className="h-full"
+                    />
+                  )
+                })}
+              </div>
+              <div className="mt-3 grid grid-cols-3 gap-4">
+                {topSellingProducts.map((p, i) => {
+                  const share = totalProductOrders > 0 ? Math.round((p.orders / totalProductOrders) * 100) : 0
+                return (
+                  <div key={`tsp-legend-${i}`} className="flex items-center gap-2">
+                      <span
+                        className="inline-block w-3 h-3 rounded-sm"
+                        style={{ backgroundColor: productColors[i % productColors.length] }}
+                      />
+                    <span className="text-xs text-gray-700 truncate">{p.name}</span>
+                    <span className="text-xs font-semibold text-[#111827]">{share}%</span>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -917,6 +920,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               )
             })}
           </div>
+          
         </div>
       </div>
 

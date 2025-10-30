@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   Search, 
   Filter, 
@@ -127,11 +127,26 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
     return matchesStatus && matchesPayment && matchesTime
   })
 
+  // Pagination
+  const [pageSize, setPageSize] = useState(10)
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalItems = filteredOrders.length
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize))
+  const pageStartIndex = (currentPage - 1) * pageSize
+  const pageEndIndex = Math.min(pageStartIndex + pageSize, totalItems)
+  const pagedOrders = filteredOrders.slice(pageStartIndex, pageEndIndex)
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [statusFilter, paymentFilter, timeFilter, searchTerm, showArchived])
+
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedOrders(filteredOrders.map(order => order.id))
+      setSelectedOrders(prev => Array.from(new Set([...prev, ...pagedOrders.map(order => order.id)])))
     } else {
-      setSelectedOrders([])
+      // Unselect only the current page rows
+      setSelectedOrders(prev => prev.filter(id => !pagedOrders.some(o => o.id === id)))
     }
   }
 
@@ -331,7 +346,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                 <th className="px-6 py-3 text-left">
                   <input
                     type="checkbox"
-                    checked={selectedOrders.length === filteredOrders.length && filteredOrders.length > 0}
+                    checked={pagedOrders.length > 0 && pagedOrders.every(o => selectedOrders.includes(o.id))}
                     onChange={(e) => handleSelectAll(e.target.checked)}
                     className="rounded border-[#E8E6CF]"
                   />
@@ -378,7 +393,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-[#E8E6CF]">
-              {filteredOrders.map((order) => {
+              {pagedOrders.map((order) => {
                 return (
                   <tr 
                     key={order.id} 
@@ -555,6 +570,42 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
           }
         }}
       />
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between mt-4">
+        <div className="text-sm text-gray-600">
+          Showing {totalItems === 0 ? 0 : pageStartIndex + 1}-{pageEndIndex} of {totalItems}
+        </div>
+        <div className="flex items-center space-x-2">
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(parseInt(e.target.value, 10) || 10)
+              setCurrentPage(1)
+            }}
+            className="px-2 py-1 border border-[#E8E6CF] rounded-lg text-sm"
+          >
+            <option value={10}>10 / page</option>
+            <option value={20}>20 / page</option>
+            <option value={50}>50 / page</option>
+          </select>
+          <button
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className={`px-3 py-1 border border-[#E8E6CF] rounded-lg text-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5F4E7]'}`}
+          >
+            Prev
+          </button>
+          <span className="text-sm text-gray-700">Page {currentPage} of {totalPages}</span>
+          <button
+            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className={`px-3 py-1 border border-[#E8E6CF] rounded-lg text-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#F5F4E7]'}`}
+          >
+            Next
+          </button>
+        </div>
+      </div>
 
       {/* Modals */}
       {selectedOrder && (
