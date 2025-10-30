@@ -722,70 +722,33 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
               <span className="text-xs text-[#666666]">Last 24 hours</span>
             </div>
           </div>
-          <div className="p-0 divide-y divide-[#E8E6CF]">
-            {sharedOrdersData.slice(0, 8).map((order, idx) => {
-              const isCompleted = order.status === 'completed'
-              const isShipped = order.status === 'shipment_in_progress'
-              const isCreated = order.status === 'processing'
-              const paid = order.payment.status === 'paid'
-              const title = isCreated
-                ? 'New Order Created'
-                : paid
-                ? 'Payment Received'
-                : isShipped
-                ? 'Shipment Created'
-                : isCompleted
-                ? 'Order Completed'
-                : 'Order Status Updated'
-              const desc = isCreated
-                ? `Order #${order.orderId} has been created by ${order.customer.name}`
-                : paid
-                ? `Payment of $${order.amount.toFixed(2)} received for order #${order.orderId}`
-                : isShipped
-                ? `Tracking number generated for order #${order.orderId}`
-                : isCompleted
-                ? `Order #${order.orderId} has been marked as completed`
-                : `Order #${order.orderId} status changed to "${order.status.replace(/_/g,' ')}"`
-              const leftBorder = paid
-                ? 'border-l-blue-400 bg-blue-50'
-                : isCompleted
-                ? 'border-l-green-500 bg-green-50'
-                : isShipped
-                ? 'border-l-purple-500 bg-purple-50'
-                : 'border-l-orange-400 bg-orange-50'
-              return (
-                <div key={order.id} className={`px-6 py-4 ${idx % 2 === 1 ? 'bg-white' : 'bg-white'} hover:bg-gray-50 transition-colors`}>
-                  <div className={`rounded-xl border border-[#E8E6CF] ${leftBorder} pl-4 pr-4 py-3`}> 
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-[#E8E6CF]">
-                          <Bell className="w-4 h-4 text-[#00473A]" />
-                        </div>
-                        <div>
-                          <div className="text-sm font-semibold text-[#0f172a]">{title}</div>
-                          <div className="text-sm text-[#334155] mt-0.5">{desc}</div>
-                          <button
-                            onClick={() => onOrderSelect?.(order as Order)}
-                            className="mt-2 text-xs font-semibold text-[#065f46] hover:underline"
-                          >
-                            {order.orderId}
-                          </button>
-                        </div>
+          <div className="p-6 space-y-3">
+            {sharedOrdersData.slice(0, 8).map((order) => (
+              <button
+                key={order.id}
+                onClick={() => onOrderSelect?.(order as Order)}
+                className="w-full text-left bg-[#F5F4E7] hover:bg-[#F5F4E7]/80 border border-[#E8E6CF] rounded-xl p-3 transition-colors"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-[#E8E6CF]">
+                      <Bell className="w-4 h-4 text-[#00473A]" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-[#333333]">
+                        {order.customer.name} • {order.orderId}
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xs text-[#64748b]">{new Date(order.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                        <button
-                          onClick={() => onOrderSelect?.(order as Order)}
-                          className="text-[#00473A] hover:text-[#00473A]/80 text-xs font-semibold inline-flex items-center gap-1"
-                        >
-                          <Eye className="w-3 h-3" /> View Order
-                        </button>
+                      <div className="text-xs text-[#666666]">
+                        Status: {order.status.replace(/_/g,' ')} • {order.payment.status === 'paid' ? 'Payment confirmed' : 'Payment ' + order.payment.status}
                       </div>
                     </div>
                   </div>
+                  <div className="text-xs text-[#666666]">
+                    {new Date(order.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </div>
                 </div>
-              )
-            })}
+              </button>
+            ))}
           </div>
         </div>
       </div>
