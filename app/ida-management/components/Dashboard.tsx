@@ -23,7 +23,8 @@ import {
   Smartphone,
   Printer,
   Edit,
-  Calendar
+  Calendar,
+  Bell
 } from 'lucide-react'
 import { getOperationByCountry, getOperationColor, getOperationIcon, getOperationFlagCountry } from '../utils/operations'
 import { sharedOrdersData } from '../data/orders'
@@ -713,168 +714,41 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
           </div>
         </div>
 
-        {/* Recent Activities */}
+        {/* Recent Activity (replaces Global Sales Overview) */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-[#E0E0E0] dark:border-gray-700">
           <div className="p-6 border-b border-[#E0E0E0]">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-[#333333]">Recent Activities</h3>
-              <div className="flex items-center space-x-1 text-xs text-[#666666]">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span>Live updates</span>
-              </div>
+              <h3 className="text-lg font-semibold text-[#333333]">Recent Activity</h3>
+              <span className="text-xs text-[#666666]">Last 24 hours</span>
             </div>
           </div>
-          <div className="p-6">
-            <div className="space-y-4">
-              {/* Activity Card 1 */}
-              <div 
-                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
-                onClick={() => {
-                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-001')
-                  if (order && onOrderSelect) {
-                    onOrderSelect(order as Order)
-                  }
-                }}
+          <div className="p-6 space-y-3">
+            {sharedOrdersData.slice(0, 8).map((order) => (
+              <button
+                key={order.id}
+                onClick={() => onOrderSelect?.(order as Order)}
+                className="w-full text-left bg-[#F5F4E7] hover:bg-[#F5F4E7]/80 border border-[#E8E6CF] rounded-xl p-3 transition-colors"
               >
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-[#333333]">Order #IDA-2024-001 completed</p>
-                      <span className="text-xs text-[#666666]">2 min ago</span>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center border border-[#E8E6CF]">
+                      <Bell className="w-4 h-4 text-[#00473A]" />
                     </div>
-                    <p className="text-xs text-[#666666] mt-1">John Doe's Digital IDP order has been successfully processed and shipped</p>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                        Completed
-                      </span>
-                      <span className="text-xs text-[#666666]">$89.99</span>
+                    <div>
+                      <div className="text-sm font-semibold text-[#333333]">
+                        {order.customer.name} • {order.orderId}
+                      </div>
+                      <div className="text-xs text-[#666666]">
+                        Status: {order.status.replaceAll('_',' ')} • {order.payment.status === 'paid' ? 'Payment confirmed' : 'Payment ' + order.payment.status}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Activity Card 2 */}
-              <div 
-                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
-                onClick={() => {
-                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-002')
-                  if (order && onOrderSelect) {
-                    onOrderSelect(order as Order)
-                  }
-                }}
-              >
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <ShoppingCart className="w-4 h-4 text-blue-600" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-[#333333]">New order received</p>
-                      <span className="text-xs text-[#666666]">5 min ago</span>
-                    </div>
-                    <p className="text-xs text-[#666666] mt-1">Sarah Johnson placed a VIP Express order for Physical + Digital package</p>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                        Processing
-                      </span>
-                      <span className="text-xs text-[#666666]">$199.99</span>
-                    </div>
+                  <div className="text-xs text-[#666666]">
+                    {new Date(order.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
                 </div>
-              </div>
-
-              {/* Activity Card 3 */}
-              <div 
-                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
-                onClick={() => {
-                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-003')
-                  if (order && onOrderSelect) {
-                    onOrderSelect(order as Order)
-                  }
-                }}
-              >
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <AlertCircle className="w-4 h-4 text-orange-600" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-[#333333]">Document approval required</p>
-                      <span className="text-xs text-[#666666]">12 min ago</span>
-                    </div>
-                    <p className="text-xs text-[#666666] mt-1">Mike Wilson's selfie photo needs review before processing order #IDA-2024-003</p>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                        Pending Review
-                      </span>
-                      <span className="text-xs text-[#666666]">$89.99</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Activity Card 4 */}
-              <div className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow">
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Users className="w-4 h-4 text-purple-600" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-[#333333]">New customer registered</p>
-                      <span className="text-xs text-[#666666]">18 min ago</span>
-                    </div>
-                    <p className="text-xs text-[#666666] mt-1">Emma Davis created an account and is browsing Digital IDP products</p>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                        New User
-                      </span>
-                      <span className="text-xs text-[#666666]">Canada</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Activity Card 5 */}
-              <div 
-                className="bg-white border border-[#E8E6CF] rounded-lg p-4 hover:shadow-sm transition-shadow cursor-pointer hover:bg-[#F5F4E7]"
-                onClick={() => {
-                  const order = sharedOrdersData.find(o => o.orderId === 'IDA-2024-004')
-                  if (order && onOrderSelect) {
-                    onOrderSelect(order as Order)
-                  }
-                }}
-              >
-                <div className="flex items-start space-x-3">
-                  <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <RotateCcw className="w-4 h-4 text-red-600" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-[#333333]">Refund processed</p>
-                      <span className="text-xs text-[#666666]">25 min ago</span>
-                    </div>
-                    <p className="text-xs text-[#666666] mt-1">Order #IDA-2024-004 refunded due to customer request - $199.99 returned</p>
-                    <div className="flex items-center space-x-2 mt-2">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                        Refunded
-                      </span>
-                      <span className="text-xs text-[#666666]">$199.99</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* View All Activities Button */}
-            <div className="mt-6 text-center">
-              <button className="text-sm text-[#00473A] hover:text-[#00473A]/80 font-medium transition-colors">
-                View All Activities →
               </button>
-            </div>
+            ))}
           </div>
         </div>
       </div>
