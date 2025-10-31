@@ -297,7 +297,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       visitors: 10000,
       percentage: 100,
       icon: Users,
-      color: 'bg-blue-500',
+      color: '#6B97FF', // Express color
       description: 'Total visitors to the site'
     },
     {
@@ -305,7 +305,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       visitors: 7500,
       percentage: 75,
       icon: Eye,
-      color: 'bg-blue-400',
+      color: '#6B97FF', // Express color
       description: 'Visitors who viewed products'
     },
     {
@@ -313,7 +313,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       visitors: 3200,
       percentage: 32,
       icon: ShoppingCart,
-      color: 'bg-yellow-500',
+      color: '#00473A', // Physical color
       description: 'Visitors who added items to cart'
     },
     {
@@ -321,7 +321,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       visitors: 1800,
       percentage: 18,
       icon: CreditCard,
-      color: 'bg-orange-500',
+      color: '#00473A', // Physical color
       description: 'Visitors who started checkout'
     },
     {
@@ -329,7 +329,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       visitors: 1200,
       percentage: 12,
       icon: CreditCard,
-      color: 'bg-red-500',
+      color: '#34C759',
       description: 'Visitors who reached payment'
     },
     {
@@ -337,7 +337,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
       visitors: 850,
       percentage: 8.5,
       icon: CheckCircle,
-      color: 'bg-green-500',
+      color: '#34C759',
       description: 'Successful purchases'
     }
   ]
@@ -742,7 +742,10 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                     {/* Stage Row */}
                     <div className="flex items-center space-x-3">
                       {/* Stage Icon */}
-                      <div className={`w-8 h-8 ${step.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
+                      <div 
+                        className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ backgroundColor: step.color }}
+                      >
                         <Icon className="w-4 h-4 text-white" />
                       </div>
 
@@ -759,10 +762,13 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                         {/* Progress Bar */}
                         <div className="w-full bg-[#E0E0E0] rounded-full h-3 overflow-hidden relative">
                           <div 
-                            className={`h-3 ${step.color} rounded-full transition-all duration-1000 ease-out ${
+                            className={`h-3 rounded-full transition-all duration-1000 ease-out ${
                               isImportant ? 'animate-pulse' : ''
                             }`}
-                            style={{ width: `${step.percentage}%` }}
+                            style={{ 
+                              width: `${step.percentage}%`,
+                              backgroundColor: step.color
+                            }}
                           ></div>
                           
                           {/* Shine effect for important stages */}
