@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { 
   LayoutDashboard, 
+  Home,
   ShoppingCart, 
   Package, 
   Users, 
@@ -29,8 +30,8 @@ interface SidebarProps {
 const navigationItems = [
   {
     id: 'dashboard',
-    label: 'Dashboard',
-    icon: LayoutDashboard,
+    label: 'Home',
+    icon: Home,
     roles: ['admin', 'team']
   },
   {
@@ -51,18 +52,6 @@ const navigationItems = [
     ]
   },
   {
-    id: 'products',
-    label: 'Products',
-    icon: Package,
-    roles: ['admin', 'team']
-  },
-  {
-    id: 'users',
-    label: 'Users',
-    icon: Users,
-    roles: ['admin', 'team']
-  },
-  {
     id: 'reports',
     label: 'Reports & Analytics',
     icon: BarChart3,
@@ -78,6 +67,18 @@ const navigationItems = [
     id: 'affiliates',
     label: 'Affiliates',
     icon: Network,
+    roles: ['admin', 'team']
+  },
+  {
+    id: 'products',
+    label: 'Products',
+    icon: Package,
+    roles: ['admin', 'team']
+  },
+  {
+    id: 'users',
+    label: 'Users',
+    icon: Users,
     roles: ['admin', 'team']
   },
   {

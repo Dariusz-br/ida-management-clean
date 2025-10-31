@@ -239,7 +239,16 @@ export function OrderDetails({ order, onBack }: OrderDetailsProps) {
           </button>
           <div>
             <h1 className="text-display-md text-gray-900">Order Details</h1>
-            <p className="text-body-sm text-gray-500">Order ID: {order.orderId}</p>
+            <div className="flex items-center gap-2">
+              <p className="text-body-sm text-gray-500">Order ID: <span className="font-bold text-gray-900">{order.orderId}</span></p>
+              <button
+                onClick={() => navigator.clipboard?.writeText(order.orderId)}
+                className="p-1 text-gray-400 hover:text-[#00473A] transition-colors"
+                title="Copy Order ID"
+              >
+                <Copy className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
         <div className="flex items-center space-x-3">

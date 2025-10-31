@@ -208,7 +208,7 @@ export function Products() {
             </thead>
             <tbody className="divide-y divide-[#E8E6CF]">
               {filteredProducts.map((product) => (
-                <tr key={product.id} className="hover:bg-gray-50">
+                <tr key={product.id} className="hover:bg-[#faf9f5]">
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-4">
                       <div className="w-36 h-36 bg-[#F5F4E7] rounded-[10px] flex items-center justify-center relative group">

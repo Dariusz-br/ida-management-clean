@@ -19,7 +19,8 @@ import {
   ChevronDown,
   CheckCircle,
   XCircle,
-  AlertTriangle
+  AlertTriangle,
+  Copy
 } from 'lucide-react'
 // Importing Order caused type mismatch with abandoned-specific fields; use a local type for flexibility
 import { abandonedOrdersData } from '../data/orders'
@@ -334,7 +335,7 @@ export function AbandonedOrders({ onOrderSelect, initialSearchTerm = '' }: Aband
               {filteredOrders.map((order) => (
                 <tr 
                   key={order.id} 
-                  className="hover:bg-[#F5F4E7] cursor-pointer"
+                  className="hover:bg-[#faf9f5] cursor-pointer"
                   onClick={() => onOrderSelect(order)}
                 >
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -349,15 +350,27 @@ export function AbandonedOrders({ onOrderSelect, initialSearchTerm = '' }: Aband
                     />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        onOrderSelect(order)
-                      }}
-                      className="text-sm font-medium text-[#00473A] hover:text-[#00473A]/80 cursor-pointer"
-                    >
-                      {order.orderId}
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onOrderSelect(order)
+                        }}
+                        className="text-sm font-bold text-[#00473A] hover:text-[#00473A]/80 cursor-pointer"
+                      >
+                        {order.orderId}
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          navigator.clipboard?.writeText(order.orderId)
+                        }}
+                        className="p-1 text-gray-400 hover:text-[#00473A] transition-colors"
+                        title="Copy Order ID"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </button>
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">

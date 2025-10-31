@@ -20,7 +20,8 @@ import {
   Upload,
   ChevronDown,
   CreditCard,
-  Calendar
+  Calendar,
+  Copy
 } from 'lucide-react'
 import { Order } from '../page'
 import { OrderStatusModal } from './OrderStatusModal'
@@ -397,7 +398,7 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                 return (
                   <tr 
                     key={order.id} 
-                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    className="hover:bg-[#faf9f5] cursor-pointer"
                     onClick={() => onOrderSelect(order)}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -412,12 +413,24 @@ export function Orders({ onOrderSelect, initialSearchTerm = '' }: OrdersProps) {
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-        <button
-          onClick={() => onOrderSelect(order)}
-          className="text-sm font-medium text-[#00473A] hover:text-[#00473A]/80 cursor-pointer"
-        >
-                        {order.orderId}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => onOrderSelect(order)}
+                          className="text-sm font-bold text-[#00473A] hover:text-[#00473A]/80 cursor-pointer"
+                        >
+                          {order.orderId}
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            navigator.clipboard?.writeText(order.orderId)
+                          }}
+                          className="p-1 text-gray-400 hover:text-[#00473A] transition-colors"
+                          title="Copy Order ID"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </button>
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>

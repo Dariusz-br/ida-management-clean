@@ -386,7 +386,7 @@ export function ComponentLab() {
                             { country: 'Germany', visits: 3795, purchases: 1173, change: 0.9, revenue: 117300 },
                             { country: 'United Kingdom', visits: 2100, purchases: 1012, change: -0.1, revenue: 101200 }
                           ].map((country) => (
-                            <tr key={country.country} className="hover:bg-[#F5F4E7] transition-colors">
+                            <tr key={country.country} className="hover:bg-[#faf9f5] transition-colors">
                               <td className="px-3 py-2 whitespace-nowrap">
                                 <div className="flex items-center">
                                   <FlatFlag country={country.country} size="sm" className="mr-2" />

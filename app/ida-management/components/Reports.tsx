@@ -164,7 +164,7 @@ export function Reports() {
                     const aov = (data.revenue / data.orders).toFixed(2)
                     
                     return (
-                      <tr key={index} className="hover:bg-[#F5F4E7]">
+                      <tr key={index} className="hover:bg-[#faf9f5]">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                           {data.month}
                         </td>

@@ -25,7 +25,8 @@ import {
   Edit,
   Calendar,
   Bell,
-  Download
+  Download,
+  Copy
 } from 'lucide-react'
 import { getOperationByCountry, getOperationColor, getOperationIcon, getOperationFlagCountry } from '../utils/operations'
 import { sharedOrdersData } from '../data/orders'
@@ -565,7 +566,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                       { country: 'Germany', visits: 60000, purchases: 2500, change: 5.5, revenue: 250000 },
                       { country: 'Australia', visits: 50000, purchases: 2000, change: 1.8, revenue: 200000 }
                     ].map((country) => (
-                      <tr key={country.country} className="hover:bg-[#F5F4E7] transition-colors">
+                      <tr key={country.country} className="hover:bg-[#faf9f5] transition-colors">
                         <td className="px-3 py-2 whitespace-nowrap">
                           <div className="flex items-center">
                             <FlatFlag country={country.country} size="sm" className="mr-2" />
@@ -908,7 +909,19 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                         </div>
                       )}
                       <div className="flex items-center justify-between mt-2">
-                        <span className="text-xs text-[#00473A] font-medium">{order.orderId}</span>
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs text-[#00473A] font-bold">{order.orderId}</span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              navigator.clipboard?.writeText(order.orderId)
+                            }}
+                            className="p-0.5 text-gray-400 hover:text-[#00473A] transition-colors"
+                            title="Copy Order ID"
+                          >
+                            <Copy className="w-3 h-3" />
+                          </button>
+                        </div>
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
@@ -1009,7 +1022,7 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                 return (
                   <tr 
                     key={order.id} 
-                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    className="hover:bg-[#faf9f5] cursor-pointer"
                     onClick={() => onOrderSelect?.(order as Order)}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -1024,12 +1037,24 @@ export function Dashboard({ onOrderSelect, onNavigate, onSearch }: DashboardProp
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-        <button
-          onClick={() => onOrderSelect?.(order as Order)}
-          className="text-sm font-medium text-[#00473A] hover:text-[#00473A]/80 cursor-pointer"
-        >
-                        {order.orderId}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => onOrderSelect?.(order as Order)}
+                          className="text-sm font-bold text-[#00473A] hover:text-[#00473A]/80 cursor-pointer"
+                        >
+                          {order.orderId}
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            navigator.clipboard?.writeText(order.orderId)
+                          }}
+                          className="p-1 text-gray-400 hover:text-[#00473A] transition-colors"
+                          title="Copy Order ID"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </button>
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>

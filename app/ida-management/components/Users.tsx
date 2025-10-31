@@ -264,7 +264,7 @@ export function Users() {
                 return (
                   <tr 
                     key={user.id} 
-                    className="hover:bg-[#F5F4E7] cursor-pointer"
+                    className="hover:bg-[#faf9f5] cursor-pointer"
                     onClick={() => handleViewUser(user)}
                   >
                     <td className="px-6 py-4 whitespace-nowrap">

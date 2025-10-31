@@ -393,7 +393,7 @@ export function CustomerReport() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredCustomers.map((customer) => (
-                <tr key={customer.id} className="hover:bg-[#F5F4E7]">
+                <tr key={customer.id} className="hover:bg-[#faf9f5]">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div>
                       <div className="text-sm font-medium text-gray-900">{customer.name}</div>

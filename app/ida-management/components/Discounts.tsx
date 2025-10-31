@@ -192,7 +192,7 @@ export function Discounts() {
             </thead>
             <tbody className="bg-white divide-y divide-[#E8E6CF]">
               {filteredDiscounts.map((discount) => (
-                <tr key={discount.id} className="hover:bg-[#F5F4E7]">
+                <tr key={discount.id} className="hover:bg-[#faf9f5]">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">{discount.code}</div>
                   </td>

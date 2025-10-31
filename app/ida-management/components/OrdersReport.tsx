@@ -360,7 +360,7 @@ export function OrdersReport() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredOrders.map((order) => (
-                <tr key={order.id} className="hover:bg-[#F5F4E7]">
+                <tr key={order.id} className="hover:bg-[#faf9f5]">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">
                     {order.orderId}
                   </td>
